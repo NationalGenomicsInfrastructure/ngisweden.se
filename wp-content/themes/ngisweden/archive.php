@@ -105,29 +105,11 @@
         continue;
       }
 
-      // Get the status icon
-      $status_icon = '';
-      $status_ribbon = '';
-      $method_statuses = get_the_terms(null, 'method_status');
-      if ($method_statuses && !is_wp_error($method_statuses)){
-        foreach($method_statuses as $status){
-          $colour = '';
-          $status_colour = get_option( "method_status_colour_".$status->term_id );
-          if($status_colour){
-            $colour = 'ribbon-'.$status_colour;
-          }
-          // Overwrite, so if multiple we take the last one seen
-          $status_ribbon = '<div class="ribbon '.$colour.'"><span>'.$status->name.'</span></div>';
-        }
-      }
-
       // Start building the method card
       $card_output = '
       <div class="card">
         <div class="card-body">
-          '.$status_ribbon.'
           <h5 class="card-title">
-            '.$status_icon.'
             <a href="'.get_the_permalink().'">'.get_the_title().'</a>
           </h5>';
       // Excerpt intro text
