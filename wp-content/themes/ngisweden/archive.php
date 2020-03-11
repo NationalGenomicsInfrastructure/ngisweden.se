@@ -39,7 +39,7 @@
   if(isset($term_meta['application_page']) && $term_meta['application_page']){
     $app_page = get_post($term_meta['application_page']);
     $page_title = $app_page->post_title;
-    $page_contents = '<hr>'.$app_page->post_content;
+    $page_contents = $app_page->post_content;
   }
 
   // Start the structure to collect the cards
@@ -167,7 +167,7 @@
   echo $page_contents;
 
   // Print the tab headers
-  echo '<div class="row mt-3 mb-3"><div class="col-sm-2 mb-3"><div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">';
+  echo '<div class="row mt-5 mb-3"><div class="col-sm-2 mb-3"><div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">';
   $first = true;
   foreach($card_decks as $id => $deck){
     if(count($deck['cards']) > 0){
