@@ -1,4 +1,12 @@
-<?php get_header(); ?>
+<?php
+
+// For regular news posts, use home.php instead
+if(get_post_type() == 'post'){
+  include('home.php');
+  exit;
+}
+
+get_header(); ?>
 
 <div class="container main-page">
 

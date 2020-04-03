@@ -11,6 +11,10 @@ if(is_category()){
   $title_suffix = single_cat_title(' &raquo; ', false);
 } elseif(is_date()){
   $title_suffix = ' &raquo; '.get_query_var('year');
+} elseif(is_author()){
+  $title_suffix = ' &raquo; Author: '.get_the_author_meta('display_name', get_query_var('author'));
+} elseif(is_tag()){
+  $title_suffix = ' &raquo; Keyword: '.get_query_var('tag');
 }
 
 ?>
