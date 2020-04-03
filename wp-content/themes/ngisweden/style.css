@@ -462,6 +462,9 @@ footer {
     margin: 1rem 0 2rem;
     padding: 0.5rem 1rem;
 }
+.methods-lead p {
+    margin: 0;
+}
 .method-keyword {
     font-size: 11px;
 }

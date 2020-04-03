@@ -20,10 +20,12 @@ if(is_category()){
     <div class="row">
       <div class="col-sm-9">
         <h1>News<?php echo $title_suffix; ?></h1>
-        <div class="row row-cols-1 row-cols-lg-2">
         <?php
-        the_archive_description();
+        if(get_the_archive_description() and strlen(trim(get_the_archive_description()))){
+          echo '<div class="methods-lead">'.get_the_archive_description().'</div>';
+        }
         if (have_posts()) {
+          echo '<div class="row row-cols-1 row-cols-lg-2">';
           while (have_posts()) {
             the_post();
             echo '<div class="col mb-4"><div class="card">';
@@ -37,12 +39,11 @@ if(is_category()){
                 </div>';
             echo '</div></div>';
           }
+          echo '</div>';
         } else {
           echo '<p class="text-muted lead">No posts found.</p>';
         }
-        ?>
-        </div>
-        <?php bootstrap_pagination(); ?>
+        bootstrap_pagination(); ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
 
