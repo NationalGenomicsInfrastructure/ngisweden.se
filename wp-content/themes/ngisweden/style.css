@@ -477,66 +477,6 @@ footer {
     margin-top: -2px;
 }
 
-.ribbon {
-    position: absolute;
-    right: -5px; top: -5px;
-    z-index: 1;
-    overflow: hidden;
-    width: 75px; height: 75px;
-    text-align: right;
-}
-.ribbon span {
-    font-size: 10px;
-    font-weight: bold;
-    color: #FFF;
-    text-transform: uppercase;
-    text-align: center;
-    line-height: 20px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-    width: 100px;
-    display: block;
-    background: #79A70A;
-    background: linear-gradient(#B6BAC9 0%, #808080 100%);
-    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
-    position: absolute;
-    top: 19px; right: -21px;
-}
-.ribbon span::before {
-    content: "";
-    position: absolute; left: 0px; top: 100%;
-    z-index: -1;
-    border-left: 3px solid #808080;
-    border-right: 3px solid transparent;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #808080;
-}
-.ribbon span::after {
-    content: "";
-    position: absolute; right: 0px; top: 100%;
-    z-index: -1;
-    border-left: 3px solid transparent;
-    border-right: 3px solid #808080;
-    border-bottom: 3px solid transparent;
-    border-top: 3px solid #808080;
-}
-.ribbon.ribbon-red span { background: linear-gradient(#F70505 0%, #8F0808 100%); }
-.ribbon.ribbon-red span::before { border-left: 3px solid #8F0808; border-top: 3px solid #8F0808; }
-.ribbon.ribbon-red span::after { border-right: 3px solid #8F0808; border-top: 3px solid #8F0808; }
-.ribbon.ribbon-green span { background: linear-gradient(#9BC90D 0%, #79A70A 100%); }
-.ribbon.ribbon-green span::before { border-left: 3px solid #79A70A; border-top: 3px solid #79A70A; }
-.ribbon.ribbon-green span::after { border-right: 3px solid #79A70A; border-top: 3px solid #79A70A; }
-.ribbon.ribbon-blue span { background: linear-gradient(#2989d8 0%, #1e5799 100%); }
-.ribbon.ribbon-blue span::before { border-left: 3px solid #1e5799; border-top: 3px solid #1e5799; }
-.ribbon.ribbon-blue span::after { border-right: 3px solid #1e5799; border-top: 3px solid #1e5799; }
-.ribbon.ribbon-turquoise span { background: linear-gradient(#05EFF7 0%, #087F8F 100%); }
-.ribbon.ribbon-turquoise span::before { border-left: 3px solid #087F8F; border-top: 3px solid #087F8F; }
-.ribbon.ribbon-turquoise span::after { border-right: 3px solid #087F8F; border-top: 3px solid #087F8F; }
-.ribbon.ribbon-orange span { background: linear-gradient(#F79E05 0%, #8F5408 100%); }
-.ribbon.ribbon-orange span::before { border-left: 3px solid #8F5408; border-top: 3px solid #8F5408; }
-.ribbon.ribbon-orange span::after { border-right: 3px solid #8F5408; border-top: 3px solid #8F5408; }
-
-
 /* Gutenberg Stackable CSS overrides */
 /* Feature grid and Team Member cards - less padding */
 .ugb-feature-grid.ugb-feature-grid--v2:not(.ugb-feature-grid--design-plain) .ugb-feature-grid__item,

@@ -59,7 +59,7 @@ function method_status_taxonomy_custom_fields($tag) {
                 <option value="turquoise"<?php if($status_colour == 'turquoise'){ echo ' selected="selected"'; } ?>>Turquoise</option>
                 <option value="orange"<?php if($status_colour == 'orange'){ echo ' selected="selected"'; } ?>>Orange</option>
             </select>
-            <p><?php _e('Set the colour of the corner ribbon'); ?></p>
+            <p><?php _e('Set the colour of the status label'); ?></p>
         </td>
     </tr>
     <?php

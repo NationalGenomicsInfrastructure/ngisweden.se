@@ -91,26 +91,10 @@ function singlepage_get_application_parents( $id, $visited = array() ) {
                   // Start a row of cards
                   if($postcounter % $cards_per_row == 0) echo '<div class="ngisweden-application-methods card-deck">';
 
-                  // Get the status icon
-                  $status_ribbon = '';
-                  $tech_statuses = wp_get_post_terms($child_id, 'method_status');
-                  if ($tech_statuses && !is_wp_error($tech_statuses)){
-                    foreach($tech_statuses as $status){
-                      $colour = '';
-                      $status_colour = get_option( "method_status_colour_".$status->term_id );
-                      if($status_colour){
-                        $colour = 'ribbon-'.$status_colour;
-                      }
-                      // Overwrite, so if multiple we take the last one seen
-                      $status_ribbon = '<div class="ribbon '.$colour.'"><span>'.$status->name.'</span></div>';
-                    }
-                  }
-
                   // Print the card
                   echo '
                   <div class="card">
                     <div class="card-body">
-                      '.$status_ribbon.'
                       <h5 class="card-title">
                         <a href="'.$tech_child->guid.'">'.$tech_child->post_title.'</a>
                       </h5>

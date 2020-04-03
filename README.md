@@ -362,10 +362,8 @@ Copy this text in to the _Application Icon_ field and save. It should now be use
 
 ### Statuses
 
-Statuses are used to show whether an application is high throughput and used in production or still in development. Again, there is a special fields: _Status Colour_.
-Setting this decides on the colour of the little ribbon that goes over the corner of the cards on the application pages.
-
-
+Statuses are used to show whether an application is high throughput and used in production or still in development.
+Again, there is a special field: _Status Colour_.
 
 
 # Developing the website code
