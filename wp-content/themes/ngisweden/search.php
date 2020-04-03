@@ -10,6 +10,7 @@ if (have_posts() && trim(get_query_var('s')) != '') {
 <div class="ngisweden-sidebar-page">
   <div class="container main-page">
     <h1>Search Results for <em>'<?php echo get_search_query(); ?>'</em><?php echo $num_results_badge; ?></h1>
+    <div class="card-columns">
     <?php
     if (have_posts() && trim(get_query_var('s')) != '') {
       while (have_posts()) {
@@ -19,9 +20,13 @@ if (have_posts() && trim(get_query_var('s')) != '') {
         } else {
           $parent = '';
         }
-        echo '<h3>'.$parent.'<a href="'.get_permalink().'">'.get_the_title().'</a></h3>';
-        the_excerpt();
-        echo '<hr>';
+        echo '
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">'.$parent.'<a href="'.get_permalink().'">'.get_the_title().'</a></h5>
+              <p class="card-text small text-muted">'.get_the_excerpt().'</p>
+            </div>
+          </div>';
       }
       bootstrap_pagination();
     } else {
@@ -30,7 +35,7 @@ if (have_posts() && trim(get_query_var('s')) != '') {
     }
 
     ?>
-
+    </div>
   </div>
 </div>
 

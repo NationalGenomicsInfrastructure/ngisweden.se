@@ -20,25 +20,29 @@ if(is_category()){
     <div class="row">
       <div class="col-sm-9">
         <h1>News<?php echo $title_suffix; ?></h1>
-        <hr>
+        <div class="row row-cols-1 row-cols-lg-2">
         <?php
         the_archive_description();
         if (have_posts()) {
           while (have_posts()) {
             the_post();
-            echo '<h4><a href="'.get_the_permalink().'">'.get_the_title().'</a></h4>';
+            echo '<div class="col mb-4"><div class="card">';
             if ( has_post_thumbnail() ) {
-              echo '<a href="'.get_the_permalink().'" class="alignright">'.get_the_post_thumbnail('thumb').'</a>';
+              the_post_thumbnail('thumb', array('class' => 'card-img-top'));
             }
-            echo '<p class="small text-muted mb-1">'.get_the_date().' &nbsp;-&nbsp; Categories: <em>'.get_the_category_list(', ').'</em></p>';
-            the_excerpt();
-            echo '<hr>';
+            echo'<div class="card-body">
+                  <h5 class="card-title"><a href="'.get_the_permalink().'">'.get_the_title().'</a></h5>
+                  <p class="small text-muted mb-1">'.get_the_date().' &nbsp;-&nbsp; Categories: <em>'.get_the_category_list(', ').'</em></p>
+                  <p class="card-text small">'.get_the_excerpt().'</p>
+                </div>';
+            echo '</div></div>';
           }
           bootstrap_pagination();
         } else {
           echo '<p class="text-muted lead">No posts found.</p>';
         }
         ?>
+        </div>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
 
