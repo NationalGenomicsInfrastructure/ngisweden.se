@@ -34,6 +34,9 @@ if(is_category()){
             the_excerpt();
             echo '<hr>';
           }
+          bootstrap_pagination();
+        } else {
+          echo '<p class="text-muted lead">No posts found.</p>';
         }
         ?>
       </div>

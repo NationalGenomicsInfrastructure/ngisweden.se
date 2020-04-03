@@ -483,3 +483,9 @@ footer {
 .ugb-team-member.ugb-team-member--v3.ugb-team-member--design-basic .ugb-team-member__item {
     padding: 30px 25px;
 }
+
+.search-count-count-badge {
+    font-size: 1.2rem;
+    vertical-align: top;
+    margin: 0.8rem;
+}

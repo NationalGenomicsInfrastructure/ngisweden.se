@@ -50,6 +50,24 @@ add_action('init', 'register_ngisweden_nav');
 require_once('includes/bs4navwalker.php');
 require_once('functions/bootstrap-breadcrumb.php');
 
+// Bootstrap pagination links
+require_once('functions/bootstrap-pagination.php');
+
+// Search - highlight terms
+function ngi_highlight_search_terms($text){
+    if(is_search() && !is_admin()){
+        $sr = get_query_var('s');
+        if(trim($sr) != ''){
+            $keys = explode(" ",$sr);
+            $keys = array_filter($keys);
+            $text = preg_replace('/('.implode('|', $keys) .')/iu', '<mark>$1</mark>', $text);
+        }
+    }
+    return $text;
+}
+add_filter('the_excerpt', 'ngi_highlight_search_terms');
+add_filter('the_title', 'ngi_highlight_search_terms');
+
 // Rename "Posts" to "News"
 // https://gist.github.com/gyrus/3155982
 add_action( 'admin_menu', 'ngisweden_change_post_menu_label' );
@@ -76,6 +94,13 @@ function ngisweden_change_post_object_label() {
     $labels->search_items = 'Search News';
     $labels->not_found = 'No News found';
     $labels->not_found_in_trash = 'No News found in Trash';
+}
+
+// Exclude media library attachments from search results
+add_action( 'init', 'ngisweden_exclude_attachments_from_search_results' );
+function ngisweden_exclude_attachments_from_search_results() {
+    global $wp_post_types;
+    $wp_post_types['attachment']->exclude_from_search = true;
 }
 
 // Enqueue a custom javascript file for extending gutenberg
