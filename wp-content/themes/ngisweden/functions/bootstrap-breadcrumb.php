@@ -34,8 +34,14 @@ function bootstrap_breadcrumb() {
 
   $html = '<div class="ngisweden-header-breadcrumbs"><div class="container"><ol class="breadcrumb">';
 
-  if ( (is_front_page()) || (is_home()) ) {
-    $html .= '<li class="breadcrumb-item active">Home</li>';
+  if ( is_home() ) {
+    $html .= '<li class="breadcrumb-item active bc-home">Home</li>';
+
+    // Main News & Events page - get by looking for page slug 'applications'
+    $root_page = get_page_by_path( 'news' );
+    if($root_page){
+      $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+    }
   }
 
   else {
@@ -50,21 +56,7 @@ function bootstrap_breadcrumb() {
       }
 
       $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $parent ) ) . '">' . $parent->post_title . '</a></li>';
-      $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
-    }
-
-    elseif ( is_date() ) {
-      $archive_year = get_query_var('year');
-
-      // Main News & Events page - get by looking for page slug 'applications'
-      $root_page = get_page_by_path( 'news' );
-      if($root_page){
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
-      }
-
-      // Append current year
-      $html .= '<li class="breadcrumb-item active">' . $archive_year . '</li>';
-
+      $html .= '<li class="breadcrumb-item active bc-attachment">' . get_the_title() . '</li>';
     }
 
     elseif ( is_category() ) {
@@ -80,7 +72,7 @@ function bootstrap_breadcrumb() {
         $html .= custom_get_tax_parents( $category->parent, array(), 'category' );
       }
 
-      $html .= '<li class="breadcrumb-item active">' . single_cat_title( '', false ) . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-cat">' . single_cat_title( '', false ) . '</li>';
     }
 
     elseif ( is_tax() ) {
@@ -99,7 +91,7 @@ function bootstrap_breadcrumb() {
         $html .= custom_get_tax_parents( $term->parent, array(), $taxonomy->slug );
       }
 
-      $html .= '<li class="breadcrumb-item active">' . single_cat_title( '', false ) . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-tax">' . single_cat_title( '', false ) . '</li>';
     }
 
     elseif ( is_page() && !is_front_page() ) {
@@ -120,17 +112,23 @@ function bootstrap_breadcrumb() {
         }
       }
 
-      $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-page">' . get_the_title() . '</li>';
     }
 
     elseif ( is_singular( 'post' ) ) {
       $categories = get_the_category();
 
+      // Main News & Events page - get by looking for page slug 'applications'
+      $root_page = get_page_by_path( 'news' );
+      if($root_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      }
+
       if ( $categories[0] ) {
         $html .= custom_get_tax_parents($categories[0], array(), 'category' );
       }
 
-      $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-post">' . get_the_title() . '</li>';
     }
 
     elseif ( is_singular( 'methods' ) || is_singular( 'technologies' ) || is_singular( 'bioinformatics' ) ) {
@@ -173,38 +171,59 @@ function bootstrap_breadcrumb() {
         $html .= custom_get_tax_parents($categories[0], array(), 'applications');
       }
 
-      $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-method-technology-bioinfo">' . get_the_title() . '</li>';
     }
 
     elseif ( is_tag() ) {
-      $html .= '<li class="breadcrumb-item active">' . single_tag_title( '', false ) . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-tag">' . single_tag_title( '', false ) . '</li>';
     }
 
     elseif ( is_day() ) {
+      // Main News & Events page - get by looking for page slug 'applications'
+      $root_page = get_page_by_path( 'news' );
+      if($root_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      }
+
       $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
       $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_month_link( get_the_time( 'Y' ), get_the_time( 'm' ) ) ) . '">' . get_the_time( 'm' ) . '</a></li>';
-      $html .= '<li class="breadcrumb-item active">' . get_the_time('d') . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-day">' . get_the_time('d') . '</li>';
     }
 
     elseif ( is_month() ) {
+      // Main News & Events page - get by looking for page slug 'applications'
+      $root_page = get_page_by_path( 'news' );
+      if($root_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      }
+
       $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_year_link( get_the_time( 'Y' ) ) ) . '">' . get_the_time( 'Y' ) . '</a></li>';
-      $html .= '<li class="breadcrumb-item active">' . get_the_time( 'F' ) . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-month">' . get_the_time( 'F' ) . '</li>';
     }
 
     elseif ( is_year() ) {
-      $html .= '<li class="breadcrumb-item active">' . get_the_time( 'Y' ) . '</li>';
+
+      // Main News & Events page - get by looking for page slug 'applications'
+      $root_page = get_page_by_path( 'news' );
+      if($root_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      }
+
+      // Append current year
+      $html .= '<li class="breadcrumb-item active bc-year">' . get_the_time( 'Y' ) . '</li>';
+
     }
 
     elseif ( is_author() ) {
-      $html .= '<li class="breadcrumb-item active">' . get_the_author() . '</li>';
+      $html .= '<li class="breadcrumb-item active bc-author">' . get_the_author() . '</li>';
     }
 
     elseif ( is_search() ) {
-      $html .= '<li class="breadcrumb-item active">Search</li>';
+      $html .= '<li class="breadcrumb-item active bc-search">Search</li>';
     }
 
     elseif ( is_404() ) {
-      $html .= '<li class="breadcrumb-item active">404</li>';
+      $html .= '<li class="breadcrumb-item active bc-404">404</li>';
     }
 
   }
