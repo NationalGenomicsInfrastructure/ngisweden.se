@@ -37,12 +37,12 @@ if(is_category()){
                 </div>';
             echo '</div></div>';
           }
-          bootstrap_pagination();
         } else {
           echo '<p class="text-muted lead">No posts found.</p>';
         }
         ?>
         </div>
+        <?php bootstrap_pagination(); ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
 

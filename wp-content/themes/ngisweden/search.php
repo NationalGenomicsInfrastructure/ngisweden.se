@@ -28,7 +28,6 @@ if (have_posts() && trim(get_query_var('s')) != '') {
             </div>
           </div>';
       }
-      bootstrap_pagination();
     } else {
       echo '<p class="text-muted lead">Sorry - nothing found.</p>';
       get_search_form();
@@ -36,6 +35,7 @@ if (have_posts() && trim(get_query_var('s')) != '') {
 
     ?>
     </div>
+    <?php bootstrap_pagination(); ?>
   </div>
 </div>
 
