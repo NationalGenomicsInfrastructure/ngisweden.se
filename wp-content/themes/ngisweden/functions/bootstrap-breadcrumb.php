@@ -53,11 +53,25 @@ function bootstrap_breadcrumb() {
       $html .= '<li class="breadcrumb-item active">' . get_the_title() . '</li>';
     }
 
+    elseif ( is_date() ) {
+      $archive_year = get_query_var('year');
+
+      // Main News & Events page - get by looking for page slug 'applications'
+      $root_page = get_page_by_path( 'news' );
+      if($root_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      }
+
+      // Append current year
+      $html .= '<li class="breadcrumb-item active">' . $archive_year . '</li>';
+
+    }
+
     elseif ( is_category() ) {
       $category = get_category( get_query_var( 'cat' ) );
 
       // Main News & Events page - get by looking for page slug 'applications'
-      $root_page = get_page_by_path( 'news-events' );
+      $root_page = get_page_by_path( 'news' );
       if($root_page){
         $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
       }
@@ -155,7 +169,7 @@ function bootstrap_breadcrumb() {
         }
       }
 
-      if ( $categories[0] ) {
+      if ( $categories && $categories[0] ) {
         $html .= custom_get_tax_parents($categories[0], array(), 'applications');
       }
 
