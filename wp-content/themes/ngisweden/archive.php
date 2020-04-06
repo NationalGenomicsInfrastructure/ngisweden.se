@@ -6,6 +6,20 @@ if(get_post_type() == 'post'){
   exit;
 }
 
+// If we have a page that exactly matches the URL, display that instead
+$request_uri = trim($_SERVER['REQUEST_URI'], '/');
+$page = get_page_by_path($request_uri);
+if($page){
+  get_header();
+  echo '<div class="container main-page">';
+  echo '<h1>'.get_the_title($page).'</h1>';
+  echo get_the_content(null, null, $page);
+  echo '</div>';
+  get_footer();
+  exit;
+}
+
+
 get_header(); ?>
 
 <div class="container main-page">
