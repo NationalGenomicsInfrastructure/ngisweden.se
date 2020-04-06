@@ -8,15 +8,18 @@ if(get_post_type() == 'post'){
 
 // If we have a page that exactly matches the URL, display that instead
 $request_uri = trim($_SERVER['REQUEST_URI'], '/');
-$page = get_page_by_path($request_uri);
-if($page){
-  get_header();
-  echo '<div class="container main-page">';
-  echo '<h1>'.$page->post_title.'</h1>';
-  echo apply_filters('the_content', $page->post_content);
-  echo '</div>';
-  get_footer();
-  exit;
+// Only top-level URLs (categories can associate their own page)
+if(substr_count($request_uri, '/') == 0){
+  $page = get_page_by_path($request_uri);
+  if($page){
+    get_header();
+    echo '<div class="container main-page">';
+    echo '<h1>'.$page->post_title.'</h1>';
+    echo apply_filters('the_content', $page->post_content);
+    echo '</div>';
+    get_footer();
+    exit;
+  }
 }
 
 
