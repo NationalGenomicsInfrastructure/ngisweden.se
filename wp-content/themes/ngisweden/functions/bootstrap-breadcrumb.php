@@ -40,7 +40,7 @@ function bootstrap_breadcrumb() {
     // Main News & Events page - get by looking for page slug 'applications'
     $root_page = get_page_by_path( 'news' );
     if($root_page){
-      $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
+      $html .= '<li class="breadcrumb-item bc-news"><a href="' . esc_url( get_permalink( $root_page ) ) . '">' . get_the_title( $root_page ) . '</a></li>';
     }
   }
 
@@ -220,6 +220,10 @@ function bootstrap_breadcrumb() {
 
     elseif ( is_search() ) {
       $html .= '<li class="breadcrumb-item active bc-search">Search</li>';
+    }
+
+    elseif ( is_post_type_archive() ) {
+      $html .= '<li class="breadcrumb-item active bc-archive">' . post_type_archive_title('', false) . '</li>';
     }
 
     elseif ( is_404() ) {
