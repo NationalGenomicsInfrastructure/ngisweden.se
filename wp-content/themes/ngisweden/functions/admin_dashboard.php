@@ -194,7 +194,7 @@ if($tab == 'warnings'):
   <?php if(count($applications_no_posts) > 0): ?>
     <h3>Applications with no content</h3>
     <p class="description">
-      Every application should have a method or bioinformatics page.
+      Every application should have at least one method or bioinformatics page associated with it.
     </p>
     <ul style="list-style-type: inherit; margin-left: 2rem;">
     <?php
