@@ -12,13 +12,23 @@ foreach($menu_items as $menu_item){
   }
 }
 // Get all page IDs
+$ignore_pages = [get_option('page_on_front')]; // Static homepage page ID
+foreach(['applications', 'methods', 'bioinformatics', 'technologies'] as $slug){
+  $ignore_page = get_page_by_path($slug);
+  if($ignore_page){
+    $ignore_pages[] = $ignore_page->ID;
+  }
+}
 $ngi_pages = get_pages(array(
   'hierarchical'=> false,
-  // Exclude pages that are children of 'Applications' or 'Events'
   'exclude_tree' => [
+    // Exclude pages that are children of 'Applications'
     get_page_by_path('applications')->ID,
-    get_page_by_path('news/events')->ID,
+    // Exclude children of 'News' (the Events pages)
+    get_page_by_path('news')->ID,
   ],
+  // Ignore pages with same basenames as CPTs
+  'exclude' => $ignore_pages,
   //////// DEBUG ONLY
   ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
   'post_status' => 'publish,pending,draft'
