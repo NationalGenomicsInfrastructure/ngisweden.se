@@ -12,8 +12,8 @@ $page = get_page_by_path($request_uri);
 if($page){
   get_header();
   echo '<div class="container main-page">';
-  echo '<h1>'.get_the_title($page).'</h1>';
-  echo get_the_content(null, null, $page);
+  echo '<h1>'.$page->post_title.'</h1>';
+  echo apply_filters('the_content', $page->post_content);
   echo '</div>';
   get_footer();
   exit;
