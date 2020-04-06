@@ -1,5 +1,34 @@
 <?php // Custom Dashboard page
 
+$tab = isset($_GET['tab']) ? $_GET['tab'] : null;
+
+//
+// DASHBOARD CHECKS
+//
+if($tab == 'warnings'):
+$max_except_length = 300;
+
+// METHODS WITH NO APPLICATION
+// NO KEYWORDS
+// Every method should belong to at least one application
+// Check that we have some keywords
+$all_method_posts = get_posts(array(
+  'post_type' => array('methods', 'bioinformatics'),
+  'posts_per_page' => -1,
+  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
+));
+$methods_missing_application = [];
+$methods_missing_keywords = [];
+foreach($all_method_posts as $method_post){
+  if(!get_the_terms($method_post->ID, 'applications')){
+    $methods_missing_application[] = $method_post;
+  }
+  if(!get_the_terms($method_post->ID, 'method_keywords')){
+    $methods_missing_keywords[] = $method_post;
+  }
+}
+
+// MISSING FROM NAV
 // Check if we have any pages that should me in the main menu and are not
 // Get menu page IDs
 $menu_locations = get_nav_menu_locations();
@@ -40,6 +69,51 @@ foreach($ngi_pages as $ngi_page){
   }
 }
 
+// BAD EXCERPTS
+// Nearly everything should have an excerpt!
+// Check that those set are not too long.
+$methods_missing_excerpt = [];
+$all_cpt_posts = get_posts(array(
+  'post_type' => array('methods', 'bioinformatics', 'technologies'),
+  'posts_per_page' => -1,
+  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
+));
+$cpts_missing_excerpt = [];
+$cpts_excerpt_too_long = [];
+foreach($all_cpt_posts as $cpt_post){
+  if(!has_excerpt($cpt_post)){
+    $cpts_missing_excerpt[] = $cpt_post;
+  } else {
+    $excerpt_length = strlen(strip_tags(get_the_excerpt($cpt_post)));
+    if($excerpt_length > $max_except_length){
+      $cpts_excerpt_too_long[] = [$cpt_post, $excerpt_length];
+    }
+  }
+}
+// APPLICATIONS WITH NO METHODS
+// MISSING APPLICATION DESCRIPTIONS
+$applications_missing_descriptions = [];
+$applications_description_too_long = [];
+$applications_no_posts = [];
+$applications = get_terms([
+    'taxonomy' => 'applications',
+    'hide_empty' => false,
+]);
+foreach($applications as $application){
+  if($application->count == 0){
+    $applications_no_posts[] = $application;
+  }
+  if(trim($application->description) == ''){
+    $applications_missing_descriptions[] = $application;
+  } else {
+    $description_length = strlen(trim($application->description));
+    if($description_length > $max_except_length) {
+      $applications_description_too_long[] = [$application, $description_length];
+    }
+  }
+}
+
+endif; // if($tab == 'warnings'):
 
 ?>
 
@@ -50,6 +124,13 @@ foreach($ngi_pages as $ngi_page){
     You can manage all of the content on the <?php bloginfo('name'); ?> website from these pages.
   </div>
 
+  <nav class="nav-tab-wrapper">
+    <a href="<?php echo admin_url('index.php?page=ngi-dashboard'); ?>" class="nav-tab <?php if($tab === null){ echo 'nav-tab-active'; } ?>">Your Content</a>
+    <a href="<?php echo admin_url('index.php?page=ngi-dashboard'); ?>&tab=user_guide" class="nav-tab <?php if($tab == 'user_guide'){ echo 'nav-tab-active'; } ?>">NGI Sweden Website User Guide</a>
+    <a href="<?php echo admin_url('index.php?page=ngi-dashboard'); ?>&tab=warnings" class="nav-tab <?php if($tab == 'warnings'){ echo 'nav-tab-active'; } ?>">Website Warnings</a>
+  </nav>
+
+  <?php if($tab === null): ?>
   <h3>Your Content</h3>
   <p class="description">We assign each web page to a person by setting them as an author.
   Follow these links to see only the content where you are set as author.</p>
@@ -76,13 +157,60 @@ foreach($ngi_pages as $ngi_page){
     }
     echo '</ul>';
   ?>
+<?php endif;  // <?php if($tab === null):
+
+if($tab == 'user_guide'):
+?>
+
+<h3>
+  <a class="button button-primary" style="float:right; margin-bottom: 10px;" href="https://docs.google.com/document/d/1wXarUg1JlxSmDLZwmhZs5ChV1Kq28pV-dBniaASlPWA/edit?usp=sharing" target="_blank">Open docs in new tab</a>
+  Website walkthrough for editors
+</h3>
+<div style="box-shadow: 0px 0px 6px 0px #0000002e;">
+  <iframe style="width:100%; height: 600px;" src="https://docs.google.com/document/d/e/2PACX-1vTty9lSxiX0O9dgNO8v6jEftdxilRH-oVGuTpxLqCR5Ta1IULbIgcDKOvoWa-Hft4RADVxaSJhZYrFa/pub"></iframe>
+</div>
+
+<?php
+endif; // if($tab == 'user_guide'):
+
+if($tab == 'warnings'):
+?>
+
+  <?php if(count($methods_missing_application) > 0): ?>
+    <h3>Methods missing an application</h3>
+    <p class="description">
+      Every method must be assigned to at least one Application category, so that it can be discovered through the website.
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($methods_missing_application as $method){
+      echo '<li><a href="'.$method->guid.'">'.$method->post_title.'</a> (<a href="'.get_edit_post_link($method).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
+
+
+  <?php if(count($applications_no_posts) > 0): ?>
+    <h3>Applications with no content</h3>
+    <p class="description">
+      Every application should have a method or bioinformatics page.
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($applications_no_posts as $application){
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
 
   <?php if(count($missing_pages) > 0): ?>
-    <h3>Missing menu pages</h3>
+    <h3>Pages not in the main menu</h3>
     <p class="description">
       Website pages aren't automatically added to the main navigation, they have to be placed in the menu editor.
       The list below shows pages that are not in the top navigation.
-      This excludes methods, applications, technologies and bioinformatics.
+      This excludes methods, applications, technologies, bioinformatics and news/events.
       <a href="<?php echo admin_url('nav-menus.php'); ?>">Click here to edit the main navigation</a>.
     </p>
     <ul style="list-style-type: inherit; margin-left: 2rem;">
@@ -94,19 +222,100 @@ foreach($ngi_pages as $ngi_page){
     </ul>
   <?php endif; ?>
 
-  <h3>
-    <a class="button button-primary" style="float:right; margin-bottom: 10px;" href="https://docs.google.com/document/d/1wXarUg1JlxSmDLZwmhZs5ChV1Kq28pV-dBniaASlPWA/edit?usp=sharing" target="_blank">Open docs in new tab</a>
-    Website walkthrough for editors
-  </h3>
-  <div style="box-shadow: 0px 0px 6px 0px #0000002e;">
-    <iframe style="width:100%; height: 600px;" src="https://docs.google.com/document/d/e/2PACX-1vTty9lSxiX0O9dgNO8v6jEftdxilRH-oVGuTpxLqCR5Ta1IULbIgcDKOvoWa-Hft4RADVxaSJhZYrFa/pub"></iframe>
-  </div>
+
+  <?php if(count($cpts_missing_excerpt) > 0): ?>
+    <h3>Content missing an excerpt</h3>
+    <p class="description">
+      Methods, technologies and bioinformatics posts should all have a <em>custom excerpt</em>.
+      This is displayed on the cards on the listing pages and in a blue highlight at the top of the page.
+      See the walkthrough below to find out how to write excerpts.
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($cpts_missing_excerpt as $post){
+      echo '<li><a href="'.$post->guid.'">'.$post->post_title.'</a> (<a href="'.get_edit_post_link($post).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
+
+
+  <?php if(count($cpts_excerpt_too_long) > 0): ?>
+    <h3>Excerpts too long</h3>
+    <p class="description">
+      Methods, technologies and bioinformatics posts should all have a short <em>custom excerpt</em>.
+      For consistency with other pages, the excerpt should be kept short (less than <?php echo $max_except_length; ?> characters).
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($cpts_excerpt_too_long as $except_too_long){
+      $post = $except_too_long[0];
+      $excerpt_length = $except_too_long[1];
+      echo '<li><a href="'.$post->guid.'">'.$post->post_title.'</a> - '.$excerpt_length.' characters (<a href="'.get_edit_post_link($post).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
+
+
+  <?php if(count($applications_missing_descriptions) > 0): ?>
+    <h3>Applications missing a description</h3>
+    <p class="description">
+      Application categories should all have a <em>description</em>.
+      This is displayed on the cards on the listing pages and in a blue highlight at the top of the page.
+      See the walkthrough below to find out how to write application descriptions.
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($applications_missing_descriptions as $application){
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
+
+
+  <?php if(count($applications_description_too_long) > 0): ?>
+    <h3>Application descriptions too long</h3>
+    <p class="description">
+      Application categories should all have a <em>description</em>.
+      For consistency with other content, the description should be kept short (less than <?php echo $max_except_length; ?> characters).
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($applications_description_too_long as $description_too_long){
+      $application = $description_too_long[0];
+      $description_length = $description_too_long[1];
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> - '.$description_length.' characters (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
+
+
+  <?php if(count($methods_missing_keywords) > 0): ?>
+    <h3>Methods with no keywords</h3>
+    <p class="description">
+      Keywords are used for easier searching and grouping of methods. Every method and bioinformatics should have at least one keyword.
+    </p>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($methods_missing_keywords as $method){
+      echo '<li><a href="'.$method->guid.'">'.$method->post_title.'</a> (<a href="'.get_edit_post_link($method).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+  <?php endif; ?>
 
   <hr>
   <h3>Administrators</h3>
   <p>The code for the website is available on GitHub:
     <a href="https://github.com/NationalGenomicsInfrastructure/ngisweden.se/" target="_blank">https://github.com/NationalGenomicsInfrastructure/ngisweden.se/</a></p>
   <p>Please contact <a href="mailto:it-support@scilifelab.se">SciLifeLab IT support</a> for help regarding the server.</p>
+
+
+<?php endif; // if($tab == 'warnings'):
+?>
 
 </div>
 <hr style="margin-top:3rem;">
