@@ -89,17 +89,25 @@ get_header(); ?>
   // Applications are hierarchical. If this is a parent, get the children
   //
 
-  $term_children = @get_term_children($term->term_id, 'applications');
-  foreach ($term_children as $child) {
+  $term_children_ids = @get_term_children($term->term_id, 'applications');
+  $term_children = [];
+  foreach ($term_children_ids as $child_id) {
     // Get the sub-term details
-    $subterm = get_term_by('id', $child, 'applications' );
-    $subterm_app_description = trim(strip_tags(term_description($child, 'applications')));
+    $subterm = get_term_by('id', $child_id, 'applications' );
+    $subterm_app_description = trim(strip_tags(term_description($child_id, 'applications')));
+    // Ignore sub-children, only get direct children
+    if($subterm->parent == $term->term_id){
+      $term_children[$subterm->term_order] = $subterm;
+    }
+  }
+  ksort($term_children);
+  foreach($term_children as $subterm){
     // Build the card itself
     $card_output = '
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
-          <a href="'.get_term_link($child, 'applications').'">'.$subterm->name.'</a>
+          <a href="'.get_term_link($subterm->term_id, 'applications').'">'.$subterm->name.'</a>
         </h5>
         '.$subterm_app_description.'
       </div>
