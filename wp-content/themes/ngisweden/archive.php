@@ -104,13 +104,26 @@ get_header(); ?>
   }
   ksort($term_children);
   foreach($term_children as $subterm){
+    // Get the description
     $subterm_app_description = trim(strip_tags(term_description($subterm->term_id, 'applications')));
+    // Get the icon
+    $term_meta = get_option('application_page_'.$subterm->term_id);
+    $subterm_app_icon = '';
+    if(isset($term_meta['application_icon'])){
+      $a_icon_path = get_stylesheet_directory().'/'.$term_meta['application_icon'];
+      if(file_exists($a_icon_path) && is_file($a_icon_path)){
+        $subterm_app_icon = '<span class="application-icon">'.file_get_contents($a_icon_path).'</span>';
+      }
+    }
+
+
     // Build the card itself
     $card_output = '
     <div class="card">
       <div class="card-body">
         <h5 class="card-title">
           <a href="'.get_term_link($subterm->term_id, 'applications').'">'.$subterm->name.'</a>
+          '.$subterm_app_icon.'
         </h5>
         '.$subterm_app_description.'
       </div>

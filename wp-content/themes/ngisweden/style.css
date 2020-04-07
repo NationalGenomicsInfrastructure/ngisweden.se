@@ -382,7 +382,7 @@ footer {
 .ngisweden-method-tabs .ngisweden-method-tab a:active {
     background-color: #c8d3ea;
 }
-.ngisweden-method-tabs .ngisweden-method-tab a .application-icon {
+.application-icon {
     width: 4rem;
     height: 4rem;
     border-radius: 4rem;
@@ -395,7 +395,7 @@ footer {
     text-align: center;
     display: flex;
 }
-.ngisweden-method-tabs .ngisweden-method-tab a .application-icon svg {
+.application-icon svg {
     width: 40px;
     height: 40px;
     margin: auto;
@@ -478,6 +478,11 @@ footer {
 }
 .single-methods .method-status-icon svg {
     margin-top: -2px;
+}
+
+.ngisweden-application-methods.card-deck .application-icon {
+    float: right;
+    margin: -0.5rem -0.5rem 1rem 1rem;
 }
 
 /* Gutenberg Stackable CSS overrides */
