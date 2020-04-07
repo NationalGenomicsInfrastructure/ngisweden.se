@@ -54,7 +54,7 @@ code {
 blockquote, .blockquote {
     font-size: 1.2rem;
     font-weight: 100;
-    margin: 2rem 5rem 2rem 3rem;
+    margin: 2rem 2rem 2rem 1rem;
     border-left: 2px solid #dedede;
     padding-left: 2rem;
 }
