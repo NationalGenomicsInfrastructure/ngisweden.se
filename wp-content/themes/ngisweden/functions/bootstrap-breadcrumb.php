@@ -88,7 +88,7 @@ function bootstrap_breadcrumb() {
 
       // Get upstream tax
       if ( $term->parent != 0 ) {
-        $html .= custom_get_tax_parents( $term->parent, array(), $taxonomy->slug );
+        $html .= @custom_get_tax_parents( $term->parent, array(), $taxonomy->slug );
       }
 
       $html .= '<li class="breadcrumb-item active bc-tax">' . single_cat_title( '', false ) . '</li>';

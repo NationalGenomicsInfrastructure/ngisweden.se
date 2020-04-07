@@ -97,7 +97,6 @@ get_header(); ?>
   foreach ($term_children_ids as $child_id) {
     // Get the sub-term details
     $subterm = get_term_by('id', $child_id, 'applications' );
-    $subterm_app_description = trim(strip_tags(term_description($child_id, 'applications')));
     // Ignore sub-children, only get direct children
     if($subterm->parent == $term->term_id){
       $term_children[$subterm->term_order] = $subterm;
@@ -105,6 +104,7 @@ get_header(); ?>
   }
   ksort($term_children);
   foreach($term_children as $subterm){
+    $subterm_app_description = trim(strip_tags(term_description($subterm->term_id, 'applications')));
     // Build the card itself
     $card_output = '
     <div class="card">

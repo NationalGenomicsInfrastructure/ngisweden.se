@@ -45,10 +45,18 @@ add_action( 'init', 'create_method_tax_applications', 0 );
 
 // Add custom fields to the Applications taxonomy
 function applications_taxonomy_custom_fields($tag) {
-    $term_meta = get_option( "application_page_".$tag->term_id );
     $page_link = '<a class="button button-primary" disabled>Edit Page</a>';
-    if(isset($term_meta['application_page']) && $term_meta['application_page']){
-        $page_link = '<a href="'.get_edit_post_link($term_meta['application_page']).'" class="button button-primary">Edit Page</a>';
+    $application_page_selected = false;
+    $application_icon = '';
+    if(is_object($tag)){
+        $term_meta = get_option( "application_page_".$tag->term_id );
+        if(isset($term_meta['application_page']) && $term_meta['application_page']){
+            $page_link = '<a href="'.get_edit_post_link($term_meta['application_page']).'" class="button button-primary">Edit Page</a>';
+            $application_page_selected = $term_meta['application_page'];
+        }
+        if(isset($term_meta['application_icon']) && $term_meta['application_icon']){
+            $application_icon = $term_meta['application_icon'];
+        }
     }
     ?>
     <tr class="form-field">
@@ -57,7 +65,7 @@ function applications_taxonomy_custom_fields($tag) {
         </th>
         <td>
             <?php wp_dropdown_pages(array(
-                'selected' => $term_meta['application_page'],
+                'selected' => $application_page_selected,
                 'id' => 'application_page',
                 'name' => 'application_page',
                 'show_option_none'  => '[ choose a page ]',
@@ -75,7 +83,7 @@ function applications_taxonomy_custom_fields($tag) {
             <label for="application_icon"><?php _e('Application Icon'); ?></label>
         </th>
         <td>
-            <input type="text" name="application_icon" id="application_icon" size="25" style="width:60%;" value="<?php echo $term_meta['application_icon'] ? $term_meta['application_icon'] : ''; ?>"><br />
+            <input type="text" name="application_icon" id="application_icon" size="25" style="width:60%;" value="<?php echo $application_icon; ?>"><br />
             <p><?php _e('Find an icon and click + copy the text associated into the above box.'); ?>
             <a href="<?php echo get_template_directory_uri() ?>/includes/icons/index.php" target="_blank"><?php _e('Click here to find icon URLs'); ?></a></p>
         </td>
