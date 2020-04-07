@@ -7,7 +7,7 @@ function show_all_draft_pending( $query ) {
 
     // Don't do this if we're on the admin overview tables,
     // otherwise we can't filter by post status
-    if(is_admin() && get_current_screen()->base == 'edit'){
+    if(is_admin() && function_exists('get_current_screen') && get_current_screen()->base == 'edit'){
         return;
     }
 
@@ -102,6 +102,52 @@ function ngisweden_exclude_attachments_from_search_results() {
     global $wp_post_types;
     $wp_post_types['attachment']->exclude_from_search = true;
 }
+
+// Use a custom colour palette for Gutenberg colour picker
+function ngi_gutenberg_color_palette() {
+    add_theme_support('editor-color-palette', array(
+        array( 'color' => '#007bff', 'name'  => 'NGI Blue', 'slug' => 'ngi-blue' ),
+        array( 'color' => '#e7ecf7', 'name'  => 'Light Blue', 'slug' => 'light-blue' ),
+        array( 'color' => '#0056b3', 'name'  => 'Dark Blue', 'slug' => 'dark-blue' ),
+        array( 'color' => '#183c55', 'name'  => 'Darker Blue', 'slug' => 'darker-blue' ),
+        array( 'color' => '#495057', 'name'  => 'Dark Grey Blue', 'slug' => 'dark-grey-blue' ),
+        array( 'color' => '#6c757d', 'name'  => 'Grey', 'slug' => 'grey' ),
+
+        array( 'color' => '#E9F2D1', 'name'  => 'SciLifeLab Lime 25%', 'slug' => 'scilifelab-lime-25' ),
+        array( 'color' => '#D3E4A3', 'name'  => 'SciLifeLab Lime 50%', 'slug' => 'scilifelab-lime-50' ),
+        array( 'color' => '#BDD775', 'name'  => 'SciLifeLab Lime 75%', 'slug' => 'scilifelab-lime-75' ),
+        array( 'color' => '#a7c947', 'name'  => 'SciLifeLab Lime', 'slug' => 'scilifelab-lime' ),
+        array( 'color' => '#004085', 'name'  => 'Dark Bootstrap Blue', 'slug' => 'dark-bootstrap-blue' ),
+        array( 'color' => '#cce5ff', 'name'  => 'Light Bootstrap Blue', 'slug' => 'light-bootstrap-blue' ),
+
+        array( 'color' => '#C0D6D8', 'name'  => 'SciLifeLab Teal 25%', 'slug' => 'scilifelab-teal-25' ),
+        array( 'color' => '#82AEB2', 'name'  => 'SciLifeLab Teal 50%', 'slug' => 'scilifelab-teal-50' ),
+        array( 'color' => '#43858B', 'name'  => 'SciLifeLab Teal 75%', 'slug' => 'scilifelab-teal-75' ),
+        array( 'color' => '#045C64', 'name'  => 'SciLifeLab Teal', 'slug' => 'scilifelab-teal' ),
+        array( 'color' => '#155724', 'name'  => 'Dark Bootstrap Green', 'slug' => 'dark-bootstrap-green' ),
+        array( 'color' => '#d4edda', 'name'  => 'Light Bootstrap Green', 'slug' => 'light-bootstrap-green' ),
+
+        array( 'color' => '#D2E5E7', 'name'  => 'SciLifeLab Aqua 25%', 'slug' => 'scilifelab-aqua-25' ),
+        array( 'color' => '#A6CBCF', 'name'  => 'SciLifeLab Aqua 50%', 'slug' => 'scilifelab-aqua-50' ),
+        array( 'color' => '#79B1B7', 'name'  => 'SciLifeLab Aqua 75%', 'slug' => 'scilifelab-aqua-75' ),
+        array( 'color' => '#4c979f', 'name'  => 'SciLifeLab Aqua', 'slug' => 'scilifelab-aqua' ),
+        array( 'color' => '#721c24', 'name'  => 'Dark Bootstrap Red', 'slug' => 'dark-bootstrap-red' ),
+        array( 'color' => '#f8d7da', 'name'  => 'Light Bootstrap Red', 'slug' => 'light-bootstrap-red' ),
+
+        array( 'color' => '#D2C7D4', 'name'  => 'SciLifeLab Grape 25%', 'slug' => 'scilifelab-grape-25' ),
+        array( 'color' => '#A48FA9', 'name'  => 'SciLifeLab Grape 50%', 'slug' => 'scilifelab-grape-50' ),
+        array( 'color' => '#77577E', 'name'  => 'SciLifeLab Grape 75%', 'slug' => 'scilifelab-grape-75' ),
+        array( 'color' => '#491f53', 'name'  => 'SciLifeLab Grape', 'slug' => 'scilifelab-grape' ),
+        array( 'color' => '#856404', 'name'  => 'Dark Bootstrap Yellow', 'slug' => 'dark-bootstrap-yellow' ),
+        array( 'color' => '#fff3cd', 'name'  => 'Light Bootstrap Yellow', 'slug' => 'light-bootstrap-yellow' ),
+
+        array( 'color' => '#E5E5E5', 'name'  => 'SciLifeLab Light Grey', 'slug' => 'scilifelab-light-grey' ),
+        array( 'color' => '#A6A6A6', 'name'  => 'SciLifeLab Medium Grey', 'slug' => 'scilifelab-medium-grey' ),
+        array( 'color' => '#3F3F3F', 'name'  => 'SciLifeLab Dark Grey', 'slug' => 'scilifelab-dark-grey' ),
+
+    ));
+}
+add_action( 'after_setup_theme', 'ngi_gutenberg_color_palette' );
 
 // Enqueue a custom javascript file for extending gutenberg
 function ngi_guten_enqueue() {
