@@ -51,6 +51,19 @@ code {
     clear: both;
     text-align: center;
 }
+blockquote, .blockquote {
+    font-size: 1.2rem;
+    font-weight: 100;
+    margin: 2rem 5rem 2rem 3rem;
+    border-left: 2px solid #dedede;
+    padding-left: 2rem;
+}
+blockquote cite, .blockquote cite, blockquote .cite, .blockquote .cite {
+    font-style: italic;
+    font-size: 1rem;
+    font-weight: 100;
+    color: #999;
+}
 
 #wpadminbar {
     position: fixed;
