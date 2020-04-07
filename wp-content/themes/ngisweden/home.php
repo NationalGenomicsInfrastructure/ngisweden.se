@@ -67,7 +67,7 @@ if(is_category()){
             echo '<a href="'.$cat_url.'" class="list-group-item list-group-item-action '.$active.'">'.$cat->name.'</a>';
           }
           ?>
-          <a href="<?php echo get_permalink(get_page_by_path('events')); ?>" class="list-group-item list-group-item-action">Events</a>
+          <a href="<?php echo home_url( '/news/events/' ); ?>" class="list-group-item list-group-item-action">Events</a>
         </div>
 
         <h5 class="mt-3">News Archives</h5>
