@@ -281,8 +281,14 @@ footer {
     box-shadow: 0 .125rem .5rem rgba(0, 0, 0, 0.2);
 
 }
+.homepage_carousel_overlay.alert-box-shown {
+    top: 128px;
+}
 .admin-bar .homepage_carousel_overlay {
     top: 92px;
+}
+.admin-bar .homepage_carousel_overlay.alert-box-shown {
+    top: 174px;
 }
 .homepage_carousel_overlay .container .row {
     margin-top: 50px;

@@ -1,6 +1,12 @@
-<?php get_header(); ?>
+<?php
+$alert_box = false;
+if(get_theme_mod( 'ngisweden_banner_message_text' ) && strlen(trim(get_theme_mod( 'ngisweden_banner_message_text' ))) > 0) {
+  $alert_box = true;
+}
 
-<div class="homepage_carousel_overlay">
+get_header(); ?>
+
+<div class="homepage_carousel_overlay <?php echo $alert_box ? 'alert-box-shown' : ''; ?>">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-sm-6 py-3">
