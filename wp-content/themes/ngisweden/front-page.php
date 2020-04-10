@@ -4,21 +4,25 @@ if(get_theme_mod( 'ngisweden_banner_message_text' ) && strlen(trim(get_theme_mod
   $alert_box = true;
 }
 
-get_header(); ?>
+get_header();
+
+echo do_shortcode('[image-carousel]');
+
+?>
 
 <div class="homepage_carousel_overlay <?php echo $alert_box ? 'alert-box-shown' : ''; ?>">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-sm-6 py-3">
+      <div class="col-sm-3 py-3">
         <?php
         if (is_active_sidebar('homepage-header-left')){
           dynamic_sidebar( 'homepage-header-left');
         } else {
-          echo '<img src="'.get_stylesheet_directory_uri().'/img/NGI-logo-darkbg.png">';
+          echo '<img src="'.get_stylesheet_directory_uri().'/img/NGI-logo.png">';
         }
         ?>
       </div>
-      <div class="col-sm-6 py-3">
+      <div class="col-sm-9 py-3">
         <?php
         if (is_active_sidebar('homepage-header-right')){
           dynamic_sidebar( 'homepage-header-right');
@@ -34,8 +38,6 @@ get_header(); ?>
     </div>
   </div>
 </div>
-
-<?php echo do_shortcode('[image-carousel]'); ?>
 
 <div class="container main-page" id="front-page-container">
   <?php
