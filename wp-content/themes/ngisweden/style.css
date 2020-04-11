@@ -243,6 +243,9 @@ footer {
 .content-main ul li {
     margin-bottom: 0.5rem;
 }
+.content-main img {
+    max-width: 100%;
+}
 
 
 .ngisweden-sidebar-page-sidebar {
@@ -268,6 +271,9 @@ footer {
         padding-top: 0.5rem;
         padding-bottom: 1.5rem;
     }
+}
+.ngisweden-sidebar-page-sidebar img {
+    max-width: 100%;
 }
 
 
