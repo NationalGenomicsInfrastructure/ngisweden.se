@@ -510,6 +510,13 @@ footer {
     margin: -0.5rem -0.5rem 1rem 1rem;
 }
 
+.sidebar-links {
+    font-size: 0.95rem;
+}
+.sidebar-links ul {
+    padding-left: 2rem;
+}
+
 /* Gutenberg Stackable CSS overrides */
 /* Feature grid and Team Member cards - less padding */
 .ugb-feature-grid.ugb-feature-grid--v2:not(.ugb-feature-grid--design-plain) .ugb-feature-grid__item,
