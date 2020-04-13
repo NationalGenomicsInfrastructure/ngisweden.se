@@ -12,10 +12,13 @@ function bioinformatics_link_metabox_fields() {
         'post_type' => 'bioinformatics',
         'numberposts' => -1,
         'orderby' => 'post_title',
-        'order' => 'ASC'
+        'order' => 'ASC',
+        //////// DEBUG ONLY
+        ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
+        'post_status' => 'publish,pending,draft',
     ) );
     echo '<input type="hidden" name="bioinformatics_nonce" value="'.wp_create_nonce( basename( __FILE__ ) ).'" />';
-    echo '<div style="max-height: 200px; overflow-y: scroll;">';
+    echo '<div style="padding: 10px 0 0;">';
     foreach ( $all_bioinformatics as $bioinfo ){
         $selected = '';
         if(is_array($selected_bioinformatics) && in_array( $bioinfo->ID, $selected_bioinformatics )){
