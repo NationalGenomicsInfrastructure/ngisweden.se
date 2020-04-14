@@ -103,6 +103,16 @@ function ngisweden_exclude_attachments_from_search_results() {
     $wp_post_types['attachment']->exclude_from_search = true;
 }
 
+// Don't paginate archives for custom post types
+function ngi_cpt_archive_posts_per_page( WP_Query $wp_query ) {
+    if ($wp_query->is_main_query() && !is_admin()) {
+        if(is_tax('applications') || is_post_type_archive('methods') || is_post_type_archive('technologies') || is_post_type_archive('bioinformatics')){
+            $wp_query->set('posts_per_page', -1);
+        }
+    }
+}
+add_action('pre_get_posts', 'ngi_cpt_archive_posts_per_page');
+
 // Use a custom colour palette for Gutenberg colour picker
 function ngi_gutenberg_color_palette() {
     add_theme_support('editor-color-palette', array(
