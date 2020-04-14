@@ -174,6 +174,21 @@ function bootstrap_breadcrumb() {
       $html .= '<li class="breadcrumb-item active bc-method-technology-bioinfo">' . get_the_title() . '</li>';
     }
 
+    elseif ( is_singular( 'event' )) {
+      // Events parent
+      $page_slug = 'events';
+      $slug_page = get_page_by_path( $page_slug );
+      if($slug_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $slug_page ) ) . '">' . get_the_title( $slug_page ) . '</a></li>';
+      } else {
+        // Just fake it - TODO: Must be a better way
+        $html .= '<li class="breadcrumb-item"><a href="'.esc_url( get_bloginfo('url').'/'.$page_slug ).'">' . ucfirst($page_slug) . '</a></li>';
+      }
+
+      // Page
+      $html .= '<li class="breadcrumb-item active bc-event">' . get_the_title() . '</li>';
+    }
+
     elseif ( is_tag() ) {
       $html .= '<li class="breadcrumb-item active bc-tag">' . single_tag_title( '', false ) . '</li>';
     }
