@@ -49,7 +49,9 @@ function ngisweden_method_tabs($atts_raw){
 
       // Get the icon
       $curr_icon = get_post_meta($post->ID, '_ngi_post_icon', true);
-      $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
+      if(!file_exists($curr_icon) || !is_file($curr_icon)){
+        $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
+      }
       if(file_exists($curr_icon) && is_file($curr_icon)){
         $button['icon'] = $curr_icon;
       }
