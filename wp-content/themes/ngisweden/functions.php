@@ -46,8 +46,14 @@ function register_ngisweden_nav() {
 }
 add_action('init', 'register_ngisweden_nav');
 
-// Functions for nav breadcrumbs
-require_once('includes/bs4navwalker.php');
+// Nav menu custom walker
+// https://github.com/wp-bootstrap/wp-bootstrap-navwalker
+function ngi_register_navwalker(){
+    require_once get_template_directory().'/includes/class-wp-bootstrap-navwalker.php';
+}
+add_action('after_setup_theme', 'ngi_register_navwalker');
+
+// Nav breadcrumbs
 require_once('functions/bootstrap-breadcrumb.php');
 
 // Bootstrap pagination links

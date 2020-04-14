@@ -24,6 +24,7 @@
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <?php
+          // https://github.com/wp-bootstrap/wp-bootstrap-navwalker
           wp_nav_menu([
             'menu'            => 'main-nav',
             'theme_location'  => 'main-nav',
@@ -31,8 +32,8 @@
             'menu_id'         => false,
             'menu_class'      => 'navbar-nav',
             'depth'           => 2,
-            'fallback_cb'     => false,
-            'walker'          => new bs4navwalker()
+            'fallback_cb'     => 'WP_Bootstrap_Navwalker::fallback',
+            'walker'          => new WP_Bootstrap_Navwalker()
           ]);
           ?>
           <a class="btn btn-primary new-order-btn" id="menu-main-order-btn" href="https://ngisweden.scilifelab.se/">New Order</a>

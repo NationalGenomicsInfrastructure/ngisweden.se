@@ -78,6 +78,12 @@ nav.navbar {
     height: 48px;
     width: 150px;
 }
+.dropdown-header.h6 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    background-color: #f3f3f3;
+    margin-bottom: 0.2rem;
+}
 @media all and (min-width: 992px) {
     .admin-bar nav.fixed-top {
         top: 32px;
