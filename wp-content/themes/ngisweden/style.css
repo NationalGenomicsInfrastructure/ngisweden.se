@@ -119,6 +119,12 @@ nav.navbar {
         margin-bottom: 3px;
     }
 }
+@media all and (max-width: 992px) {
+    nav.navbar {
+        max-height: 100%;
+        overflow-y: auto;
+    }
+}
 
 
 #main_navbar .wpdreams_asl_container .probox {
