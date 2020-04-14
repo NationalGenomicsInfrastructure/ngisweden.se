@@ -1,7 +1,14 @@
 <?php
 
 function add_meta_boxes_methods_link_bioinfo() {
-    add_meta_box('methods_bioinfo_link_metabox', 'Bioinformatics Methods', 'bioinformatics_link_metabox_fields', 'methods', 'side', 'low');
+    add_meta_box(
+        'methods_bioinfo_link_metabox',
+        'Bioinformatics Methods',
+        'bioinformatics_link_metabox_fields',
+        'methods',
+        'side',
+        'low'
+    );
 }
 add_action( 'add_meta_boxes_methods', 'add_meta_boxes_methods_link_bioinfo' );
 

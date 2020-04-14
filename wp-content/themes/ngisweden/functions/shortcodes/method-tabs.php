@@ -48,16 +48,11 @@ function ngisweden_method_tabs($atts_raw){
       ];
 
       // Get the icon
-//      $post_type = get_post_type_object(get_post_type($post));
-//      get_post_meta($post->ID, '_technologies', true);
-//      $icon_meta_key = $atts['type'].'_icon';
-//      $term_meta = get_option( $post_type->labels->singular_name."_page_".$post->ID );
-//      if(isset($term_meta[$icon_meta_key])){
-//        $a_icon = get_stylesheet_directory().'/'.$term_meta[$icon_meta_key];
-//        if(file_exists($a_icon) && is_file($a_icon)){
-//          $button['icon'] = $a_icon;
-//        }
-//      }
+      $curr_icon = get_post_meta($post->ID, '_ngi_post_icon', true);
+      $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
+      if(file_exists($curr_icon) && is_file($curr_icon)){
+        $button['icon'] = $curr_icon;
+      }
 
       $buttons[] = $button;
 

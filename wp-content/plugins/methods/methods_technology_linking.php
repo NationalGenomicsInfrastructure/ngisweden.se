@@ -1,7 +1,14 @@
 <?php
 
 function add_meta_boxes_methods_link_tech() {
-    add_meta_box('methods_tech_link_metabox', 'Relevant Technologies', 'technologies_link_metabox_fields', 'methods', 'side', 'low');
+    add_meta_box(
+        'methods_tech_link_metabox',
+        'Relevant Technologies',
+        'technologies_link_metabox_fields',
+        'methods',
+        'side',
+        'low'
+    );
 }
 add_action( 'add_meta_boxes_methods', 'add_meta_boxes_methods_link_tech' );
 

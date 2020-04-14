@@ -26,3 +26,6 @@ require_once('taxonomies/keywords.php');
 // Link methods with technologies and bioinformatics
 require_once('methods_technology_linking.php');
 require_once('methods_bioinfo_linking.php');
+
+// Add field for custom icon
+require_once('custom_icons.php');

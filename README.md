@@ -213,7 +213,6 @@ To make the card centred on the page, add `centred=1`.
 
 To use a custom image for the icon, use `icon=url`
 
-
 For example:
 
 ```
@@ -348,23 +347,35 @@ Every method or bioinformatics page should be assigned to all of these taxonomie
 
 Applications have additional special fields: _Application Page_ and _Application Icon_.
 
-It's difficult to have rich formatted content for a taxonomy, so to get around this we just write a short description and then link to a _Page_. This should be nested under the page called _Applications_. I realise that this is kind of confusing, sorry.
+It's difficult to have rich formatted content for a taxonomy, so to get around this we just write a short description and then link to a _Page_.
+This should be nested under the page called _Applications_.
+I realise that this is kind of confusing, sorry.
 
-Note that any _Page_ added as a child of the one called _Applications_ will not be viewable on the website. This is because the _Method_ categories is called `applications`, so the URL clashes. This is kind of intended, as any pages there should be linked to from the relevant application taxonomy.
+Note that any _Page_ added as a child of the one called _Applications_ will not be viewable on the website.
+This is because the _Method_ categories is called `applications`, so the URL clashes.
+This is kind of intended, as any pages there should be linked to from the relevant application taxonomy.
 
-The _Application Icon_ allows you to customise the icon used on the homepage for the given application. NB: This is only used for top-level applications. To use this, click the link _Click here to find icon URLs_ next to the field to open a new page. This has tonnes of nice icons, along with a search bar. Find one that you like and click it to reveal some text that shoud look something like this:
+The _Application Icon_ allows you to customise the icon used for the given application.
+To use this, click the link _Click here to find icon URLs_ next to the field to open a new page.
+This has tonnes of nice icons, along with a search bar.
+Find one that you like and click it to reveal some text that should look something like this:
 
 ```
 includes/icons/fontawesome-svgs/regular/smile-wink.svg
 ```
 
-Copy this text in to the _Application Icon_ field and save. It should now be used on the homepage. If left blank or not found, the homepage will default to showing a little conical flask icon.
+Copy this text in to the _Application Icon_ field and save.
+It should now be used on the homepage / application listing.
+If left blank or not found, it will show a sensible default.
+
+Methods, Technologies and Bioinformatics posts can all also have custom icons.
+These are set in a similar way using the _Custom Icon_ box on the edit-post page,
+under the _Document_ sidebar.
 
 ### Statuses
 
 Statuses are used to show whether an application is high throughput and used in production or still in development.
 Again, there is a special field: _Status Colour_.
-
 
 # Developing the website code
 
