@@ -44,16 +44,20 @@ function ngisweden_method_tabs($atts_raw){
         'name' => $post->post_title,
         'description' => trim(strip_tags($post->post_excerpt)),
         'link' => get_post_permalink($post),
-        'icon' => get_stylesheet_directory().'/includes/icons/fontawesome-svgs/solid/'.$default_icon,
+        'icon' => file_get_contents(get_stylesheet_directory().'/includes/icons/fontawesome-svgs/solid/'.$default_icon),
       ];
 
       // Get the icon
       $curr_icon = get_post_meta($post->ID, '_ngi_post_icon', true);
-      if(!file_exists($curr_icon) || !is_file($curr_icon)){
-        $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
-      }
-      if(file_exists($curr_icon) && is_file($curr_icon)){
-        $button['icon'] = $curr_icon;
+      if(wp_http_validate_url($curr_icon)){
+        $button['icon'] = file_get_contents($curr_icon);
+      } else {
+        if(!file_exists($curr_icon) || !is_file($curr_icon)){
+          $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
+        }
+        if(file_exists($curr_icon) && is_file($curr_icon)){
+          $button['icon'] = file_get_contents($curr_icon);
+        }
       }
 
       $buttons[] = $button;
@@ -88,7 +92,7 @@ function ngisweden_method_tabs($atts_raw){
       if(isset($term_meta[$icon_meta_key])){
         $a_icon = get_stylesheet_directory().'/'.$term_meta[$icon_meta_key];
         if(file_exists($a_icon) && is_file($a_icon)){
-          $button['icon'] = $a_icon;
+          $button['icon'] = file_get_contents($a_icon);
         }
       }
 
@@ -105,7 +109,7 @@ function ngisweden_method_tabs($atts_raw){
     }
     $output .= '<div class="ngisweden-method-tab">
       <a href="'.$button['link'].'" class="app-link" '.$tooltip.'>
-        <span class="application-icon">'.file_get_contents($button['icon']).'</span>
+        <span class="application-icon">'.$button['icon'].'</span>
         '.$button['name'].'
       </a>
     </div>';
