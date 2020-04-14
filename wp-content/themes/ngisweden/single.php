@@ -32,6 +32,7 @@
         ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
+        <div class="sticky-top">
         <?php
         // Post info
         echo '<h5 class="mt-3">Details</h5>';
@@ -56,6 +57,7 @@
           }
         }
         ?>
+        </div>
       </div>
     </div>
   </div>

@@ -35,6 +35,7 @@ $EM_Event = em_get_event($post->ID, 'post_id');
         ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
+        <div class="sticky-top">
 
         <h5 class="mt-3">Location</h5>
         <p class="mb-0">
@@ -72,6 +73,7 @@ $EM_Event = em_get_event($post->ID, 'post_id');
           }
         }
         ?>
+        </div>
       </div>
     </div>
   </div>

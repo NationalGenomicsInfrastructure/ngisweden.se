@@ -272,6 +272,13 @@ footer {
         padding-bottom: 1.5rem;
     }
 }
+.ngisweden-sidebar-page-sidebar .sticky-top {
+    top: 80px;
+    margin-top: 3rem;
+}
+.admin-bar .ngisweden-sidebar-page-sidebar .sticky-top {
+    top: 110px;
+}
 .ngisweden-sidebar-page-sidebar img {
     max-width: 100%;
 }

@@ -50,7 +50,7 @@ if(is_category()){
         bootstrap_pagination(); ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
-
+        <div class="sticky-top">
         <h5 class="mt-3">Categories</h5>
         <div class="list-group">
           <?php
@@ -85,7 +85,7 @@ if(is_category()){
           }
           ?>
         </div>
-
+        </div>
       </div>
     </div>
   </div>

@@ -52,12 +52,13 @@
         ?>
       </div>
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
+        <div class="sticky-top">
         <?php
 
         // Application categories
         $method_applications = get_the_terms(null, 'applications');
         if ($method_applications && !is_wp_error($method_applications) && count($method_applications) > 0){
-          echo '<h5 class="mt-5">Applications</h5>';
+          echo '<h5>Applications</h5>';
           $app_ids = [];
           foreach($method_applications as $app){
             $app_ids[] = $app->term_id;
@@ -154,6 +155,7 @@
           }
         }
         ?>
+        </div>
       </div>
     </div>
   </div>
