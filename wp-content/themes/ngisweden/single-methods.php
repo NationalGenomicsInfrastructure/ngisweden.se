@@ -118,6 +118,7 @@
               }
               echo '</div>';
             }
+            wp_reset_query();
           }
         }
 
@@ -177,6 +178,7 @@
             }
             echo '</div>';
           }
+          wp_reset_query();
         }
         ?>
         </div>

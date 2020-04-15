@@ -286,7 +286,7 @@ footer {
 }
 .ngisweden-sidebar-page-sidebar .sticky-top {
     top: 80px;
-    margin-top: 3rem;
+    margin: 3rem 0;
 }
 .admin-bar .ngisweden-sidebar-page-sidebar .sticky-top {
     top: 110px;
