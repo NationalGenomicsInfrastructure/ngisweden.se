@@ -3,18 +3,6 @@
 // Register widget areas
 function ngisweden_widgets_init() {
     register_sidebar( array(
-        'name' => 'Homepage Header - Left',
-        'id' => 'homepage-header-left',
-        'before_widget' => '',
-        'after_widget' => '',
-    ) );
-    register_sidebar( array(
-        'name' => 'Homepage Header - Right',
-        'id' => 'homepage-header-right',
-        'before_widget' => '',
-        'after_widget' => '',
-    ) );
-    register_sidebar( array(
         'name' => 'Footer - Column 1',
         'id' => 'footer-widget-area-1',
         'before_widget' => '',
