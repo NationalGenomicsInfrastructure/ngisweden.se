@@ -16,6 +16,7 @@ function ngisweden_pubs_shortcode($atts_raw){
     // Shortcode attribute defaults
     $atts = shortcode_atts( array(
         'title' => 1,
+        'footer' => 1,
         'randomise' => 1,
         'num' => 5,
         'collabs' => 0,
@@ -195,7 +196,16 @@ function ngisweden_pubs_shortcode($atts_raw){
     }
     $pubs_div .= '<div class="list-group">';
     $pubs_div .= implode("\n", $pubs_items);
-    $pubs_div .= '</div></div>';
+    $pubs_div .= '</div>';
+    if($atts['footer']) {
+        $pubs_div .= '<p class="small text-muted mt-2">
+            See all publications at
+            <a href="https://publications.scilifelab.se/label/National%20Genomics%20Infrastructure" target="_blank" class="text-muted">
+                publications.scilifelab.se
+            </a>
+        </p>';
+    }
+    $pubs_div .= '</div>';
 
     // Return the list and modals output
     return $pubs_div.$modals;

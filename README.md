@@ -72,7 +72,7 @@ See [NGI Sweden Theme](#ngi-sweden-theme) for more detail.
 [mailchimp_subscribe form=1 btn_text="Sign Up" btn_colour="outline-danger"]
 
 [ngisweden_publications]
-[ngisweden_publications title=0 randomise=0 num=10 collabs=10]
+[ngisweden_publications title=0 footer=0 randomise=0 num=10 collabs=10]
 
 [homepage_applications]
 ```
@@ -280,6 +280,8 @@ Use the following shortcode:
 
 Arguments:
 * `title` - Show or hide the default _"User Publications"_ heading above the list
+    * `0` to disable, `1` to enable. Default: `1`
+* `footer` - Show or hide the default _"See all publications at publications.scilifelab.se"_ footer below the list
     * `0` to disable, `1` to enable. Default: `1`
 * `randomise` - Randomise the list, or show the most recent
     * `0` to leave sorted, `1` to randomise. Default: `1`
