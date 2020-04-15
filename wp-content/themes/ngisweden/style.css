@@ -319,11 +319,18 @@ footer {
     backdrop-filter: blur(8px);
     background-color: rgba(255,255,255,0.5);
     border-radius: 15px;
-    right: 50%;
     top: 50%;
     transform: translateY(-50%);
     bottom: auto;
     text-align: left;
+}
+@media all and (min-width: 992px) {
+    .home .carousel-caption {
+        right: 50%;
+    }
+    .home .carousel-caption h4 {
+        font-size: 2rem;
+    }
 }
 
 .homepage-applications-tabbtns.nav-pills li a.nav-link {
