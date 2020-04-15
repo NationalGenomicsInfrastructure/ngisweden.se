@@ -308,8 +308,10 @@ footer {
 .home .carousel-indicators li.active {
     opacity: 1;
 }
-.home .carousel-control-next, .home .carousel-control-prev {
-    opacity: 0.9;
+.home .carousel-control-next span, .home .carousel-control-prev span {
+    filter: invert(1);
+    width: 25px;
+    height: 25px;
 }
 .home .carousel-caption {
     padding: 20px;
