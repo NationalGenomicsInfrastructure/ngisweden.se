@@ -154,6 +154,30 @@
             echo '<a href="'.get_term_link($kw->slug, 'method_keywords').'" rel="tag" class="badge badge-secondary method-keyword '.$kw->slug.'">'.$kw->name.'</a> ';
           }
         }
+
+        // Methods for this bioinformatics post
+        if(get_post_type() == 'bioinformatics'){
+          $linked_method_posts_query = new WP_Query(array(
+            'posts_per_page'   => -1,
+            'post_type'        => 'methods',
+            'meta_key'         => '_bioinformatics',
+            'meta_value'       => get_the_ID(),
+            'meta_compare'     => 'LIKE'
+          ));
+          // echo '<pre>'.print_r($linked_method_posts_query, true).'</pre>';
+          if($linked_method_posts_query->have_posts()){
+            echo '<h5 class="mt-3">Compatible Methods</h5>';
+            echo '<div class="sidebar-links">';
+            while($linked_method_posts_query->have_posts()){
+              $linked_method_posts_query->the_post();
+              echo '<p class="mb-0"><a href="'.get_the_permalink().'">'.get_the_title().'</a></p>';
+              if($linked_method_posts_query->post_count < 4 && has_excerpt() && get_the_excerpt() and strlen(trim(get_the_excerpt()))){
+                echo '<p class="small text-muted">'.get_the_excerpt().'</p>';
+              }
+            }
+            echo '</div>';
+          }
+        }
         ?>
         </div>
       </div>
