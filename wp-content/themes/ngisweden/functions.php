@@ -180,9 +180,6 @@ require_once('functions/admin_ui.php');
 // Initialising widget areas, creating new widgets
 require_once('functions/widgets.php');
 
-// New options for the Appearance > Customise
-require_once('functions/theme_customiser.php');
-
 // Theme shortcodes
 require_once('functions/shortcodes/method-tabs.php');
 require_once('functions/shortcodes/ngi-ajaxsearch.php');

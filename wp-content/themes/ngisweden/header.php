@@ -65,11 +65,6 @@ Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrast
         bootstrap_breadcrumb();
     }
 
-    // Customise > Alert box
-    if(get_theme_mod( 'ngisweden_banner_message_text' ) && strlen(trim(get_theme_mod( 'ngisweden_banner_message_text' ))) > 0) {
-      $colour = get_theme_mod( 'ngisweden_banner_message_colour' );
-      echo '<div class="container mt-3"><div data-alert class="alert '.($colour ? $colour : 'alert-secondary').'">';
-      echo get_theme_mod( 'ngisweden_banner_message_text' );
-      echo '</div></div>';
-    }
+    // Customise > Bootstrap Banner
+    echo bootstrap_banner();
     ?>
