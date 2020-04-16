@@ -1,5 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+<!--
+
+         ,,,,,,,,,,,,,,((((((
+         ,,,,,,,,,,,,,((((((
+         ,,,,,,,,,,((((((((        ::::    :::   ::::::::   :::::::::::
+          ,,,,,,((((((((((         :+:+:   :+:  :+:    :+:      :+:
+           ,,((((((((((((          :+:+:+  +:+  +:+             +:+
+                                   +#+ +:+ +#+  :#:             +#+
+         //////////////,,          +#+  +#+#+#  +#+   +#+#      +#+
+       ((((((((((((((((,,          #+#   #+#+#  #+#    #+#      #+#
+     (((((((((((((((((,,,,         ###    ####   ########   ###########
+   (((((((((((((((((((,,,,,
+  (((((((((((((((((((,,,,,
+
+Welcome to the NGI Sweden website code!
+Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrastructure/ngisweden.se/
+
+-->
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
