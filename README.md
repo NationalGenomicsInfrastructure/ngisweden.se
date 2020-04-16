@@ -55,10 +55,12 @@ To add a banner, click _Customise_ in the admin header bar (Appearance > Customi
 
 ```html
 Warning - sample delivery closed for vacations!
-<a href="https://website.com/url-address">Click here</a> for more information.
+<a href="https://website.com/url-address" class="alert-link">Click here</a> for more information.
 ```
 
-Banner messages are shown on every page and are kind of annoying, so use sparingly.
+Banner messages are shown on every page and are deliberately very attention-grabbing, so use sparingly.
+
+The code that handles this has now been moved out into its own repository: https://github.com/ewels/bootstrap-banner
 
 ### Shortcodes
 
