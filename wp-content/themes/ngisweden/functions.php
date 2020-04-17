@@ -10,6 +10,11 @@ function show_all_draft_pending( $query ) {
     if(is_admin() && function_exists('get_current_screen') && get_current_screen()->base == 'edit'){
         return;
     }
+    // Don't do this on the Customizer as it breaks stuff
+    global $wp_customize;
+    if(isset($wp_customize)){
+        return;
+    }
 
     // Return all posts, even if draft or pending
     $query->set('post_status', 'publish,pending,draft,auto,future,private,inherit,trash');
