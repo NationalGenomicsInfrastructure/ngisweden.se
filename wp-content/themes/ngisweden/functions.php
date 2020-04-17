@@ -186,11 +186,11 @@ require_once('functions/admin_ui.php');
 require_once('functions/widgets.php');
 
 // Theme shortcodes
-require_once('functions/shortcodes/method-tabs.php');
-require_once('functions/shortcodes/ngi-ajaxsearch.php');
-require_once('functions/shortcodes/homepage.php');
-require_once('functions/shortcodes/publications.php');
-require_once('functions/shortcodes/github_repo.php');
-require_once('functions/shortcodes/mailchimp_signup.php');
-require_once('functions/shortcodes/site_map.php');
+require_once('functions/shortcodes/ngisweden_tabs.php');
+require_once('functions/shortcodes/ngisweden_search.php');
+require_once('functions/shortcodes/homepage_applications.php');
+require_once('functions/shortcodes/ngisweden_publications.php');
+require_once('functions/shortcodes/github_badge.php');
+require_once('functions/shortcodes/mailchimp_subscribe.php');
+require_once('functions/shortcodes/ngisweden_site_map.php');
 require_once('functions/shortcodes/show_file.php');
