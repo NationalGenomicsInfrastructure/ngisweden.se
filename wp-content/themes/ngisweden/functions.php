@@ -193,3 +193,4 @@ require_once('functions/shortcodes/publications.php');
 require_once('functions/shortcodes/github_repo.php');
 require_once('functions/shortcodes/mailchimp_signup.php');
 require_once('functions/shortcodes/site_map.php');
+require_once('functions/shortcodes/show_file.php');
