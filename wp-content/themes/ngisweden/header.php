@@ -66,7 +66,7 @@ Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrast
     }
 
     // Customise > Bootstrap Banner
-    if (function_exists('bootstrap_banner')){
-        echo bootstrap_banner();
+    if (function_exists('global_bootstrap_banner')){
+        echo global_bootstrap_banner();
     }
     ?>
