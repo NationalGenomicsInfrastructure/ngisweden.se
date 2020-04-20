@@ -6,7 +6,8 @@ function ngisweden_method_tabs($atts_raw){
 
   // Shortcode attribute defaults
   $atts = shortcode_atts( array(
-    'type' => 'applications'
+    'type' => 'applications',
+    'soft_link' => false
   ), $atts_raw);
 
   $output = '<div class="ngisweden-method-tabs tax-'.$atts['type'].'">';
@@ -83,6 +84,11 @@ function ngisweden_method_tabs($atts_raw){
         'link' => get_term_link($term->slug, $atts['type']),
         'icon' => get_stylesheet_directory().'/includes/icons/fontawesome-svgs/solid/flask.svg',
       ];
+
+      // Add a soft-link (eg. #bioinformatics) if supplied
+      if($atts['soft_link']){
+        $button['link'] .= '#'.$atts['soft_link'];
+      }
 
       // Get the icon
       $tax_labels = get_taxonomy_labels(get_taxonomy($atts['type']));

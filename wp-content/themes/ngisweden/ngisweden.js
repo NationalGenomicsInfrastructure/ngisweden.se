@@ -34,9 +34,6 @@ jQuery(function($) {
             $('#'+hash[1]).tab('show');
             url = location.href.replace(/\/#/, "#");
             history.replaceState(null, null, url);
-            setTimeout(() => {
-                $(window).scrollTop(0);
-            }, 400);
         }
     }
     $('a[data-toggle="pill"]').on("click", function() {

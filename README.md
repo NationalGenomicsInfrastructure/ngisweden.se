@@ -77,6 +77,12 @@ See [NGI Sweden Theme](#ngi-sweden-theme) for more detail.
 [ngisweden_publications title=0 footer=0 randomise=0 num=10 collabs=10]
 
 [homepage_applications]
+[ngisweden_tabs]
+[ngisweden_search]
+
+[ngisweden_site_map]
+
+[show_file]
 ```
 
 ### Applications pages
@@ -198,7 +204,7 @@ Note that it is also possible to add custom CSS through the admin interface in t
 
 In addition to just changing the way that WordPress builds web pages (the "front end"), the theme also creates a few new ways to add content:
 
-* Shortcodes - `[ngisweden_publications]`, `[github_badge]`, `[homepage_applications]`
+* Shortcodes - e.g. `[ngisweden_publications]`, `[github_badge]`, `[homepage_applications]`
 * Widgets - `NGI Footer Logos` and `NGI Footer Social Buttons`
 * Banner Messages in the Theme Customiser.
 
@@ -318,6 +324,44 @@ Use the following shortcode (there are currently no options):
 
 ```
 [homepage_applications]
+```
+
+This creates the buttons _Applications_, _Technologies_, _Bioinformatics_
+and then outputs the tabs using the `[ngisweden_tabs]` shortcode.
+
+### Application / Method tabs
+
+The blue tabs that link to applications and methods are generated using the `[ngisweden_tabs]` short code.
+This can accept two arguments: `type` and `soft_link`.
+
+The `type` argument defaults to `applications` but can take any taxonomy or post type, such as `bioinformatics` or `technologies`.
+
+The `soft_link` appends a `#soft_link` to all tab URLs (if a taxonomy such as `applications`), allowing the tabs to link directly to a specific content type.
+
+For example, to show all applications but link to the bioinformatics methods within, we can use:
+
+```
+[ngisweden_tabs type=applications soft_link=bioinformatics]
+```
+
+### Custom in-page search box
+
+The homepage displays a large dynamic search box that is styled in the same way as the application tabs. This is generated using the `[ngisweden_search]` shortcode. It does not have any options.
+
+### Site map
+
+Generating a website map for the NGI Sweden website is not super trivial, because we have custom post types and multiple linking (so some methods can appear in mulitple locations).
+Because of this, the website site map is generated using custom code that is used via the `[ngisweden_site_map]` short code. There are no options.
+
+### Show file
+
+Sometimes it is useful to be able to render a static file within a web page.
+Specifically, this short code was added to be able to render the NGI Stockholm dashboard HTML file inside a wordpress page.
+
+To use it, specify along with a file path for the file. For example:
+
+```
+[show_file file="/path/to/file.html"]
 ```
 
 ### WordPress Admin interface
