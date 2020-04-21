@@ -19,10 +19,7 @@ function bioinformatics_link_metabox_fields() {
         'post_type' => 'bioinformatics',
         'numberposts' => -1,
         'orderby' => 'post_title',
-        'order' => 'ASC',
-        //////// DEBUG ONLY
-        ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-        'post_status' => 'publish,pending,draft',
+        'order' => 'ASC'
     ) );
     echo '<input type="hidden" name="bioinformatics_nonce" value="'.wp_create_nonce( basename( __FILE__ ) ).'" />';
     echo '<div style="padding: 10px 0 0;">';

@@ -1,37 +1,6 @@
 <?php
 /* NGIsweden Theme Functions */
 
-//////// DEBUG ONLY
-///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-function show_all_draft_pending( $query ) {
-
-    // Don't do this if we're on the admin overview tables,
-    // otherwise we can't filter by post status
-    if(is_admin() && function_exists('get_current_screen') && get_current_screen()->base == 'edit'){
-        return;
-    }
-    // Don't do this on the Customizer as it breaks stuff
-    global $wp_customize;
-    if(isset($wp_customize)){
-        return;
-    }
-
-    // Return all posts, even if draft or pending
-    $query->set('post_status', 'publish,pending,draft,auto,future,private,inherit,trash');
-}
-add_action('pre_get_posts', 'show_all_draft_pending');
-
-// Make a new user role where people can edit anything but not publish
-function add_roles_on_plugin_activation() {
-    // Get editor capabilities and then edit these
-    $editor_caps = get_role( 'administrator' )->capabilities;
-    $editor_caps['publish_pages'] = false;
-    $editor_caps['publish_posts'] = false;
-    // Make the new role
-    add_role( 'editor_nopublish', 'NGI Editor', $editor_caps );
-}
-register_activation_hook(__FILE__, 'add_roles_on_plugin_activation' );
-
 // Enqueue Bootstrap JS and CSS files
 function ngis_wp_bootstrap_scripts_styles() {
     $ngisweden_theme = wp_get_theme();

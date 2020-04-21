@@ -29,10 +29,7 @@ function ngisweden_site_map_shortcode($atts_raw){
         'sort_column' => 'menu_order',
         'title_li' => null,
         'exclude_tree' => $exclude_ids,
-        'echo' => false,
-        //////// DEBUG ONLY
-        ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-        'post_status' => 'publish,pending,draft',
+        'echo' => false
     ));
     $html .= '</ul>';
 
@@ -43,10 +40,7 @@ function ngisweden_site_map_shortcode($atts_raw){
     $method_bioinfo_posts = get_posts(array(
         'post_type' => array('methods', 'bioinformatics'),
         'sort_column' => 'menu_order',
-        'posts_per_page' => -1,
-        // DEBUG - CHANGE WHEN SITE GOES LIVE
-        // 'post_status' => 'publish',
-        'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
+        'posts_per_page' => -1
     ));
     foreach($method_bioinfo_posts as $cpt_post){
         if(!array_key_exists($cpt_post->post_type, $term_singular_names)){
@@ -71,10 +65,7 @@ function ngisweden_site_map_shortcode($atts_raw){
         'sort_column' => 'menu_order',
         'title_li' => null,
         'exclude' => implode(',', $exclude_ids),
-        'echo' => false,
-        //////// DEBUG ONLY
-        ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-        'post_status' => 'publish,pending,draft',
+        'echo' => false
     ));
     $html .= '</ul>';
 

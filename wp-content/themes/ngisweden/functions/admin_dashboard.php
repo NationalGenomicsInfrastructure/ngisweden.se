@@ -14,8 +14,7 @@ $max_except_length = 300;
 // Check that we have some keywords
 $all_method_posts = get_posts(array(
   'post_type' => array('methods', 'bioinformatics'),
-  'posts_per_page' => -1,
-  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
+  'posts_per_page' => -1
 ));
 $methods_missing_application = [];
 $methods_missing_keywords = [];
@@ -57,10 +56,7 @@ $ngi_pages = get_pages(array(
     get_page_by_path('news')->ID,
   ],
   // Ignore pages with same basenames as CPTs
-  'exclude' => $ignore_pages,
-  //////// DEBUG ONLY
-  ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-  'post_status' => 'publish,pending,draft'
+  'exclude' => $ignore_pages
 ));
 $missing_pages = [];
 foreach($ngi_pages as $ngi_page){
@@ -75,8 +71,7 @@ foreach($ngi_pages as $ngi_page){
 $methods_missing_excerpt = [];
 $all_cpt_posts = get_posts(array(
   'post_type' => array('methods', 'bioinformatics', 'technologies'),
-  'posts_per_page' => -1,
-  'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
+  'posts_per_page' => -1
 ));
 $cpts_missing_excerpt = [];
 $cpts_excerpt_too_long = [];
@@ -146,7 +141,6 @@ endif; // if($tab == 'warnings'):
     $posts = get_posts(array(
       'author' => get_current_user_id(),
       'post_type' => array_keys($pcounts),
-      'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
       'posts_per_page' => -1
     ));
     foreach($posts as $post) {

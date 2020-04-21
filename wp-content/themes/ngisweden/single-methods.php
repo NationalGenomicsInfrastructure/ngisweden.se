@@ -88,9 +88,6 @@
               'post_type' => 'technologies',
               'include' => $linked_technologies_posts,
               'title_li' => '',
-              // DEBUG - CHANGE WHEN SITE GOES LIVE
-              // 'post_status' => 'publish',
-              'post_status' => array('publish', 'pending', 'draft', 'future', 'private', 'inherit'),
               'sort_column' => 'menu_order'
             ));
             echo '</ul>';

@@ -12,8 +12,7 @@
           ?>
         </div>
         <?php
-        //////// DEBUG ONLY
-        // Print which template file is being used
+        // Print which template file is being used if we're developing the theme
         if(is_super_admin() && defined('WP_DEBUG') && WP_DEBUG === true){
           global $template;
           echo('<p class="small text-muted">Template file being used: <code>'.$template.'</code></p>');

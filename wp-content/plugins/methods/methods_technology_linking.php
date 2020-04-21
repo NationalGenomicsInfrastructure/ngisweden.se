@@ -20,10 +20,7 @@ function technologies_link_metabox_fields() {
     $all_technologies = wp_list_pages(array(
         'post_type' => 'technologies',
         'title_li' => null,
-        'walker' => new NGIMethods_Hierarchical_Metabox_Checkboxes(),
-        //////// DEBUG ONLY
-        ///// REMOVE THIS WHEN THE SITE IS GOING LIVE
-        'post_status' => 'publish,pending,draft',
+        'walker' => new NGIMethods_Hierarchical_Metabox_Checkboxes()
     ));
 
     echo '</div>';
