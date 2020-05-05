@@ -6,6 +6,13 @@ if(get_post_type() == 'post'){
   exit;
 }
 
+// Events post type, redirect to the Events page
+if(get_post_type() == 'event'){
+  $slug_page = get_page_by_path('news/events');
+  wp_redirect( get_permalink( $slug_page ) );
+  exit;
+}
+
 // If we have a page that exactly matches the URL, display that instead
 $request_uri = trim($_SERVER['REQUEST_URI'], '/');
 // Only top-level URLs (categories can associate their own page)

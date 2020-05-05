@@ -176,7 +176,7 @@ function bootstrap_breadcrumb() {
 
     elseif ( is_singular( 'event' )) {
       // Events parent
-      $page_slug = 'events';
+      $page_slug = 'news/events';
       $slug_page = get_page_by_path( $page_slug );
       if($slug_page){
         $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $slug_page ) ) . '">' . get_the_title( $slug_page ) . '</a></li>';
