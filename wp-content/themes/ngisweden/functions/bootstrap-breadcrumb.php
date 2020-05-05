@@ -175,14 +175,16 @@ function bootstrap_breadcrumb() {
     }
 
     elseif ( is_singular( 'event' )) {
+      // News parent
+      $news_page = get_page_by_path( 'news' );
+      if($news_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $news_page ) ) . '">' . get_the_title( $news_page ) . '</a></li>';
+      }
+
       // Events parent
-      $page_slug = 'news/events';
-      $slug_page = get_page_by_path( $page_slug );
-      if($slug_page){
-        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $slug_page ) ) . '">' . get_the_title( $slug_page ) . '</a></li>';
-      } else {
-        // Just fake it - TODO: Must be a better way
-        $html .= '<li class="breadcrumb-item"><a href="'.esc_url( get_bloginfo('url').'/'.$page_slug ).'">' . ucfirst($page_slug) . '</a></li>';
+      $events_page = get_page_by_path( 'news/events' );
+      if($events_page){
+        $html .= '<li class="breadcrumb-item"><a href="' . esc_url( get_permalink( $events_page ) ) . '">' . get_the_title( $events_page ) . '</a></li>';
       }
 
       // Page
