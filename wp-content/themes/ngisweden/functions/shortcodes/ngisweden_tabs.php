@@ -53,7 +53,7 @@ function ngisweden_method_tabs($atts_raw){
       if(wp_http_validate_url($curr_icon)){
         // Convert a URL to a file path
         // Will fail for URLs that are not part of the site, but that's checked below
-        $button['icon'] = get_home_path() + wp_make_link_relative($curr_icon);
+        $curr_icon = ABSPATH . wp_make_link_relative($curr_icon);
       }
       if(!file_exists($curr_icon) || !is_file($curr_icon)){
         $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
