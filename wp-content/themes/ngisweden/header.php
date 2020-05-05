@@ -54,7 +54,7 @@ Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrast
             'walker'          => new WP_Bootstrap_Navwalker()
           ]);
           ?>
-          <a class="btn btn-primary new-order-btn" id="menu-main-order-btn" href="https://ngisweden.scilifelab.se/">New Order</a>
+          <a class="btn btn-primary new-order-btn" id="menu-main-order-btn" href="https://ngisweden.scilifelab.se/orders">New Order</a>
           <?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
         </div>
       </div>
