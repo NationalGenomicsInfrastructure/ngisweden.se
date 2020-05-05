@@ -51,14 +51,15 @@ function ngisweden_method_tabs($atts_raw){
       // Get the icon
       $curr_icon = get_post_meta($post->ID, '_ngi_post_icon', true);
       if(wp_http_validate_url($curr_icon)){
+        // Convert a URL to a file path
+        // Will fail for URLs that are not part of the site, but that's checked below
+        $button['icon'] = get_home_path() + wp_make_link_relative($curr_icon);
+      }
+      if(!file_exists($curr_icon) || !is_file($curr_icon)){
+        $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
+      }
+      if(file_exists($curr_icon) && is_file($curr_icon)){
         $button['icon'] = file_get_contents($curr_icon);
-      } else {
-        if(!file_exists($curr_icon) || !is_file($curr_icon)){
-          $curr_icon = get_stylesheet_directory().'/'.$curr_icon;
-        }
-        if(file_exists($curr_icon) && is_file($curr_icon)){
-          $button['icon'] = file_get_contents($curr_icon);
-        }
       }
 
       $buttons[] = $button;
