@@ -25,6 +25,9 @@ body.admin-bar {
         padding-top: 74px;
     }
 }
+.text-body {
+    color: #183c55 !important;
+}
 code {
     color: #5679ac;
     background-color: #f2f4f7;
@@ -331,6 +334,10 @@ footer {
     .home .carousel-caption h4 {
         font-size: 2rem;
     }
+}
+
+.wp-block-latest-posts__post-excerpt {
+    font-size: 13px;
 }
 
 .homepage-applications-tabbtns.nav-pills li a.nav-link {

@@ -79,6 +79,7 @@ See [NGI Sweden Theme](#ngi-sweden-theme) for more detail.
 [homepage_applications]
 [ngisweden_tabs]
 [ngisweden_search]
+[ngisweden_events_list]
 
 [ngisweden_site_map]
 
@@ -347,6 +348,26 @@ For example, to show all applications but link to the bioinformatics methods wit
 ### Custom in-page search box
 
 The homepage displays a large dynamic search box that is styled in the same way as the application tabs. This is generated using the `[ngisweden_search]` shortcode. It does not have any options.
+
+### Custom upcoming events list
+
+To allow hiding the list of upcoming events on the homepage if there are not enough
+_(1 event looks weird when full page-width)_, there is a custom shortcode that shows
+columns with upcoming events:
+
+```
+[ngisweden_events_list]
+```
+
+The arguments are as follows (default values shown):
+
+* `limit`: `3`
+* `min_events`: `2`
+* `block_title`: `'Upcoming Events'`
+* `block_title_link`: `false`
+
+If there are not at least `min_events` upcoming events, nothing will be shown.
+If `block_title` is set to an empty string, the title will be hidden.
 
 ### Site map
 
