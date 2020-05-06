@@ -18,6 +18,7 @@ function ngisweden_events_list($atts) {
     $em_settings = array(
       'limit' => $limit,
       'orderby' => 'event_start_date,event_start_time',
+      'order' => 'DESC',
       'format' => '
         <div class="col mb-5">
           <p class="mb-1">#_EVENTLINK</p>
