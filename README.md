@@ -2,10 +2,7 @@
 
 ![NGI Sweden](wp-content/themes/ngisweden/img/NGI-logo.png)
 
-### Wordpress theme and plugins for ngisweden.se
-
-> ### Current Status - April 2019
-> Under development, running at https://ngisweden-dev.scilifelab.se
+### Wordpress theme and plugins for ngisweden.scilifelab.se
 
 ## Table of Contents
 
@@ -38,9 +35,6 @@
     * [Installing the website](#installing-the-website)
     * [Required plugins](#required-plugins)
 * [Credits](#credits)
-
-
-
 
 # Quick Reference
 
@@ -98,7 +92,6 @@ See the [Applications section](##applications) below for more information.
 * The interface for adding and editing content recently updated. As such, you might find that older help articles on the web look wrong. See [terminology](#terminology) below for more.
 * The NGI Sweden main navigation menu only supports menu items two-deep. If you nest pages any deeper than that, they will be ignored.
 * I have removed / disabled a bunch of things in the admin interface to try to simplify the menus. So, Comments, the Theme chooser and various other bits and pieces that you may read about are gone. See [NGI Sweden theme](#ngi-sweden-theme) below for more info.
-
 
 # Content style guide
 
@@ -173,7 +166,6 @@ WordPress has a bunch of jargon that you'll need to be familiar with you find yo
 * Theme Customiser
     * Although Widgets and Manus have their own administration pages, they can also be edited through the _Theme Customiser_. This is a page where you can make changes and see a live preview of the site update as you do so.
     * A number of aspects of the site can only be edited within the Theme Customiser, so remeber to have a dig there if you're looking for something (eg. banner messages).
-
 
 ### Plugins and Themes
 
