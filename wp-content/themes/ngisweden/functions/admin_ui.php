@@ -29,7 +29,6 @@ function my_admin_bar_render() {
     $wp_admin_bar->remove_node('new-event-recurring');
     $wp_admin_bar->remove_node('new-cookielawinfo');
     $wp_admin_bar->remove_node('monsterinsights_frontend_button');
-    $wp_admin_bar->remove_node('updraft_admin_node');
     // Rename posts to news
     $new_post_node = $wp_admin_bar->get_node('new-post');
     $new_post_node->title = 'News';
@@ -42,6 +41,9 @@ function my_admin_bar_render() {
     $wp_admin_bar->add_node($new_event_node);
 }
 add_action( 'wp_before_admin_bar_render', 'my_admin_bar_render' );
+
+// Don't show the annoying Updraft admin bar thing.
+define('UPDRAFTPLUS_ADMINBAR_DISABLE', true);
 
 // Customise the order of pages in the admin list (move Media down)
 function ngisweden_admin_menu_media_down() {

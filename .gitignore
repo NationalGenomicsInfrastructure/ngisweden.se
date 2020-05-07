@@ -8,6 +8,7 @@ wp-content/themes/*
 wp-content/themes/ngisweden/cache/*
 !wp-content/themes/ngisweden/cache/README.md
 
+wp-content/updraft/
 ngisweden.sql
 *.log
 .DS_Store
