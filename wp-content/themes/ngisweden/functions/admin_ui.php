@@ -29,6 +29,7 @@ function my_admin_bar_render() {
     $wp_admin_bar->remove_node('new-event-recurring');
     $wp_admin_bar->remove_node('new-cookielawinfo');
     $wp_admin_bar->remove_node('monsterinsights_frontend_button');
+    $wp_admin_bar->remove_node('updraft_admin_node');
     // Rename posts to news
     $new_post_node = $wp_admin_bar->get_node('new-post');
     $new_post_node->title = 'News';
