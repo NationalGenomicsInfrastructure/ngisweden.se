@@ -212,9 +212,6 @@ footer {
     margin-top: 8rem;
     border-top: 1px solid #ededed;
 }
-.ngisweden-footer-logos {
-    text-align: right;
-}
 .footer-scilifelab-logo {
     max-width: 200px;
     margin-bottom: 15px;
@@ -453,7 +450,7 @@ footer {
 .ngisweden-method-tabs .ngisweden-method-tab a:active svg {
     fill: #ffffff;
 }
-@media all and (min-width: 600px) {
+@media all and (min-width: 768px) {
     .ngisweden-method-tabs .ngisweden-method-tab {
         width: 50%;
     }
@@ -468,6 +465,32 @@ footer {
         float: right;
         margin: -0.5rem;
         margin-left: 1.5rem;
+    }
+}
+@media all and (max-width: 992px) {
+    .homepage-applications-tabbtns.nav-pills li a.nav-link {
+        font-size: 0.8rem;
+        padding: 0.5rem;
+    }
+    .ngisweden-method-tabs .ngisweden-method-tab a,
+    .ngiswden-ajax-search.ngi-tabs .wpdreams_asl_container .probox {
+        padding: 0.5rem;
+        border-radius: 1rem;
+    }
+    .ngisweden-method-tabs .ngisweden-method-tab a,
+    .ngiswden-ajax-search.ngi-tabs .wpdreams_asl_container .probox form input {
+        font-size: 1rem;
+    }
+    .application-icon {
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        margin: 0.5rem !important;
+        margin-right: 1.5rem;
+    }
+    .application-icon svg {
+        width: 1rem;
+        height: 1rem;
     }
 }
 

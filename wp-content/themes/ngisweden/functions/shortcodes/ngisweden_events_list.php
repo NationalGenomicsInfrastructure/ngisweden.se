@@ -20,7 +20,7 @@ function ngisweden_events_list($atts) {
       'orderby' => 'event_start_date,event_start_time',
       'order' => 'ASC',
       'format' => '
-        <div class="col mb-5">
+        <div class="col-md mb-5">
           <p class="mb-1">#_EVENTLINK</p>
           <p class="small text-muted mb-1">#_EVENTDATES, #_EVENTTIMES</p>
           <p class="small">#_EVENTEXCERPT{10,...}</p>

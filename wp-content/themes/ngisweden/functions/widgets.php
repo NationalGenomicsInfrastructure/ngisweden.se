@@ -61,7 +61,7 @@ class FooterUniLogos extends WP_Widget {
         if ( ! empty( $instance['title'] ) ) {
             echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
         }
-        echo '<div class="ngisweden-footer-logos">
+        echo '<div class="ngisweden-footer-logos text-md-right">
             <a href="https://www.scilifelab.se" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/SciLifeLab-logo.svg" class="footer-scilifelab-logo" alt="SciLifeLab logo"></a>
             <br>
             <a href="https://www.ki.se" target="_blank"><img src="'.get_stylesheet_directory_uri().'/img/KI-logo.svg" class="footer-uni-logo" alt="KI logo"></a>
