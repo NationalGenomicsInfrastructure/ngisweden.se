@@ -220,6 +220,29 @@ For example:
 [github_badge repo=https://github.com/ewels/MultiQC icon=https://multiqc.info/logos/MultiQC_logo_square.png centred=1]
 ```
 
+If you want multiple repository cards side by side, and you want them all to have
+cards which are _exactly the same height_ - fear not!
+You can also give these attributes in the shortcode contents - just give the URLs to
+multiple repositories, separated by newlines:
+
+```
+[github_badge]
+https://github.com/ewels/MultiQC
+https://github.com/user/repo
+https://github.com/nf-core/sarek
+[\github]
+```
+
+You can also give attributes after the URL:
+
+```
+[github_badge]
+https://github.com/ewels/MultiQC icon=https://multiqc.info/logos/MultiQC_logo_square.png centred=1
+https://github.com/nf-core/sarek icon=https://ngisweden.scilifelab.se/wp-content/uploads/2019/04/Sarek_no_Border-1.png
+https://github.com/Molmed/checkQC icon=https://avatars0.githubusercontent.com/u/3587866?s=200&amp;v=4
+[/github_badge]
+```
+
 ### MailChimp mailing list subscribe form
 Insert a form for people to sign up to the mailing list.
 
