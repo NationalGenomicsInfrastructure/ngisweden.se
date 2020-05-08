@@ -110,11 +110,17 @@ function github_badge_shortcode($atts_raw, $content = null){
                     </div>
                 </div>
             </div>
-            <div class="card-footer small text-muted text-center px-0">
+            <div class="card-footer small text-center px-0">
                 <div class="row no-gutters">
-                    <div class="col"><i class="fas fa-eye"></i> '.$repo['watchers_count'].'</div>
-                    <div class="col"><i class="fas fa-star"></i> '.$repo['stargazers_count'].'</div>
-                    <div class="col"><i class="fas fa-code-branch"></i> '.$repo['forks_count'].'</div>
+                    <div class="col">
+                        <a class="text-muted" href="'.$repo['html_url'].'/watchers" target="_blank"><i class="fas fa-eye"></i> '.$repo['watchers_count'].'</a>
+                    </div>
+                    <div class="col">
+                        <a class="text-muted" href="'.$repo['html_url'].'/stargazers" target="_blank"><i class="fas fa-star"></i> '.$repo['stargazers_count'].'</a>
+                    </div>
+                    <div class="col">
+                        <a class="text-muted" href="'.$repo['html_url'].'/network/members" target="_blank"><i class="fas fa-code-branch"></i> '.$repo['forks_count'].'</a>
+                    </div>
                 </div>
             </div>
         </div>';
