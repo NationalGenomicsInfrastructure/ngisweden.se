@@ -37,12 +37,15 @@ $EM_Event = em_get_event($post->ID, 'post_id');
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
         <div class="sticky-top">
 
+        <?php if(strlen($EM_Event->output('#_LOCATIONNAME')) || strlen($EM_Event->output('#_LOCATIONFULLBR'))): ?>
         <h5>Location</h5>
         <p class="mb-0">
           <?php echo $EM_Event->output('#_LOCATIONNAME'); ?><br>
           <?php echo $EM_Event->output('#_LOCATIONFULLBR'); ?>
         </p>
         <?php
+        endif;
+
         echo $EM_Event->output('#_LOCATIONMAP');
         if($EM_Event->output('#_LOCATIONIMAGE')){
           // Do it like this so that CSS can control the max-width without forced heights
