@@ -506,6 +506,17 @@ footer {
 .ngisweden-publications .list-pub-collab {
     border-left: 2px solid #4986e7 !important;
 }
+.ngisweden-publications .list-pub-techdev {
+    background-color: #4986e711;
+}
+.ngisweden-publications-modal .modal-header {
+    border-bottom: 0;
+    padding-bottom: 0.5rem;
+}
+.ngisweden-publications-modal .modal-sub-header {
+    padding: 0 1rem 1rem;
+    border-bottom: 1px solid #dee2e6;
+}
 .pub-authors {
     max-height: 55px;
     overflow-y: scroll;

@@ -3,6 +3,8 @@
 // NGI Publications Shortcode
 // Fetches publications from publications.scilifelab.se and displays nicely
 function ngisweden_pubs_shortcode($atts_raw){
+    // Warning strings to print to the page as HTML comments
+    $warnings = array();
 
     // Facility labels
     $fac_labels = array(
@@ -20,7 +22,8 @@ function ngisweden_pubs_shortcode($atts_raw){
         'randomise' => 1,
         'num' => 5,
         'collabs' => 0,
-        'max_collabs' => -1
+        'max_collabs' => -1,
+        'tech_dev_is_collab' => 1
     ), $atts_raw);
 
     // Fetch the cached publications data
@@ -28,16 +31,28 @@ function ngisweden_pubs_shortcode($atts_raw){
     $pubs_data = @json_decode($pubs_json, true);
 
     // Refresh cache if it doesn't exist or is more than a week old
-    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7))){
-        $pubs_data = array(
+    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or @count($pubs_data['publications']) == 0){
+        $new_pubs_data = array(
             'downloaded' => time(),
             'publications' => array()
         );
         foreach($fac_labels as $fac){
             $pubs_url = 'https://publications.scilifelab.se/label/'.rawurlencode($fac).'.json?limit='.$download_limit;
             $pubs_json = file_get_contents($pubs_url);
-            $pubs_raw_data = json_decode($pubs_json, true);
-            $pubs_data['publications'] = array_merge($pubs_data['publications'], $pubs_raw_data['publications']);
+            if($pubs_json){
+                $pubs_raw_data = json_decode($pubs_json, true);
+                $new_pubs_data['publications'] = array_merge($new_pubs_data['publications'], $pubs_raw_data['publications']);
+            } else {
+                $warnings[] = 'Could not fetch URL: '.$pubs_url;
+                $warnings[] = print_r(error_get_last(), true);
+            }
+        }
+
+        // Only overwrite the cache if we successfully got some data
+        if(count($new_pubs_data['publications'])){
+            $pubs_data = $new_pubs_data;
+        } else {
+            $warnings[] = 'No publications found when fetching, using old cache';
         }
 
         // Clean up
@@ -59,8 +74,24 @@ function ngisweden_pubs_shortcode($atts_raw){
                     $pubs_data['publications'][$idx]['is_collab'] = true;
                 }
             }
+
+            // Check if this is Technology development
+            $pubs_data['publications'][$idx]['is_tech_dev'] = false;
+            foreach($fac_labels as $fac){
+                if(isset($pub['labels'][$fac]) && $pub['labels'][$fac] == 'Technology development'){
+                    $pubs_data['publications'][$idx]['is_tech_dev'] = true;
+                    if($atts['tech_dev_is_collab']){
+                        $pubs_data['publications'][$idx]['is_collab'] = true;
+                    }
+                }
+            }
         }
         @file_put_contents(get_template_directory().'/cache/publications_cache.json', json_encode($pubs_data));
+    }
+
+
+    if(@count($pubs_data['publications']) == 0){
+        return '<p class="text-muted"><em>Error: Publications could not be retrieved</em></p> <!-- '.implode("\n\n", $warnings).' -->';
     }
 
     // Randomise the order
@@ -101,10 +132,12 @@ function ngisweden_pubs_shortcode($atts_raw){
 
         // Add to the visible list
         $pubs_items[] = '
-        <a data-toggle="modal" data-target="#pub_'.$pub['iuid'].'" href="'.$pub['links']['display']['href'].'" target="_blank" class="list-group-item list-group-item-action'.($pub['is_collab'] ? ' list-pub-collab' : '').'">
+        <a data-toggle="modal" data-target="#pub_'.$pub['iuid'].'" href="'.$pub['links']['display']['href'].'" target="_blank" class="list-group-item list-group-item-action'.($pub['is_collab'] ? ' list-pub-collab' : '').($pub['is_tech_dev'] ? ' list-pub-techdev' : '').'">
             '.$pub['title'].'<br>
             <small class="text-muted"><em>'.$pub['journal']['title'].'</em> ('.explode('-', $pub['published'])[0].')</small>
         </a>';
+
+        // $pubs_items[] = '<pre>'.print_r($pub, true).'</pre>';
 
         //
         // Make publication modal
@@ -146,7 +179,12 @@ function ngisweden_pubs_shortcode($atts_raw){
         // NGI collaboration flag
         $collab_badge = '';
         if($pub['is_collab']){
-            $collab_badge = '<span class="float-right badge badge-primary">NGI Collaboration</span>';
+            $collab_badge = '<span class="float-right badge badge-primary" title="A publication where a facility member is in the authors list" data-toggle="tooltip">NGI Collaboration</span>';
+        }
+
+        // NGI Technology Development flag
+        if($pub['is_tech_dev']){
+            $collab_badge = '<span class="float-right badge badge-success" title="A publication with facility internal technology development" data-toggle="tooltip">NGI Technology development</span>';
         }
 
         // Only show modal body if we have an abstract
@@ -161,16 +199,16 @@ function ngisweden_pubs_shortcode($atts_raw){
             $footer_border = 'border-0';
         }
         $modals .= '
-        <div class="modal fade" id="pub_'.$pub['iuid'].'" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal ngisweden-publications-modal fade" id="pub_'.$pub['iuid'].'" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <div class="modal-title">
-                    <h5>'.$pub['title'].'</h5>
-                    <div class="font-weight-light pub-authors">'.implode(', ', $authors).'</div>
-                    <p class="mb-0">'.$collab_badge.$pub_ref.'</p>
-                </div>
+                <h5 class="modal-title">'.$pub['title'].'</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-sub-header">
+                <div class="font-weight-light pub-authors">'.implode(', ', $authors).'</div>
+                <p class="mt-2 mb-0">'.$collab_badge.$pub_ref.'</p>
               </div>
               '.$abstract.'
               <div class="modal-footer '.$footer_border.'">
@@ -184,7 +222,7 @@ function ngisweden_pubs_shortcode($atts_raw){
         </div>';
     }
 
-    // Randomise the order again, so that collabs aren't always at the bottom
+    // Randomise the order again, so that  aren't always at the bottom
     if($atts['randomise']) {
         shuffle($pubs_items);
     }
@@ -207,7 +245,13 @@ function ngisweden_pubs_shortcode($atts_raw){
     }
     $pubs_div .= '</div>';
 
+    // Warnings-string
+    $warnings_str = '';
+    if(count($warnings)){
+        $warnings_str = "<!-- Warnings:\n\n".implode("\n\n", $warnings).' -->';
+    }
+
     // Return the list and modals output
-    return $pubs_div.$modals;
+    return $pubs_div.$modals.$warnings_str;
 }
 add_shortcode('ngisweden_publications', 'ngisweden_pubs_shortcode');
