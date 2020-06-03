@@ -319,6 +319,8 @@ Arguments:
     * Any number. Default `-1`
     * If less than 0, no maximum limit will be applied
     * If set to 0 then list will not contain any collaborative publications
+* `tech_dev_is_collab` - Treat _Technology Development_ category as a collaboration
+    * `1` to treat as collab, `0` to treat as a regular publication. Default: `1`
 
 For example, to show a sorted list with the 10 latest collaboration papers and no _User Publications_ heading:
 
@@ -331,6 +333,12 @@ To show a random list of 20 non-collaborative papers:
 ```
 [ngisweden_publications num=20 collabs=0]
 ```
+
+Pulling new publications from [publications.scilifelab.se](publications.scilifelab.se) takes a few seconds
+and delays the page load. To speed things up, the website caches the publications results.
+
+By default, publications are cached on the NGI website for a week. To force a fresh pull
+add `?refresh` to the end of the web URL, eg: `https://ngisweden.scilifelab.se/resources/scientific-highlights/?refresh`
 
 ### Homepage application launcher
 

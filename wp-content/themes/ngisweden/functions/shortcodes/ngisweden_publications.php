@@ -31,7 +31,7 @@ function ngisweden_pubs_shortcode($atts_raw){
     $pubs_data = @json_decode($pubs_json, true);
 
     // Refresh cache if it doesn't exist or is more than a week old
-    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or @count($pubs_data['publications']) == 0){
+    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or @count($pubs_data['publications']) == 0 or isset($_GET['refresh'])){
         $new_pubs_data = array(
             'downloaded' => time(),
             'publications' => array()
