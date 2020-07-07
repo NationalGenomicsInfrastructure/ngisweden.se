@@ -590,3 +590,72 @@ footer {
     vertical-align: top;
     margin: 0.8rem;
 }
+
+/* Custom Gutenberg colour palette */
+.has-ngi-blue-color { color: #007bff; }
+.has-light-blue-color { color: #e7ecf7; }
+.has-dark-blue-color { color: #0056b3; }
+.has-darker-blue-color { color: #183c55; }
+.has-dark-grey-blue-color { color: #495057; }
+.has-grey-color { color: #6c757d; }
+.has-scilifelab-lime-25-color { color: #E9F2D1; }
+.has-scilifelab-lime-50-color { color: #D3E4A3; }
+.has-scilifelab-lime-75-color { color: #BDD775; }
+.has-scilifelab-lime-color { color: #a7c947; }
+.has-dark-bootstrap-blue-color { color: #004085; }
+.has-light-bootstrap-blue-color { color: #cce5ff; }
+.has-scilifelab-teal-25-color { color: #C0D6D8; }
+.has-scilifelab-teal-50-color { color: #82AEB2; }
+.has-scilifelab-teal-75-color { color: #43858B; }
+.has-scilifelab-teal-color { color: #045C64; }
+.has-dark-bootstrap-green-color { color: #155724; }
+.has-light-bootstrap-green-color { color: #d4edda; }
+.has-scilifelab-aqua-25-color { color: #D2E5E7; }
+.has-scilifelab-aqua-50-color { color: #A6CBCF; }
+.has-scilifelab-aqua-75-color { color: #79B1B7; }
+.has-scilifelab-aqua-color { color: #4c979f; }
+.has-dark-bootstrap-red-color { color: #721c24; }
+.has-light-bootstrap-red-color { color: #f8d7da; }
+.has-scilifelab-grape-25-color { color: #D2C7D4; }
+.has-scilifelab-grape-50-color { color: #A48FA9; }
+.has-scilifelab-grape-75-color { color: #77577E; }
+.has-scilifelab-grape-color { color: #491f53; }
+.has-dark-bootstrap-yellow-color { color: #856404; }
+.has-light-bootstrap-yellow-color { color: #fff3cd; }
+.has-scilifelab-light-grey-color { color: #E5E5E5; }
+.has-scilifelab-medium-grey-color { color: #A6A6A6; }
+.has-scilifelab-dark-grey-color { color: #3F3F3F; }
+
+.has-ngi-blue-background-color { background-color: #007bff; }
+.has-light-blue-background-color { background-color: #e7ecf7; }
+.has-dark-blue-background-color { background-color: #0056b3; }
+.has-darker-blue-background-color { background-color: #183c55; }
+.has-dark-grey-blue-background-color { background-color: #495057; }
+.has-grey-background-color { background-color: #6c757d; }
+.has-scilifelab-lime-25-background-color { background-color: #E9F2D1; }
+.has-scilifelab-lime-50-background-color { background-color: #D3E4A3; }
+.has-scilifelab-lime-75-background-color { background-color: #BDD775; }
+.has-scilifelab-lime-background-color { background-color: #a7c947; }
+.has-dark-bootstrap-blue-background-color { background-color: #004085; }
+.has-light-bootstrap-blue-background-color { background-color: #cce5ff; }
+.has-scilifelab-teal-25-background-color { background-color: #C0D6D8; }
+.has-scilifelab-teal-50-background-color { background-color: #82AEB2; }
+.has-scilifelab-teal-75-background-color { background-color: #43858B; }
+.has-scilifelab-teal-background-color { background-color: #045C64; }
+.has-dark-bootstrap-green-background-color { background-color: #155724; }
+.has-light-bootstrap-green-background-color { background-color: #d4edda; }
+.has-scilifelab-aqua-25-background-color { background-color: #D2E5E7; }
+.has-scilifelab-aqua-50-background-color { background-color: #A6CBCF; }
+.has-scilifelab-aqua-75-background-color { background-color: #79B1B7; }
+.has-scilifelab-aqua-background-color { background-color: #4c979f; }
+.has-dark-bootstrap-red-background-color { background-color: #721c24; }
+.has-light-bootstrap-red-background-color { background-color: #f8d7da; }
+.has-scilifelab-grape-25-background-color { background-color: #D2C7D4; }
+.has-scilifelab-grape-50-background-color { background-color: #A48FA9; }
+.has-scilifelab-grape-75-background-color { background-color: #77577E; }
+.has-scilifelab-grape-background-color { background-color: #491f53; }
+.has-dark-bootstrap-yellow-background-color { background-color: #856404; }
+.has-light-bootstrap-yellow-background-color { background-color: #fff3cd; }
+.has-scilifelab-light-grey-background-color { background-color: #E5E5E5; }
+.has-scilifelab-medium-grey-background-color { background-color: #A6A6A6; }
+.has-scilifelab-dark-grey-background-color { background-color: #3F3F3F; }
