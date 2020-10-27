@@ -56,6 +56,7 @@ $EM_Event = em_get_event($post->ID, 'post_id');
         <h5 class="mt-4">Date / Time</h5>
         <p class="mb-0"><?php echo $EM_Event->output('#_EVENTDATES'); ?></p>
         <p class="mb-0"><?php echo $EM_Event->output('#_EVENTTIMES'); ?></p>
+        <p class="mb-0"><?php echo $EM_Event->output('#_EVENTWEBCALLINK'); ?> / <?php echo $EM_Event->output('#_EVENTICALLINK'); ?></p>
 
         <?php
 
