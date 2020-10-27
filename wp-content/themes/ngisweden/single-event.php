@@ -62,7 +62,7 @@ $EM_Event = em_get_event($post->ID, 'post_id');
           </a>
         </p>
         <p class="mb-0">
-          <a href="<?php echo $EM_Event->output('#_EVENTICALLINK'); ?>" class="btn btn-sm btn-outline-primary">
+          <a href="<?php echo $EM_Event->output('#_EVENTICALURL'); ?>" class="btn btn-sm btn-outline-primary">
             <i class="fas fa-file-download mr-1"></i> Download calendar invite
           </a>
         </p>
