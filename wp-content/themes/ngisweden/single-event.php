@@ -55,8 +55,17 @@ $EM_Event = em_get_event($post->ID, 'post_id');
 
         <h5 class="mt-4">Date / Time</h5>
         <p class="mb-0"><?php echo $EM_Event->output('#_EVENTDATES'); ?></p>
-        <p class="mb-0"><?php echo $EM_Event->output('#_EVENTTIMES'); ?></p>
-        <p class="mb-0"><?php echo $EM_Event->output('#_EVENTWEBCALLINK'); ?> / <?php echo $EM_Event->output('#_EVENTICALLINK'); ?></p>
+        <p class="mb-1"><?php echo $EM_Event->output('#_EVENTTIMES'); ?></p>
+        <p class="mb-1">
+          <a href="<?php echo $EM_Event->output('#_EVENTWEBCALURL'); ?>" class="btn btn-sm btn-outline-primary">
+            <i class="fas fa-calendar-plus mr-1"></i> Add to calendar
+          </a>
+        </p>
+        <p class="mb-0">
+          <a href="<?php echo $EM_Event->output('#_EVENTICALLINK'); ?>" class="btn btn-sm btn-outline-primary">
+            <i class="fas fa-file-download mr-1"></i> Download calendar invite
+          </a>
+        </p>
 
         <?php
 
