@@ -70,7 +70,6 @@ get_header(); ?>
   // Overwrite with the title and contents from the linked WP Page, if we have one
   if(isset($term_meta['application_page']) && $term_meta['application_page']){
     $app_page = get_post($term_meta['application_page']);
-    $page_title = $app_page->post_title;
     $page_contents = $app_page->post_content;
   }
 
