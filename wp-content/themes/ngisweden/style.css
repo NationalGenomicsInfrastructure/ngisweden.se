@@ -256,8 +256,9 @@ footer {
 .content-main ul li {
     margin-bottom: 0.5rem;
 }
-.content-main img {
+.main-page img, .content-main img {
     max-width: 100%;
+    width: auto;
     height: auto;
 }
 
