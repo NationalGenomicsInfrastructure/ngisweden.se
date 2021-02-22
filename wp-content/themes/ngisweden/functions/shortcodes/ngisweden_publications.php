@@ -11,7 +11,8 @@ function ngisweden_pubs_shortcode($atts_raw){
         'NGI Stockholm (Genomics Applications)',
         'NGI Stockholm (Genomics Production)',
         'NGI Uppsala (SNP&SEQ Technology Platform)',
-        'NGI Uppsala (Uppsala Genome Center)'
+        'NGI Uppsala (Uppsala Genome Center)',
+        'National Genomics Infrastructure'
     );
     $download_limit = 50;
 
@@ -248,7 +249,9 @@ function ngisweden_pubs_shortcode($atts_raw){
     // Warnings-string
     $warnings_str = '';
     if(count($warnings)){
-        $warnings_str = "<!-- Warnings:\n\n".implode("\n\n", $warnings).' -->';
+        $warnings_str = "<!-- NGI Sweden Publications Warnings:\n\n".implode("\n\n", $warnings).' -->';
+    } else {
+        $warnings_str = "<!-- NGI Sweden Publications Warnings: No warnings -->";
     }
 
     // Return the list and modals output
