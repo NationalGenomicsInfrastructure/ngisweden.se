@@ -99,6 +99,13 @@ function ngisweden_pubs_shortcode($atts_raw){
     if($atts['randomise']) {
         shuffle($pubs_data['publications']);
     }
+    // Sort by publication date
+    else {
+        function sort_pubdate($a, $b){
+            return strtotime($b['published']) - strtotime($b['published']);
+        }
+        uasort($pubs_data['publications'], 'sort_pubdate');
+    }
 
     // Build output
     $modals = '';
