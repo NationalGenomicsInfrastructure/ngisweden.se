@@ -101,10 +101,10 @@ function ngisweden_pubs_shortcode($atts_raw){
     }
     // Sort by publication date
     else {
-        function sort_pubdate($a, $b){
+        $sort_pubdate_func = function ($a, $b){
             return strtotime($b['published']) - strtotime($b['published']);
-        }
-        uasort($pubs_data['publications'], 'sort_pubdate');
+        };
+        uasort($pubs_data['publications'], $sort_pubdate_func);
     }
 
     // Build output
