@@ -87,6 +87,13 @@ function ngisweden_pubs_shortcode($atts_raw){
                 }
             }
         }
+
+        // Sort by publication date
+        $sort_pubdate_func = function ($a, $b){
+            return strtotime($b['published']) - strtotime($a['published']);
+        };
+        usort($pubs_data['publications'], $sort_pubdate_func);
+
         @file_put_contents(get_template_directory().'/cache/publications_cache.json', json_encode($pubs_data));
     }
 
@@ -98,13 +105,6 @@ function ngisweden_pubs_shortcode($atts_raw){
     // Randomise the order
     if($atts['randomise']) {
         shuffle($pubs_data['publications']);
-    }
-    // Sort by publication date
-    else {
-        $sort_pubdate_func = function ($a, $b){
-            return strtotime($b['published']) - strtotime($b['published']);
-        };
-        uasort($pubs_data['publications'], $sort_pubdate_func);
     }
 
     // Build output
@@ -230,7 +230,7 @@ function ngisweden_pubs_shortcode($atts_raw){
         </div>';
     }
 
-    // Randomise the order again, so that  aren't always at the bottom
+    // Randomise the order again, so that collabs aren't always at the bottom
     if($atts['randomise']) {
         shuffle($pubs_items);
     }
