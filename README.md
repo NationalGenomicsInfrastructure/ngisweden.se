@@ -402,6 +402,53 @@ If `block_title` is set to an empty string, the title will be hidden.
 Generating a website map for the NGI Sweden website is not super trivial, because we have custom post types and multiple linking (so some methods can appear in mulitple locations).
 Because of this, the website site map is generated using custom code that is used via the `[ngisweden_site_map]` short code. There are no options.
 
+### Deployed software versions
+
+To show users which versions of tools / pipelines that we are currently using in production, you can use the `[ngisweden_deployed_tools_versions]` shortcode in a page.
+
+This looks for a file called `wp-content/themes/ngisweden/cache/deployed_tools.version` which should be automatically synced from the production cluster at the end of each deployment. This shortcode parses that file and generates more readable HTML.
+
+At the time of writing, this file is defined in the ansible deployment scripts [here](https://github.com/NationalGenomicsInfrastructure/irma-provision/blob/32429494846039d2b3db1118c9787b2a9a2e3e70/host_vars/127.0.0.1/main.yml#L63-L64).
+
+An example of this file follows:
+
+<details>
+
+```
+- production (default) --
+Anaconda: conda 4.1.6
+NGI Pipeline: d1f206f2e28c6af498c711ff8b8d4a479d98440d
+Nextflow: 20.11.0-edge
+Kong: 0.12.3
+Luarocks: 2.4.3
+Cassandra: 2.2.5
+Openresty: 1.11.2.5
+Serf: 0.7.0
+TACA: 41377c8fc4fed3baa400022a4735714a785a2698
+taca-ngi-pipeline: 79d6f1b38dd5808b0ab4a3e7a732c989e5cc7ec1
+StatusDB: f21b4124e512aa50babe665f9839fcbc7205bc26
+flowcell_parser: 4ec4331bf6f968bb4a83b00c9c111d87823049de
+NGI_py3, ngi_reports: 7d796861f3ebbf352f2073fcfa0129730dec83c6
+NGI_py3, ngi_visualizations: bf1892faf5ebe16ad0979cfc83f9c72b90e2a5a0
+NGI_py3, MultiQC: v1.11
+NGI_py3, MultiQC_NGI: 0.6.5
+arteria-checksum: v1.0.4
+arteria-delivery: v2.4.1
+ugc-delivery: bd7f23d453368ec389725dfa09199c2f0c95b882
+snpseq-archive-upload: v1.0.4
+methylseq: 1.6.1
+ampliseq: 1.2.0
+atacseq: 1.2.1
+viralrecon: 1.1.0
+rnafusion: 1.2.0
+nanoseq: 1.1.0
+rnaseq: 3.0
+sarek: 2.7
+-- Deployed at 2021-10-26T07:36:54Z by irma_provision (94671ba435a0dfccca8e537ccaee2140f955f993) --
+```
+
+</details>
+
 ### Show file
 
 Sometimes it is useful to be able to render a static file within a web page.
