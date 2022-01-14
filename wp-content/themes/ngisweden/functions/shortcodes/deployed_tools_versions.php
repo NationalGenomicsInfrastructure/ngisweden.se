@@ -21,7 +21,9 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
         }
         else {
             list($tool, $version) = explode(':', $line, 2);
-            $tools[] = [trim($tool), trim($version)];
+            if(strlen($tool) > 0){
+                $tools[] = [trim($tool), trim($version)];
+            }
         }
     }
 
@@ -41,7 +43,7 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
     }
     else {
         $output = '<div class="deployed-tools-versions">';
-        $output .= '<h3>No tools deployed</h3>';
+        $output .= '<p class="text-muted font-italic">No version information found.</p>';
         $output .= '</div>';
     }
 
