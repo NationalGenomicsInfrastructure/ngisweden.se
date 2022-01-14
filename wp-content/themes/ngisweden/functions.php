@@ -164,3 +164,4 @@ require_once('functions/shortcodes/mailchimp_subscribe.php');
 require_once('functions/shortcodes/ngisweden_site_map.php');
 require_once('functions/shortcodes/show_file.php');
 require_once('functions/shortcodes/ngisweden_events_list.php');
+require_once('functions/shortcodes/deployed_tools_versions.php');
