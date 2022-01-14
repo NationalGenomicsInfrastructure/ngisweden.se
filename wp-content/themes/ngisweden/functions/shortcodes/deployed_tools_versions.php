@@ -13,10 +13,10 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
     $tools = [];
 
     foreach(preg_split("/\r\n|\n|\r/", $deployed_file_contents) as $line){
-        if(str_starts_with($line, '-- Deployed at')){
+        if(substr($string_n, 0, 14) == '-- Deployed at'){
             $deployed_at = trim(str_replace('--', '', $line));
         }
-        else if(str_starts_with($line, '--')){
+        else if(substr($string_n, 0, 2) == '--'){
             $deployment_type = trim(str_replace('--', '', $line));
         }
         else {

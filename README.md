@@ -77,6 +77,8 @@ See [NGI Sweden Theme](#ngi-sweden-theme) for more detail.
 
 [ngisweden_site_map]
 
+[ngisweden_deployed_tools_versions]
+
 [show_file]
 ```
 
