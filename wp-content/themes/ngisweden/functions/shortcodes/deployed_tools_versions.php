@@ -13,10 +13,10 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
     $tools = [];
 
     foreach(preg_split("/\r\n|\n|\r/", $deployed_file_contents) as $line){
-        if(substr($string_n, 0, 14) == '-- Deployed at'){
+        if(substr($line, 0, 14) == '-- Deployed at'){
             $deployed_at = trim(str_replace('--', '', $line));
         }
-        else if(substr($string_n, 0, 2) == '--'){
+        else if(substr($line, 0, 2) == '--'){
             $deployment_type = trim(str_replace('--', '', $line));
         }
         else {
@@ -29,16 +29,16 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
 
     if(count($tools) > 0){
         $output = '<div class="deployed-tools-versions">';
-        $output .= '<h3>'.$deployment_type.'</h3>';
-        $output .= '<p>'.$deployed_at.'</p>';
-        $output .= '<table class="table table-striped">';
+        $output .= '<table class="table table-striped table-hover table-sm small">';
         $output .= '<thead><tr><th>Tool</th><th>Version</th></tr></thead>';
         $output .= '<tbody>';
         foreach($tools as $tool){
-            $output .= '<tr><td>'.$tool[0].'</td><td>'.$tool[1].'</td></tr>';
+            $output .= '<tr><td>'.$tool[0].'</td><td><code>'.$tool[1].'</code></td></tr>';
         }
         $output .= '</tbody>';
         $output .= '</table>';
+        $output .= '<p>Deployment type: '.$deployment_type.'</p>';
+        $output .= '<p>'.$deployed_at.'</p>';
         $output .= '</div>';
     }
     else {
