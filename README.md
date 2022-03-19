@@ -546,6 +546,7 @@ These steps only have to be done the first time you want to get up and running w
 7. Got to the [plugin import page](http://localhost:8000/wp-admin/admin.php?page=ai1wm_import) and drop your exported archive.
   - It takes a really long time, grab a coffee and be patient ;)
 8. You will be booted out of the admin interface once the import finishes. You'll now need to log in with the same username and password that you use on the production site.
+9. Go to _Settings_ > _Permalinks_. Don't do anything there, just visit the page. It seems that this is needed to make the URLs work.
 
 Ok that's it - initial setup should be done and you're good to go.
 
