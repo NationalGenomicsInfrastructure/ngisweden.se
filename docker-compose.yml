@@ -10,24 +10,26 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_DATABASE: ${NGI_WP_DB_NAME}
-      MYSQL_USER: ${NGI_WP_DB_USER}
-      MYSQL_PASSWORD: ${NGI_WP_DB_PASSWORD}
+      MYSQL_USER: ${NGI_WP_DB_USER:-wordpress}
+      MYSQL_PASSWORD: ${NGI_WP_DB_PASSWORD:-wordpress}
+      MYSQL_DATABASE: ${NGI_WP_DB_NAME:-wordpress}
 
   ngi_wordpress:
     depends_on:
-      - db
+      - ngi_db
     image: wordpress:latest
     volumes:
-      - .:/var/www/html
+      - ./wp-content/:/var/www/html/wp-content/
     ports:
       - "8000:80"
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db
-      WORDPRESS_DB_USER: ${NGI_WP_DB_USER}
-      WORDPRESS_DB_PASSWORD: ${NGI_WP_DB_PASSWORD}
-      WORDPRESS_DB_NAME: ${NGI_WP_DB_NAME}
+      WORDPRESS_DB_HOST: ngi_db
+      WORDPRESS_DB_USER: ${NGI_WP_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${NGI_WP_DB_PASSWORD:-wordpress}
+      WORDPRESS_DB_NAME: ${NGI_WP_DB_NAME:-wordpress}
+      WORDPRESS_TABLE_PREFIX: ${NGI_WP_TABLE_PREFIX:-wp_}
+      WORDPRESS_DEBUG: true
 volumes:
   db_data: {}
   wordpress_data: {}
