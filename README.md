@@ -539,31 +539,19 @@ These steps only have to be done the first time you want to get up and running w
 1. [Install Docker](https://www.docker.com/products/docker-desktop/) if you don't already have it.
 2. Clone your fork of the repository locally and `cd` into that folder.
 3. Log in to https://ngisweden.scilifelab.se and go to the [_"All-in-One WP Migration"_ plugin page](https://ngisweden.scilifelab.se/wp-admin/admin.php?page=ai1wm_export). Download an archive of all content (~4GB at time of writing).
-4. Download the [Traktor tool](https://traktor.wp-migration.com/), extract the `ngisweden.scilifelab.se-xxx.wpress` archive into the repository root folder. It should make a new folder called `ngisweden`.
-5. Run the following commands to move the extracted files to the correct location (the `-n` prevents stuff being overwritten):
-   - ```bash
-     mv -n ngisweden/* wp-content/
-     mv -n ngisweden/plugins/* wp-content/plugins/
-     rm -r ngisweden
-     ```
+4. Run `docker compose up`, wait for the log messages to slow down and visit <https://localhost.8000> in your web browser.
+5. Go through the WordPress install and log into the admin interface
+6. Go to _Plugins_ > _Add new_ and search for, install and activate _"All-in-One WP Migration"_.
+7. Got to the [plugin import page](http://localhost:8000/wp-admin/admin.php?page=ai1wm_import) and drop your exported archive.
+  - It takes a while, grab a coffee and be patient ;)
 
 Ok that's it - initial setup should be done and you're good to go.
 
 ### Starting the website locally
 
-Once you've done the initial setup steps above once, you can do these steps each time you want to develop locally:
+Once you've done the initial setup steps above once, you only need to do these steps each time you want to develop locally:
 
 1. Make sure you have the latest version of the website code (`git pull` etc, remember the upstream fork).
-2. Assuming that you're running with a copy of the NGI website as described above, set the following environment variables: `NGI_WP_DB_NAME`, `NGI_WP_DB_USER`, `NGI_WP_DB_PASSWORD`. These should mirror the production website as that's where our database is coming from.
-  - These credentials are stored with the rest of our passwords at the NGI.
-  - You can put these into your `~/.bash_profile` file so that they're always present.
-  - Typical commands to set:
-    ```bash
-    # Local NGI Wordpress development
-    export NGI_WP_DB_NAME=xxx
-    export NGI_WP_DB_USER=xxx
-    export NGI_WP_DB_PASSWORD=xxx
-    ```
 2. With Docker running, `cd` to the cloned repository and run the command `docker compose up`
 3. You should get loads of log messages spat out - when it slows down, try going to <https://localhost.8000> in your web browser.
 
@@ -574,8 +562,7 @@ That's it! You should now have a working local copy of the NGI website which you
 Once you're done, you'll want to stop the local webserver.
 
 1. Hit `cmd+c` in the terminal window to stop the server.
-2. Run `docker compose down` to tear down the containers.
-   - You can add the `--volumes` flag to also remove the storage volumes if you'd like.
+2. Run `docker compose down` to tear down the docker containers.
 
 ## Deployment updates into production
 

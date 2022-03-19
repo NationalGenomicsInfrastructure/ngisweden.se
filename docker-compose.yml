@@ -5,14 +5,12 @@ services:
     image: mysql:5.7
     volumes:
       - db_data:/var/lib/mysql
-      # This line mounts a local MySQL dump into the initdb so that it is loaded on run
-      - ./wp-content/database.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
-      MYSQL_USER: ${NGI_WP_DB_USER:-wordpress}
-      MYSQL_PASSWORD: ${NGI_WP_DB_PASSWORD:-wordpress}
-      MYSQL_DATABASE: ${NGI_WP_DB_NAME:-wordpress}
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
   ngi_wordpress:
     depends_on:
@@ -20,15 +18,15 @@ services:
     image: wordpress:latest
     volumes:
       - ./wp-content/:/var/www/html/wp-content/
+      - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - "8000:80"
     restart: always
     environment:
       WORDPRESS_DB_HOST: ngi_db
-      WORDPRESS_DB_USER: ${NGI_WP_DB_USER:-wordpress}
-      WORDPRESS_DB_PASSWORD: ${NGI_WP_DB_PASSWORD:-wordpress}
-      WORDPRESS_DB_NAME: ${NGI_WP_DB_NAME:-wordpress}
-      WORDPRESS_TABLE_PREFIX: ${NGI_WP_TABLE_PREFIX:-wp_}
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: true
 volumes:
   db_data: {}

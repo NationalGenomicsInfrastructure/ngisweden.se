@@ -3,6 +3,7 @@
 ngisweden
 wp-content/database.sql
 wp-content/package.json
+wp-content/ai1wm-backups
 
 # Ignore all plugins except the ones we wrote
 wp-content/plugins/*
