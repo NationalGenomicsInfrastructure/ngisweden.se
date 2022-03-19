@@ -1,3 +1,6 @@
+# All-in-One Migration backups that are used for development
+*.wpress
+
 # Ignore all plugins except the ones we wrote
 wp-content/plugins/*
 !wp-content/plugins/methods/

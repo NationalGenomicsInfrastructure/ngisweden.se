@@ -6,35 +6,35 @@
 
 ## Table of Contents
 
-* [Quick Reference](#quick-reference)
-  * [Banner Messages](#banner-messages)
-  * [Shortcodes](#shortcodes)
-  * [Applications pages](#applications-pages)
-  * [Minor things](#minor-things)
-* [Content style guide](#content-style-guide)
-* [How the website works](#how-the-website-works)
-  * [Introduction](#introduction)
-    * [WordPress](#wordpress)
-    * [Terminology](#terminology)
-    * [Plugins and Themes](#plugins-and-themes)
-  * [_NGI Sweden_ theme](#ngi-sweden-theme)
-    * [Template files](#template-files)
-    * [CSS Styles](#css-styles)
-    * [Bonus functionality](#bonus-functionality)
-    * [GitHub Repo Badge](#github-repo-badge)
-    * [Publication list](#publication-list)
-    * [Homepage application launcher](#homepage-application-launcher)
-    * [WordPress Admin interface](#wordpress-admin-interface)
-  * [_NGI Custom Content_ plugin](#ngi-custom-content-plugin)
-    * [Post types](#post-types)
-    * [Taxonomies](#taxonomies)
-    * [Applications](#applications)
-    * [Statuses](#statuses)
-* [Developing the website code](#developing-the-website-code)
-  * [Testing locally](#testing-locally)
-  * [Installing the website](#installing-the-website)
-  * [Required plugins](#required-plugins)
-* [Credits](#credits)
+- [Quick Reference](#quick-reference)
+  - [Banner Messages](#banner-messages)
+  - [Shortcodes](#shortcodes)
+  - [Applications pages](#applications-pages)
+  - [Minor things](#minor-things)
+- [Content style guide](#content-style-guide)
+- [How the website works](#how-the-website-works)
+  - [Introduction](#introduction)
+    - [WordPress](#wordpress)
+    - [Terminology](#terminology)
+    - [Plugins and Themes](#plugins-and-themes)
+  - [_NGI Sweden_ theme](#ngi-sweden-theme)
+    - [Template files](#template-files)
+    - [CSS Styles](#css-styles)
+    - [Bonus functionality](#bonus-functionality)
+    - [GitHub Repo Badge](#github-repo-badge)
+    - [Publication list](#publication-list)
+    - [Homepage application launcher](#homepage-application-launcher)
+    - [WordPress Admin interface](#wordpress-admin-interface)
+  - [_NGI Custom Content_ plugin](#ngi-custom-content-plugin)
+    - [Post types](#post-types)
+    - [Taxonomies](#taxonomies)
+    - [Applications](#applications)
+    - [Statuses](#statuses)
+- [Developing the website code](#developing-the-website-code)
+  - [Testing locally](#testing-locally)
+  - [Installing the website](#installing-the-website)
+  - [Required plugins](#required-plugins)
+- [Credits](#credits)
 
 # Quick Reference
 
@@ -49,7 +49,8 @@ To add a banner, click _Customise_ in the admin header bar (Appearance > Customi
 
 ```html
 Warning - sample delivery closed for vacations!
-<a href="https://website.com/url-address" class="alert-link">Click here</a> for more information.
+<a href="https://website.com/url-address" class="alert-link">Click here</a> for
+more information.
 ```
 
 Banner messages are shown on every page and are deliberately very attention-grabbing, so use sparingly.
@@ -91,9 +92,9 @@ See the [Applications section](##applications) below for more information.
 
 ### Minor things
 
-* The interface for adding and editing content recently updated. As such, you might find that older help articles on the web look wrong. See [terminology](#terminology) below for more.
-* The NGI Sweden main navigation menu only supports menu items two-deep. If you nest pages any deeper than that, they will be ignored.
-* I have removed / disabled a bunch of things in the admin interface to try to simplify the menus. So, Comments, the Theme chooser and various other bits and pieces that you may read about are gone. See [NGI Sweden theme](#ngi-sweden-theme) below for more info.
+- The interface for adding and editing content recently updated. As such, you might find that older help articles on the web look wrong. See [terminology](#terminology) below for more.
+- The NGI Sweden main navigation menu only supports menu items two-deep. If you nest pages any deeper than that, they will be ignored.
+- I have removed / disabled a bunch of things in the admin interface to try to simplify the menus. So, Comments, the Theme chooser and various other bits and pieces that you may read about are gone. See [NGI Sweden theme](#ngi-sweden-theme) below for more info.
 
 # Content style guide
 
@@ -112,8 +113,8 @@ WordPress began life as a blogging platform way back in 2003, but has since deve
 
 This huge popularity means:
 
-* There are vast quantities of plugins and help available.
-* There are vast numbers of hackers targetting WordPress installations :(
+- There are vast quantities of plugins and help available.
+- There are vast numbers of hackers targetting WordPress installations :(
 
 Note the second point - if the site is running for several years, there's a significant risk that it will be hacked at some point.
 **Make regular backups**.
@@ -121,8 +122,8 @@ By far the easiest way to handle being hacked is to just wipe everything and go 
 
 To avoid confusion, WordPress actually comes in two flavours - `.com` and `.org`:
 
-* <https://wordpress.com/> has hosted blog sites for anyone to create.
-* <https://wordpress.org/> is free software that can be downloaded to run on your own web server.
+- <https://wordpress.com/> has hosted blog sites for anyone to create.
+- <https://wordpress.org/> is free software that can be downloaded to run on your own web server.
 
 We are using the second one, so we host on our own server at NGI Stockholm.
 WordPress is built in PHP and runs using a MySQL database. You may hear this referred to as a "LAMP stack" - Linux, Apache, MySQL & PHP.
@@ -133,41 +134,41 @@ Generally, WordPress.org has excellent documentation. If in doubt, head there fo
 
 WordPress has a bunch of jargon that you'll need to be familiar with you find your way around the administration pages of a WordPress site. Here's a brief starter:
 
-* Post
-  * The core building-block of most of WordPress, a _Post_ strictly speaking refers to a blog post. On the NGI Sweden I have renamed _Posts_ to _News_ to make this more intuitive. Behind the scenes, most units of content are in WordPress lingo various flavours of posts.
-* Page
-  * Website pages. Technically, a flavour of _Post_ (see above). Yeah, just a web page really. Not much more to say. Works like you'd expect.
-* Custom Post Type
-  * Plugins and themes can make their own flavour of post for specific content types. These are called _Custom Post Types_.
-* Slug
-  * Each Post and Page has a _Slug_. This is the unique, easy-to-parse name for that Page. It's typically used for the page URL. So if the _Slug_ is `awesome-page`, the URL will be <https://website.com/awesome-page>. If that page is the child of a page with the _Slug_ `iamyourfather`, the URL will be <https://website.com/iamyourfather/awesome-page>
-  * Slugs are auto-generated from Page titles. They must be unique, so if you make two News items called _New Item_, the slugs will be `new-item` and `new-item-2` (I think, or something like this).
-  * **You can edit slugs**, but it's not super obvious at first how! Select the main title when editing a Page or Post and you'll see a little box with the URL appear above it. Click on this and it is editable.
-  * It's fine to have long titles if you want, but it's nice to have short slugs so that the URL is not ridiculous.
-* Permalinks
-  * The URLs used for pages. How these are formed can be customised under Settings. Typically it should be set to `/%postname%` - that is, just use the _slug_ (see above).
-* Taxonomy
-  * General term for WordPress post categories and keywords of all types.
-* Editor
-  * Where you add and edit content for a Page / Post.
-  * NB: This changed very recently, in WordPress v5.0. It's now called the _Gutenberg Editor_  - before becoming part of core WordPress, it was available as a plugin by the same name. Some plugins and pages still use the old editor, which is referred to as the _Classic Editor_.
-  * Bear in mind that older stuff you read on the web will look different and not work in the same way because of this change.
-* Block
-  * In the Gutenberg Editor, content is split up in to _Blocks_. Each block has a certain type - it could be a heading, text, an image or many other things. Some blocks can contain other blocks, for example Columns.
-  * Check out the _Settings_ on the right hand side of the editing screen as you click around different block types. The settings available vary between blocks.
-* Shortcode
-  * To add more complex or dynamic output, WordPress can use _Shortcodes_ in page content. These are like a flag for plugins to insert special content. To use a shortcode, create a shortcode block.
-  * Shortcodes are always surrounded by square brackets: `[shortcode]`. They can have _attributes_ to tweak their behaviour. These are separated by an equals sign: `[shortcode key=value]`
-* Widget
-  * Widgets are a bit like shortcodes, but instead can be placed in specific slots defined by the theme. This is in contrast to shortcodes which are placed in the middle of page content. Again, there are many different types of widgets - many are customisable and plugins often use them.
-* Menus
-  * WordPress menus are created using a drag-and-drop interface on it's own page.
-  * **New pages are not automatically added to menus** - you have to add it yourself. Find it in the boxes on the left and then drag it to the right place.
-  * Menu items can be nested arbitrarily, but the NGI Sweden theme only shows the top two levels. Any items deeper that that will be ignored.
-  * Most content types can be added to menus, including custom URLs.
-* Theme Customiser
-  * Although Widgets and Manus have their own administration pages, they can also be edited through the _Theme Customiser_. This is a page where you can make changes and see a live preview of the site update as you do so.
-  * A number of aspects of the site can only be edited within the Theme Customiser, so remeber to have a dig there if you're looking for something (eg. banner messages).
+- Post
+  - The core building-block of most of WordPress, a _Post_ strictly speaking refers to a blog post. On the NGI Sweden I have renamed _Posts_ to _News_ to make this more intuitive. Behind the scenes, most units of content are in WordPress lingo various flavours of posts.
+- Page
+  - Website pages. Technically, a flavour of _Post_ (see above). Yeah, just a web page really. Not much more to say. Works like you'd expect.
+- Custom Post Type
+  - Plugins and themes can make their own flavour of post for specific content types. These are called _Custom Post Types_.
+- Slug
+  - Each Post and Page has a _Slug_. This is the unique, easy-to-parse name for that Page. It's typically used for the page URL. So if the _Slug_ is `awesome-page`, the URL will be <https://website.com/awesome-page>. If that page is the child of a page with the _Slug_ `iamyourfather`, the URL will be <https://website.com/iamyourfather/awesome-page>
+  - Slugs are auto-generated from Page titles. They must be unique, so if you make two News items called _New Item_, the slugs will be `new-item` and `new-item-2` (I think, or something like this).
+  - **You can edit slugs**, but it's not super obvious at first how! Select the main title when editing a Page or Post and you'll see a little box with the URL appear above it. Click on this and it is editable.
+  - It's fine to have long titles if you want, but it's nice to have short slugs so that the URL is not ridiculous.
+- Permalinks
+  - The URLs used for pages. How these are formed can be customised under Settings. Typically it should be set to `/%postname%` - that is, just use the _slug_ (see above).
+- Taxonomy
+  - General term for WordPress post categories and keywords of all types.
+- Editor
+  - Where you add and edit content for a Page / Post.
+  - NB: This changed very recently, in WordPress v5.0. It's now called the _Gutenberg Editor_ - before becoming part of core WordPress, it was available as a plugin by the same name. Some plugins and pages still use the old editor, which is referred to as the _Classic Editor_.
+  - Bear in mind that older stuff you read on the web will look different and not work in the same way because of this change.
+- Block
+  - In the Gutenberg Editor, content is split up in to _Blocks_. Each block has a certain type - it could be a heading, text, an image or many other things. Some blocks can contain other blocks, for example Columns.
+  - Check out the _Settings_ on the right hand side of the editing screen as you click around different block types. The settings available vary between blocks.
+- Shortcode
+  - To add more complex or dynamic output, WordPress can use _Shortcodes_ in page content. These are like a flag for plugins to insert special content. To use a shortcode, create a shortcode block.
+  - Shortcodes are always surrounded by square brackets: `[shortcode]`. They can have _attributes_ to tweak their behaviour. These are separated by an equals sign: `[shortcode key=value]`
+- Widget
+  - Widgets are a bit like shortcodes, but instead can be placed in specific slots defined by the theme. This is in contrast to shortcodes which are placed in the middle of page content. Again, there are many different types of widgets - many are customisable and plugins often use them.
+- Menus
+  - WordPress menus are created using a drag-and-drop interface on it's own page.
+  - **New pages are not automatically added to menus** - you have to add it yourself. Find it in the boxes on the left and then drag it to the right place.
+  - Menu items can be nested arbitrarily, but the NGI Sweden theme only shows the top two levels. Any items deeper that that will be ignored.
+  - Most content types can be added to menus, including custom URLs.
+- Theme Customiser
+  - Although Widgets and Manus have their own administration pages, they can also be edited through the _Theme Customiser_. This is a page where you can make changes and see a live preview of the site update as you do so.
+  - A number of aspects of the site can only be edited within the Theme Customiser, so remeber to have a dig there if you're looking for something (eg. banner messages).
 
 ### Plugins and Themes
 
@@ -199,9 +200,9 @@ Note that it is also possible to add custom CSS through the admin interface in t
 
 In addition to just changing the way that WordPress builds web pages (the "front end"), the theme also creates a few new ways to add content:
 
-* Shortcodes - e.g. `[ngisweden_publications]`, `[github_badge]`, `[homepage_applications]`
-* Widgets - `NGI Footer Logos` and `NGI Footer Social Buttons`
-* Banner Messages in the Theme Customiser.
+- Shortcodes - e.g. `[ngisweden_publications]`, `[github_badge]`, `[homepage_applications]`
+- Widgets - `NGI Footer Logos` and `NGI Footer Social Buttons`
+- Banner Messages in the Theme Customiser.
 
 ### GitHub Repo Badge
 
@@ -270,33 +271,33 @@ Customise the button text and colour with `btn_text`, `btn_colour`,
 [mailchimp_subscribe form=1 btn_text="Sign Up" btn_colour="outline-danger" btn_size="small" icon=0]
 ```
 
-* `icon`: Flag to show or hides the envelope icon.
-  * On by default. Set to `0` to disable.
-* `btn_size` can be `small` or `large`. Medium by default.
-* `btn_text` changes the text in the main button.
-* `btn_colour` changes the colour of the main button
-  * Button colours take the Bootstrap button classes, without the `btn-` prefix.
-  * See [the Bootstrap documentation](https://getbootstrap.com/docs/4.3/components/buttons/#examples) for further reference.
+- `icon`: Flag to show or hides the envelope icon.
+  - On by default. Set to `0` to disable.
+- `btn_size` can be `small` or `large`. Medium by default.
+- `btn_text` changes the text in the main button.
+- `btn_colour` changes the colour of the main button
+  - Button colours take the Bootstrap button classes, without the `btn-` prefix.
+  - See [the Bootstrap documentation](https://getbootstrap.com/docs/4.3/components/buttons/#examples) for further reference.
 
 Available colours:
 
-* `primary` - Blue
-* `secondary` - Grey
-* `success` - Green
-* `danger` - Red
-* `warning` - Orange
-* `info` - Turquoisee
-* `light` - Light grey
-* `dark` - Dark grey
-* `link` - Link text
-* `outline-primary` - Blue outline
-* `outline-secondary` - Grey outline
-* `outline-success` - Green outline
-* `outline-danger` - Red outline
-* `outline-warning` - Orange outline
-* `outline-info` - Turquoisee outline
-* `outline-light` - Light grey outline
-* `outline-dark` - Dark grey outline
+- `primary` - Blue
+- `secondary` - Grey
+- `success` - Green
+- `danger` - Red
+- `warning` - Orange
+- `info` - Turquoisee
+- `light` - Light grey
+- `dark` - Dark grey
+- `link` - Link text
+- `outline-primary` - Blue outline
+- `outline-secondary` - Grey outline
+- `outline-success` - Green outline
+- `outline-danger` - Red outline
+- `outline-warning` - Orange outline
+- `outline-info` - Turquoisee outline
+- `outline-light` - Light grey outline
+- `outline-dark` - Dark grey outline
 
 ### Publication list
 
@@ -308,24 +309,24 @@ Use the following shortcode:
 
 Arguments:
 
-* `title` - Show or hide the default _"User Publications"_ heading above the list
-  * `0` to disable, `1` to enable. Default: `1`
-* `footer` - Show or hide the default _"See all publications at publications.scilifelab.se"_ footer below the list
-  * `0` to disable, `1` to enable. Default: `1`
-* `randomise` - Randomise the list, or show the most recent
-  * `0` to leave sorted, `1` to randomise. Default: `1`
-* `num` - Number of publications to show in the list
-  * Any number. Default `5`
-* `collabs` - _Minimum_ number of publications that should be collaborations
-  * Any number. Default `0`
-  * If >= `num`, will show only collabs.
-  * If fewer collabs than `num` exist, list will be shorter than `num`
-* `max_collabs` - _Maximum_ number of publications that should be collaborations
-  * Any number. Default `-1`
-  * If less than 0, no maximum limit will be applied
-  * If set to 0 then list will not contain any collaborative publications
-* `tech_dev_is_collab` - Treat _Technology Development_ category as a collaboration
-  * `1` to treat as collab, `0` to treat as a regular publication. Default: `1`
+- `title` - Show or hide the default _"User Publications"_ heading above the list
+  - `0` to disable, `1` to enable. Default: `1`
+- `footer` - Show or hide the default _"See all publications at publications.scilifelab.se"_ footer below the list
+  - `0` to disable, `1` to enable. Default: `1`
+- `randomise` - Randomise the list, or show the most recent
+  - `0` to leave sorted, `1` to randomise. Default: `1`
+- `num` - Number of publications to show in the list
+  - Any number. Default `5`
+- `collabs` - _Minimum_ number of publications that should be collaborations
+  - Any number. Default `0`
+  - If >= `num`, will show only collabs.
+  - If fewer collabs than `num` exist, list will be shorter than `num`
+- `max_collabs` - _Maximum_ number of publications that should be collaborations
+  - Any number. Default `-1`
+  - If less than 0, no maximum limit will be applied
+  - If set to 0 then list will not contain any collaborative publications
+- `tech_dev_is_collab` - Treat _Technology Development_ category as a collaboration
+  - `1` to treat as collab, `0` to treat as a regular publication. Default: `1`
 
 For example, to show a sorted list with the 10 latest collaboration papers and no _User Publications_ heading:
 
@@ -389,10 +390,10 @@ columns with upcoming events:
 
 The arguments are as follows (default values shown):
 
-* `limit`: `3`
-* `min_events`: `2`
-* `block_title`: `'Upcoming Events'`
-* `block_title_link`: `false`
+- `limit`: `3`
+- `min_events`: `2`
+- `block_title`: `'Upcoming Events'`
+- `block_title_link`: `false`
 
 If there are not at least `min_events` upcoming events, nothing will be shown.
 If `block_title` is set to an empty string, the title will be hidden.
@@ -464,10 +465,10 @@ To use it, specify along with a file path for the file. For example:
 
 I removed a bunch of stuff from the WordPress admin interface to try to clean it up and simplify it. Notably, both _Comments_, the _Theme chooser_ are gone from the menu. You can still access these pages if you visit the URL directly:
 
-* Theme chooser: `/wp-admin/themes.php`
-* Theme editor: `/wp-admin/theme-editor.php`
-* Plugin editor: `/wp-admin/plugin-editor.php`
-* Discussion (Comments): `/wp-admin/options-discussion.php`
+- Theme chooser: `/wp-admin/themes.php`
+- Theme editor: `/wp-admin/theme-editor.php`
+- Plugin editor: `/wp-admin/plugin-editor.php`
+- Discussion (Comments): `/wp-admin/options-discussion.php`
 
 I also removed items from the admin top bar, the admin dashboard and a bunch of other stuff. Have a look at `wp-content/themes/ngisweden/functions/admin_ui.php` to modify this behaviour.
 
@@ -525,26 +526,58 @@ Again, there is a special field: _Status Colour_.
 
 > **Main repository: <https://github.com/NationalGenomicsInfrastructure/ngisweden.se>**
 
-The website code should be developed in the same way that we do everything - find the repository on GitHub and fork it to your personal account. Make your changes and submit as a pull-request, then deploy.
-
-For deployment instructions, ask Phil, Remi or Johannes. At some point we should probably describe the process in AM Systems or something.
+To make changes to the website, find the repository on GitHub and fork it to your personal account. Make your changes and submit as a pull-request.
 
 ## Testing locally
 
-You should always test the website locally before making changes. To do this, you'll need to run your own installation of all of the code. You only need to set this up once..
+You should always test the website locally before making changes. To do this, we will use Docker. The `docker-compose.yml` file in the repository describes how to set up all of the services needed to run the site (MySQL, PHP, Apache etc), making it pretty easy to test locally..
 
-1. Assuming that you're using a Mac, get a copy of [MAMP](https://www.mamp.info/en/) (the free version is fine)
-2. Open MAMP and open the preferences (Menu > MAMP > Preferences, or `cmd`+`,`). Go to the _Web Server_ tab and select the directory where you have cloned the repository.
-3. Hit _Start Servers_ - it should think for a moment then launch a web page. Click _My Website_ in the top menu. This will launch another new tab where you can see your development web server running! :tada:
-4. Install WordPress - see section below.
+### Initial setup
 
-* I'm now assuming that you're now looking at a similar looking, if fairly empty web page
+These steps only have to be done the first time you want to get up and running with the website. You may also want to start fresh again to get an up to date copy of the website content.
 
-5. Export content from the live website: _Tools_ > _Export_ > _All Content_
-6. Import this content to your local website: _Tools_ > _Import_ > _WordPress_ > _Run Importer_
-7. That's it! You should now have a working local copy of the NGI website which you can tinker with to your heart's content. Next time, just pull the latest code and run MAMP.
+1. [Install Docker](https://www.docker.com/products/docker-desktop/) if you don't already have it.
+2. Clone your fork of the repository locally and `cd` into that folder.
+3. Log in to https://ngisweden.scilifelab.se and go to the [_"All-in-One WP Migration"_ plugin page](https://ngisweden.scilifelab.se/wp-admin/admin.php?page=ai1wm_export). Download an archive of all content (~4GB at time of writing).
+4. Run `docker compose up`, wait for the log messages to slow down and visit <https://localhost.8000> in your web browser.
+5. Go through the WordPress install and log into the admin interface.
+  - It doesn't matter what you set here, it's going to be overwritten in a minute.
+6. Go to _Plugins_ > _Add new_ and search for, install and activate _"All-in-One WP Migration"_.
+7. Got to the [plugin import page](http://localhost:8000/wp-admin/admin.php?page=ai1wm_import) and drop your exported archive.
+  - It takes a really long time, grab a coffee and be patient ;)
+8. You will be booted out of the admin interface once the import finishes. You'll now need to log in with the same username and password that you use on the production site.
+9. Go to _Settings_ > _Permalinks_. Don't do anything there, just visit the page. It seems that this is needed to make the URLs work.
 
-## Installing the website
+Ok that's it - initial setup should be done and you're good to go.
+
+### Starting the website locally
+
+Once you've done the initial setup steps above once, you only need to do these steps each time you want to develop locally:
+
+1. Make sure you have the latest version of the website code (`git pull` etc, remember the upstream fork).
+2. With Docker running, `cd` to the cloned repository and run the command `docker compose up`
+3. You should get loads of log messages spat out - when it slows down, try going to <https://localhost.8000> in your web browser.
+
+That's it! You should now have a working local copy of the NGI website which you can tinker with to your heart's content.
+
+The `wp-content/plugins/methods/` and `wp-content/themes/ngisweden/` folders are bound to your local copy, meaning you can edit those files in your code editor and the local site running in docker will update immediately.
+
+### Stopping the website locally
+
+Once you're done, you'll want to stop the local webserver.
+
+1. Hit `cmd+c` in the terminal window to stop the server.
+2. Run `docker compose down` to tear down the docker containers.
+
+All wordpress content it stored within persistent Docker volumes. If you want to remove these and start from scratch, run `docker compose down --volumes`.
+
+## Deployment updates into production
+
+At the time of writing, the NGI website is hosted on _The Hulk_, administered by SciLifeLab Stockholm IT.
+
+The production instance has a clone of the main repo, ignoring all non-custom code. As such, deploying updates to plugin / theme code after pull-requests are merged should be as simeple as using `ssh` to log into the server, finding the deployment directory and running `git pull`.
+
+## Installing a fresh copy of the website
 
 Only the custom code written specifically for the NGI website is kept in this repository.
 When setting up locally or deploying on a new server, you need to get copies of everything else. These are the steps you need to do:
@@ -552,14 +585,14 @@ When setting up locally or deploying on a new server, you need to get copies of 
 1. [Download WordPress](https://wordpress.org/download/) from wordpress.org and extract the files where you want to run the site
 2. Make a subfolder and clone your fork of this website repository.
 3. Carefully move **all** of these files in to the main WordPress directory structure, being careful not to overwrite any existing directories.
-    * Make sure that you also move the `.git` directory and all hidden files
-    * If you prefer, you can do it the other way around - moving the WordPress files in to your cloned repository. Doesn't matter which way around this happens.
+   - Make sure that you also move the `.git` directory and all hidden files
+   - If you prefer, you can do it the other way around - moving the WordPress files in to your cloned repository. Doesn't matter which way around this happens.
 4. Check that `git status` is still clean
-    * The bundled `.gitignore` file should ignore all core WordPress files, so running `git status` should look the same as when you first cloned.
+   - The bundled `.gitignore` file should ignore all core WordPress files, so running `git status` should look the same as when you first cloned.
 5. Run the web server / go to the web page. You should see instructions for setting up WordPress with a MySQL database. Follow these instructions. _All right, sparky!_
 6. When finished, you should have a functioning through pretty empty looking website. Log in by going to `/wp-login.php` or `/wp-admin/` (there should be a link in the footer).
 7. In the admin interface, go to _Plugins_ > _Add New_ and install the plugins listed below.
-    * Make sure you activate the plugins that you install. You will also need to activate the _NGI Custom Content_ plugin that comes in this repository.
+   - Make sure you activate the plugins that you install. You will also need to activate the _NGI Custom Content_ plugin that comes in this repository.
 8. That should be it! Now it's just a case of adding content (see above section).
 
 ## Required plugins
@@ -572,24 +605,24 @@ Probably more plugins to come, but this is correct at the time of writing.
 
 This plugins are directly used by the theme code, the site may break or do weird things without them.
 
-| Plugin Name               | Minimum Version | URL | Description |
-|---------------------------|-----------------|-----|-------------|
-| Ajax Search Lite          | v4.7.25         | <https://wordpress.org/plugins/ajax-search-lite/> | Used for the search bar on the homepage and top navigation, shows dynamic results as you type. |
-| CPT Bootstrap Carousel    | v1.10           | <https://wordpress.org/plugins/cpt-bootstrap-carousel/> | Used for the image slider / carousel on the homepage. Also written by Phil, a long long time ago. |
-| Events Manager            | v5.9.5          | <https://wordpress.org/plugins/events-manager/> | Used to manage upcoming events on the website |
+| Plugin Name            | Minimum Version | URL                                                     | Description                                                                                       |
+| ---------------------- | --------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Ajax Search Lite       | v4.7.25         | <https://wordpress.org/plugins/ajax-search-lite/>       | Used for the search bar on the homepage and top navigation, shows dynamic results as you type.    |
+| CPT Bootstrap Carousel | v1.10           | <https://wordpress.org/plugins/cpt-bootstrap-carousel/> | Used for the image slider / carousel on the homepage. Also written by Phil, a long long time ago. |
+| Events Manager         | v5.9.5          | <https://wordpress.org/plugins/events-manager/>         | Used to manage upcoming events on the website                                                     |
 
 ### Soft Requirements
 
 These plugins make minor non-essential additions to the website, add minor functionality or affect the admin user interface to make life easier.
 The website should still work basically fine without them, but they're good to have.
 
-| Plugin Name               | Minimum Version | URL | Description |
-|---------------------------|-----------------|-----|-------------|
-| All In One WP Security & Firewall | v4.3.8.3 | <https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/> | Does a bunch of security hardening to try to lower our chances of being hacked. |
-| Broken Link Checker       | v1.11.8         | <https://wordpress.org/plugins/broken-link-checker/> | Adds an admin page and a admin-dashboard box warning you about in-page URLs that are broken. |
-| Fancy Admin UI            | v2.1            | <https://wordpress.org/plugins/fancy-admin-ui/> | Provides major re-styling to the admininstation interface. I think it looks nicer, but feel free to disable it if it gets buggy or annoying. |
-| GDPR Cookie Consent       | v1.7.6          | <https://wordpress.org/plugins/cookie-law-info/> | Adds the annoying little bar along the bottom warning about cookies. |
-| Post Types Order          | v1.9.3.9        | <https://wordpress.org/plugins/post-types-order/> | Adds an admin interface for each post type that allows drag-and-drop reordering of posts. |
+| Plugin Name                       | Minimum Version | URL                                                                  | Description                                                                                                                                  |
+| --------------------------------- | --------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| All In One WP Security & Firewall | v4.3.8.3        | <https://wordpress.org/plugins/all-in-one-wp-security-and-firewall/> | Does a bunch of security hardening to try to lower our chances of being hacked.                                                              |
+| Broken Link Checker               | v1.11.8         | <https://wordpress.org/plugins/broken-link-checker/>                 | Adds an admin page and a admin-dashboard box warning you about in-page URLs that are broken.                                                 |
+| Fancy Admin UI                    | v2.1            | <https://wordpress.org/plugins/fancy-admin-ui/>                      | Provides major re-styling to the admininstation interface. I think it looks nicer, but feel free to disable it if it gets buggy or annoying. |
+| GDPR Cookie Consent               | v1.7.6          | <https://wordpress.org/plugins/cookie-law-info/>                     | Adds the annoying little bar along the bottom warning about cookies.                                                                         |
+| Post Types Order                  | v1.9.3.9        | <https://wordpress.org/plugins/post-types-order/>                    | Adds an admin interface for each post type that allows drag-and-drop reordering of posts.                                                    |
 
 # Credits
 
