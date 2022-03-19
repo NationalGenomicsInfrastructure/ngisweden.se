@@ -540,9 +540,14 @@ These steps only have to be done the first time you want to get up and running w
 2. Clone your fork of the repository locally and `cd` into that folder.
 3. Log in to https://ngisweden.scilifelab.se and go to the [_"All-in-One WP Migration"_ plugin page](https://ngisweden.scilifelab.se/wp-admin/admin.php?page=ai1wm_export). Download an archive of all content (~4GB at time of writing).
 4. Download the [Traktor tool](https://traktor.wp-migration.com/), extract the `ngisweden.scilifelab.se-xxx.wpress` archive into the repository root folder. It should make a new folder called `ngisweden`.
-5. Run the following command to move the extracted files to the correct location: `mv -n ngisweden/* wp-content/` (the `-n` prevents stuff being overwritten)
+5. Run the following commands to move the extracted files to the correct location (the `-n` prevents stuff being overwritten):
+   - ```bash
+     mv -n ngisweden/* wp-content/
+     mv -n ngisweden/plugins/* wp-content/plugins/
+     rm -r ngisweden
+     ```
 
-Ok that's it - leave the `ngisweden` folder in place and you're good to go on.
+Ok that's it - initial setup should be done and you're good to go.
 
 ### Starting the website locally
 

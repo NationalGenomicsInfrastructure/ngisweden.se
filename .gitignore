@@ -1,6 +1,8 @@
 # All-in-One WP Migration tool stuff
 *.wpress
 ngisweden
+wp-content/database.sql
+wp-content/package.json
 
 # Ignore all plugins except the ones we wrote
 wp-content/plugins/*

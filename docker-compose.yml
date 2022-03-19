@@ -6,7 +6,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
       # This line mounts a local MySQL dump into the initdb so that it is loaded on run
-      - ./ngisweden/database.sql:/docker-entrypoint-initdb.d/schema.sql:ro
+      - ./wp-content/database.sql:/docker-entrypoint-initdb.d/schema.sql:ro
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
