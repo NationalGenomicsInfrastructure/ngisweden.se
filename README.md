@@ -554,6 +554,16 @@ Ok that's it - initial setup should be done and you're good to go.
 Once you've done the initial setup steps above once, you can do these steps each time you want to develop locally:
 
 1. Make sure you have the latest version of the website code (`git pull` etc, remember the upstream fork).
+2. Assuming that you're running with a copy of the NGI website as described above, set the following environment variables: `NGI_WP_DB_NAME`, `NGI_WP_DB_USER`, `NGI_WP_DB_PASSWORD`. These should mirror the production website as that's where our database is coming from.
+  - These credentials are stored with the rest of our passwords at the NGI.
+  - You can put these into your `~/.bash_profile` file so that they're always present.
+  - Typical commands to set:
+    ```bash
+    # Local NGI Wordpress development
+    export NGI_WP_DB_NAME=xxx
+    export NGI_WP_DB_USER=xxx
+    export NGI_WP_DB_PASSWORD=xxx
+    ```
 2. With Docker running, `cd` to the cloned repository and run the command `docker compose up`
 3. You should get loads of log messages spat out - when it slows down, try going to <https://localhost.8000> in your web browser.
 
