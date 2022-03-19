@@ -540,10 +540,12 @@ These steps only have to be done the first time you want to get up and running w
 2. Clone your fork of the repository locally and `cd` into that folder.
 3. Log in to https://ngisweden.scilifelab.se and go to the [_"All-in-One WP Migration"_ plugin page](https://ngisweden.scilifelab.se/wp-admin/admin.php?page=ai1wm_export). Download an archive of all content (~4GB at time of writing).
 4. Run `docker compose up`, wait for the log messages to slow down and visit <https://localhost.8000> in your web browser.
-5. Go through the WordPress install and log into the admin interface
+5. Go through the WordPress install and log into the admin interface.
+  - It doesn't matter what you set here, it's going to be overwritten in a minute.
 6. Go to _Plugins_ > _Add new_ and search for, install and activate _"All-in-One WP Migration"_.
 7. Got to the [plugin import page](http://localhost:8000/wp-admin/admin.php?page=ai1wm_import) and drop your exported archive.
   - It takes a really long time, grab a coffee and be patient ;)
+8. You will be booted out of the admin interface once the import finishes. You'll now need to log in with the same username and password that you use on the production site.
 
 Ok that's it - initial setup should be done and you're good to go.
 
