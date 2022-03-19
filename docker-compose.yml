@@ -17,7 +17,8 @@ services:
       - ngi_db
     image: wordpress:latest
     volumes:
-      - ./wp-content/:/var/www/html/wp-content/
+      - ./wp-content/plugins/methods/:/var/www/html/wp-content/plugins/methods/
+      - ./wp-content/themes/ngisweden/:/var/www/html/wp-content/themes/ngisweden/
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
       - "8000:80"

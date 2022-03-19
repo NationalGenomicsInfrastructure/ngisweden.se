@@ -543,7 +543,7 @@ These steps only have to be done the first time you want to get up and running w
 5. Go through the WordPress install and log into the admin interface
 6. Go to _Plugins_ > _Add new_ and search for, install and activate _"All-in-One WP Migration"_.
 7. Got to the [plugin import page](http://localhost:8000/wp-admin/admin.php?page=ai1wm_import) and drop your exported archive.
-  - It takes a while, grab a coffee and be patient ;)
+  - It takes a really long time, grab a coffee and be patient ;)
 
 Ok that's it - initial setup should be done and you're good to go.
 
@@ -557,12 +557,16 @@ Once you've done the initial setup steps above once, you only need to do these s
 
 That's it! You should now have a working local copy of the NGI website which you can tinker with to your heart's content.
 
+The `wp-content/plugins/methods/` and `wp-content/themes/ngisweden/` folders are bound to your local copy, meaning you can edit those files in your code editor and the local site running in docker will update immediately.
+
 ### Stopping the website locally
 
 Once you're done, you'll want to stop the local webserver.
 
 1. Hit `cmd+c` in the terminal window to stop the server.
 2. Run `docker compose down` to tear down the docker containers.
+
+All wordpress content it stored within persistent Docker volumes. If you want to remove these and start from scratch, run `docker compose down --volumes`.
 
 ## Deployment updates into production
 
