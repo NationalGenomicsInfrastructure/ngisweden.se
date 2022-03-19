@@ -1,3 +1,7 @@
+# All-in-One WP Migration tool stuff
+*.wpress
+ngisweden
+
 # Ignore all plugins except the ones we wrote
 wp-content/plugins/*
 !wp-content/plugins/methods/
