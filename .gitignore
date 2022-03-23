@@ -1,5 +1,6 @@
 # All-in-One Migration backups that are used for development
 *.wpress
+db_data
 
 # Ignore all plugins except the ones we wrote
 wp-content/plugins/*
