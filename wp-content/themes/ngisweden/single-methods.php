@@ -153,6 +153,12 @@
           }
         }
 
+        // Link to the software versions page
+        if(get_post_type() == 'bioinformatics'){
+          echo '<h5 class="mt-3">Software tool versions</h5>';
+          echo '<p class="mb-0"><a href="'.get_permalink(get_page_by_path('software-tool-versions')).'">View all software versions</a></p>';
+        }
+
         // Methods for this bioinformatics post
         if(get_post_type() == 'bioinformatics'){
           $linked_method_posts_query = new WP_Query(array(
