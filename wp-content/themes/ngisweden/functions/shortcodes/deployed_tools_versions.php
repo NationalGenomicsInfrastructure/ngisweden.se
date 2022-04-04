@@ -3,10 +3,13 @@
 // NGI Deployed Tools Versions
 // Renders the file generated on the cluster during deployment,
 // showing which versions of which tools are currently in production.
+[ngisweden_deployed_tools_versions_sthlm deployed_file_name='deployed_tools.sthlm.version']
+[ngisweden_deployed_tools_versions_upps deployed_file_name='deployed_tools.upps.version']
+
 function ngisweden_deployed_tools_versions_shortcode($atts_raw){
 
     // Fetch the deployment version file
-    $deployed_file_contents = @file_get_contents(get_template_directory().'/cache/deployed_tools.version');
+    $deployed_file_contents = @file_get_contents(get_template_directory().'/cache/'.$atts_raw['deployed_file_name']);
 
     $deployment_type = '';
     $deployed_at = '';
@@ -50,4 +53,5 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
     return $output;
 
 }
-add_shortcode('ngisweden_deployed_tools_versions', 'ngisweden_deployed_tools_versions_shortcode');
+add_shortcode('ngisweden_deployed_tools_versions_sthlm', 'ngisweden_deployed_tools_versions_shortcode');
+add_shortcode('ngisweden_deployed_tools_versions_upps', 'ngisweden_deployed_tools_versions_shortcode');
