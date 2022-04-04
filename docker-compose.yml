@@ -2,6 +2,7 @@ version: "3.9"
 
 services:
   ngi_db:
+    container_name: ngi_db
     # Need MariaDB because mysql doesn't play nicely with M1 Macs
     image: mariadb:10.7.3
     volumes:
@@ -14,6 +15,7 @@ services:
       MYSQL_PASSWORD: wordpress
 
   ngi_wordpress:
+    container_name: ngi_wordpress
     depends_on:
       - ngi_db
     image: wordpress:latest
@@ -30,6 +32,3 @@ services:
       WORDPRESS_DB_PASSWORD: wordpress
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: "true"
-volumes:
-  db_data: {}
-  wordpress_data: {}
