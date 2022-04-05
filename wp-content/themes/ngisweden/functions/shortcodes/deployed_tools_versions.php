@@ -7,8 +7,8 @@
 function ngisweden_deployed_tools_versions_shortcode($atts_raw){
 
     // Fetch the deployment version file
-    $locations = array('sthlm', 'upps')
-    $output = ''
+    $locations = array('sthlm', 'upps');
+    $output = '';
     foreach ($locations as &$location){
       $deployed_file_contents = @file_get_contents(get_template_directory().'/cache/deployed_tools.'.$location.'.version');
 
