@@ -30,7 +30,7 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
               }
           }
       }
-      $output .= '<h5>'.$location.'</h5>'
+      $output .= '<h5>'.$location.'</h5>';
       if(count($tools) > 0){
           $output .= '<div class="deployed-tools-versions">';
           $output .= '<table class="table table-striped table-hover table-sm small">';
