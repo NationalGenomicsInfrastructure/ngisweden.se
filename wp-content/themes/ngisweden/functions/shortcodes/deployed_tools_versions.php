@@ -24,7 +24,7 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
               $deployment_type = trim(str_replace('--', '', $line));
           }
           else {
-              list($tool, $version) = explode(':', $line, 2);
+              @list($tool, $version) = explode(':', $line, 2);
               if(strlen($tool) > 0){
                   $tools[] = [trim($tool), trim($version)];
               }
