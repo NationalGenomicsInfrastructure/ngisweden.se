@@ -7,10 +7,10 @@
 function ngisweden_deployed_tools_versions_shortcode($atts_raw){
 
     // Fetch the deployment version file
-    $locations = array('sthlm', 'upps');
+    $locations = array('sthlm'=>'Stockholm node', 'upps'=>'Uppsala node');
     $output = '';
-    foreach ($locations as &$location){
-      $deployed_file_contents = @file_get_contents(get_template_directory().'/cache/deployed_tools.'.$location.'.version');
+    foreach ($locations as $loc_code => $location){
+      $deployed_file_contents = @file_get_contents(get_template_directory().'/cache/deployed_tools.'.$loc_code.'.version');
 
       $deployment_type = '';
       $deployed_at = '';
@@ -30,7 +30,7 @@ function ngisweden_deployed_tools_versions_shortcode($atts_raw){
               }
           }
       }
-
+      $output .= '<h5>'.$location.'</h5>'
       if(count($tools) > 0){
           $output .= '<div class="deployed-tools-versions">';
           $output .= '<table class="table table-striped table-hover table-sm small">';
