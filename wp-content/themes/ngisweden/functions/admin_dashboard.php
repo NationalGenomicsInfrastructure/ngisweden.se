@@ -8,8 +8,8 @@ $tab = isset($_GET['tab']) ? $_GET['tab'] : null;
 if($tab == 'warnings'):
 $max_except_length = 300;
 
-// METHODS WITH NO APPLICATION
-// NO KEYWORDS
+// METHODS WITH NO APPLICATION VS WITH
+// NO KEYWORDS VS WITH
 // Every method should belong to at least one application
 // Check that we have some keywords
 $all_method_posts = get_posts(array(
@@ -17,18 +17,26 @@ $all_method_posts = get_posts(array(
   'posts_per_page' => -1
 ));
 $methods_missing_application = [];
+$methods_with_applications = [];
 $methods_missing_keywords = [];
+$methods_with_keywords = [];
 foreach($all_method_posts as $method_post){
   if(!get_the_terms($method_post->ID, 'applications')){
     $methods_missing_application[] = $method_post;
   }
+  else{
+    $methods_with_application[] = $method_post;
+  }
   if(!get_the_terms($method_post->ID, 'method_keywords')){
     $methods_missing_keywords[] = $method_post;
   }
+  else{
+    $methods_with_keywords[] = $method_post;
+  }
 }
 
-// MISSING FROM NAV
-// Check if we have any pages that should me in the main menu and are not
+// MISSING FROM NAV OR NOT
+// Check if we have any pages that should be in the main menu and are not vs that are in the menu
 // Get menu page IDs
 $menu_locations = get_nav_menu_locations();
 $menu = wp_get_nav_menu_object($menu_locations['main-nav']);
@@ -59,37 +67,48 @@ $ngi_pages = get_pages(array(
   'exclude' => $ignore_pages
 ));
 $missing_pages = [];
+$found_pages = [];
 foreach($ngi_pages as $ngi_page){
   if(!in_array($ngi_page->ID, $menu_page_ids)){
     $missing_pages[] = $ngi_page;
   }
+  else{
+    $found_pages[] = $ngi_page;
+  }
 }
 
-// BAD EXCERPTS
+// BAD EXCERPTS VS GOOD
 // Nearly everything should have an excerpt!
 // Check that those set are not too long.
-$methods_missing_excerpt = [];
+
 $all_cpt_posts = get_posts(array(
   'post_type' => array('methods', 'bioinformatics', 'technologies'),
   'posts_per_page' => -1
 ));
 $cpts_missing_excerpt = [];
+$cpts_with_excerpt = [];
 $cpts_excerpt_too_long = [];
+$cpts_excerpt_just_right = [];
 foreach($all_cpt_posts as $cpt_post){
   if(!has_excerpt($cpt_post)){
     $cpts_missing_excerpt[] = $cpt_post;
-  } else {
+  }
+  else{
+    $cpts_with_excerpt[] = $cpt_post;
     $excerpt_length = strlen(strip_tags(get_the_excerpt($cpt_post)));
     if($excerpt_length > $max_except_length){
       $cpts_excerpt_too_long[] = [$cpt_post, $excerpt_length];
     }
   }
 }
-// APPLICATIONS WITH NO METHODS
-// MISSING APPLICATION DESCRIPTIONS
+// APPLICATIONS WITH NO METHODS VS WITH
+// MISSING APPLICATION DESCRIPTIONS VS NOT
 $applications_missing_descriptions = [];
+$applications_with_descriptions = [];
 $applications_description_too_long = [];
+$applications_description_just_right = [];
 $applications_no_posts = [];
+$applications_with_posts = [];
 $applications = get_terms([
     'taxonomy' => 'applications',
     'hide_empty' => false,
@@ -98,12 +117,19 @@ foreach($applications as $application){
   if($application->count == 0){
     $applications_no_posts[] = $application;
   }
+  else{
+    $applications_with_posts[] = $application;
+  }
   if(trim($application->description) == ''){
     $applications_missing_descriptions[] = $application;
   } else {
+    $applications_with_descriptions[] = $application;
     $description_length = strlen(trim($application->description));
     if($description_length > $max_except_length) {
       $applications_description_too_long[] = [$application, $description_length];
+    }
+    else{
+      $applications_description_just_right[] = [$application, $description_length];
     }
   }
 }
@@ -171,7 +197,7 @@ if($tab == 'warnings'):
 ?>
 
   <?php if(count($methods_missing_application) > 0): ?>
-    <h3>Methods missing an application</h3>
+    <h3 style="background-color: #ffb3b3">Methods missing an application</h3>
     <p class="description">
       Every method must be assigned to at least one Application category, so that it can be discovered through the website.
     </p>
@@ -182,11 +208,10 @@ if($tab == 'warnings'):
     }
     ?>
     </ul>
-  <?php endif; ?>
-
+    <?php endif; ?>
 
   <?php if(count($applications_no_posts) > 0): ?>
-    <h3>Applications with no content</h3>
+    <h3 style="background-color: #ffb3b3">Applications with no content</h3>
     <p class="description">
       Every application should have at least one method or bioinformatics page associated with it.
     </p>
@@ -200,7 +225,7 @@ if($tab == 'warnings'):
   <?php endif; ?>
 
   <?php if(count($missing_pages) > 0): ?>
-    <h3>Pages not in the main menu</h3>
+    <h3 style="background-color: #ffb3b3">Pages not in the main menu</h3>
     <p class="description">
       Website pages aren't automatically added to the main navigation, they have to be placed in the menu editor.
       The list below shows pages that are not in the top navigation.
@@ -218,7 +243,7 @@ if($tab == 'warnings'):
 
 
   <?php if(count($cpts_missing_excerpt) > 0): ?>
-    <h3>Content missing an excerpt</h3>
+    <h3 style="background-color: #ffb3b3">Content missing an excerpt</h3>
     <p class="description">
       Methods, technologies and bioinformatics posts should all have a <em>custom excerpt</em>.
       This is displayed on the cards on the listing pages and in a blue highlight at the top of the page.
@@ -235,7 +260,7 @@ if($tab == 'warnings'):
 
 
   <?php if(count($cpts_excerpt_too_long) > 0): ?>
-    <h3>Excerpts too long</h3>
+    <h3 style="background-color: #ffb3b3">Excerpts too long</h3>
     <p class="description">
       Methods, technologies and bioinformatics posts should all have a short <em>custom excerpt</em>.
       For consistency with other pages, the excerpt should be kept short (less than <?php echo $max_except_length; ?> characters).
@@ -253,7 +278,7 @@ if($tab == 'warnings'):
 
 
   <?php if(count($applications_missing_descriptions) > 0): ?>
-    <h3>Applications missing a description</h3>
+    <h3 style="background-color: #ffb3b3">Applications missing a description</h3>
     <p class="description">
       Application categories should all have a <em>description</em>.
       This is displayed on the cards on the listing pages and in a blue highlight at the top of the page.
@@ -270,7 +295,7 @@ if($tab == 'warnings'):
 
 
   <?php if(count($applications_description_too_long) > 0): ?>
-    <h3>Application descriptions too long</h3>
+    <h3 style="background-color: #ffb3b3">Application descriptions too long</h3>
     <p class="description">
       Application categories should all have a <em>description</em>.
       For consistency with other content, the description should be kept short (less than <?php echo $max_except_length; ?> characters).
@@ -288,7 +313,7 @@ if($tab == 'warnings'):
 
 
   <?php if(count($methods_missing_keywords) > 0): ?>
-    <h3>Methods with no keywords</h3>
+    <h3 style="background-color: #ffb3b3">Methods with no keywords</h3>
     <p class="description">
       Keywords are used for easier searching and grouping of methods. Every method and bioinformatics should have at least one keyword.
     </p>
@@ -301,12 +326,50 @@ if($tab == 'warnings'):
     </ul>
   <?php endif; ?>
 
+
+  <?php if((count($methods_with_application) > 0) or (count($applications_with_posts) > 0) or (count($found_pages) > 0) or
+  (count($cpts_with_excerpt) > 0) or (count($cpts_excerpt_just_right) > 0) or (count($applications_with_descriptions) > 0) or
+  (count($applications_description_just_right) > 0) or (count($methods_with_keywords) > 0)): ?>
+    <br>
+    <details>
+    <summary>Pages that are properly included in the main menu:</summary>
+    <ul style="list-style-type: inherit; margin-left: 2rem;">
+    <?php
+    foreach($methods_with_application as $method){
+      echo '<li><a href="'.$method->guid.'">'.$method->post_title.'</a> (<a href="'.get_edit_post_link($method).'">edit</a>)</li>';
+    }
+    foreach($applications_with_posts as $application){
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    foreach($found_pages as $found_page){
+      echo '<li><a href="'.$found_page->guid.'">'.$found_page->post_title.'</a></li>';
+    }
+    foreach($cpts_with_excerpt as $post){
+      echo '<li><a href="'.$post->guid.'">'.$post->post_title.'</a> (<a href="'.get_edit_post_link($post).'">edit</a>)</li>';
+    }
+    foreach($cpts_excerpt_just_right as $except_just_right){
+      $post = $except_just_right[0];
+      $excerpt_length = $except_just_right[1];
+      echo '<li><a href="'.$post->guid.'">'.$post->post_title.'</a> - '.$excerpt_length.' characters (<a href="'.get_edit_post_link($post).'">edit</a>)</li>';
+    }
+    foreach($applications_with_descriptions as $application){
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    foreach($applications_description_just_right as $description_just_right){
+      $application = $description_just_right[0];
+      $description_length = $description_just_right[1];
+      echo '<li><a href="'.get_term_link($application).'">'.$application->name.'</a> - '.$description_length.' characters (<a href="'.get_edit_term_link($application).'">edit</a>)</li>';
+    }
+    ?>
+    </ul>
+    </details>
+  <?php endif; ?>
+
   <hr>
   <h3>Administrators</h3>
   <p>The code for the website is available on GitHub:
     <a href="https://github.com/NationalGenomicsInfrastructure/ngisweden.se/" target="_blank">https://github.com/NationalGenomicsInfrastructure/ngisweden.se/</a></p>
   <p>Please contact <a href="mailto:it-support@scilifelab.se">SciLifeLab IT support</a> for help regarding the server.</p>
-
 
 <?php endif; // if($tab == 'warnings'):
 ?>
