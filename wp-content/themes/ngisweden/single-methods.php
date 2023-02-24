@@ -54,7 +54,9 @@
       <div class="col-sm-3 ngisweden-sidebar-page-sidebar">
         <div class="sticky-top">
         <?php
-
+        //Sample Submission Guidelines button
+        echo '<p class="small text-muted">Please read our sample submission instructions before sending samples:</p>';
+        echo '<a href="/resources/sample-submission/" target="_blank" class="btn btn-warning mt-n2 mb-3" role="button">Sample Submission Guidelines</a>';
         // Application categories
         $method_applications = get_the_terms(null, 'applications');
         if ($method_applications && !is_wp_error($method_applications) && count($method_applications) > 0){
