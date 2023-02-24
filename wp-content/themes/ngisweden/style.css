@@ -429,6 +429,9 @@ footer {
 .ngisweden-method-tabs .ngisweden-method-tab a:active {
     background-color: #c8d3ea;
 }
+.asl_w_container {
+    width: 20% !important;
+}
 .application-icon {
     width: 4rem;
     height: 4rem;
