@@ -1,4 +1,4 @@
-# <https://ngisweden.se>
+# [ngisweden.se](http://ngisweden.se)
 
 ![NGI Sweden](wp-content/themes/ngisweden/img/NGI-logo.png)
 
