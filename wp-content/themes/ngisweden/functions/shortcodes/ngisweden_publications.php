@@ -143,7 +143,7 @@ function ngisweden_pubs_shortcode($atts_raw){
         <a data-toggle="modal" data-target="#pub_'.$pub['iuid'].'" href="'.$pub['links']['display']['href'].'" target="_blank" class="list-group-item list-group-item-action'.($pub['is_collab'] ? ' list-pub-collab' : '').($pub['is_tech_dev'] ? ' list-pub-techdev' : '').'">
             '.$pub['title'].'<br>
             <small class="text-muted"><em>'.$pub['journal']['title'].'</em> ('.explode('-', $pub['published'])[0].')</small>'
-            .($pub['is_collab'] ? '<span class="float-right badge badge-primary mt-3">NGI Collaboration</span>' : '').($pub['is_tech_dev'] ? '<span class="float-right badge badge-success mt-3 mr-1">NGI Technology development</span>' : '').'
+            .($pub['is_collab'] ? '<span class="float-right" style="display:inline-block"><span class="badge badge-primary mt-3">NGI Collaboration</span>' : '').($pub['is_tech_dev'] ? '<span class="badge badge-success mt-3 ml-1 mr-1">NGI Technology development</span></span>' : '</span>').'
         </a>';
 
         // $pubs_items[] = '<pre>'.print_r($pub, true).'</pre>';
