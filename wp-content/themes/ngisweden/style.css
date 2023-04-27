@@ -116,6 +116,7 @@ nav.navbar {
         border-color: #4986e7;
     }
     .navbar .new-order-btn {
+        width: 100px;
         font-size: 13px;
         font-weight: 500;
         text-transform: uppercase;
