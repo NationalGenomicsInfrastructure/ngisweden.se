@@ -209,6 +209,9 @@ nav.navbar {
 .btn-primary, .badge-primary {
     background-color: #006fe6;
 }
+.text-muted {
+    color: #4C4C4C !important;
+}
 
 footer {
     background-color: #f8f9fa;
@@ -603,7 +606,7 @@ footer {
 .has-dark-blue-color { color: #0056b3; }
 .has-darker-blue-color { color: #183c55; }
 .has-dark-grey-blue-color { color: #495057; }
-.has-grey-color { color: #6c757d; }
+.has-grey-color { color: #4C4C4C; }
 .has-scilifelab-lime-25-color { color: #E9F2D1; }
 .has-scilifelab-lime-50-color { color: #D3E4A3; }
 .has-scilifelab-lime-75-color { color: #BDD775; }
@@ -637,7 +640,7 @@ footer {
 .has-dark-blue-background-color { background-color: #0056b3; }
 .has-darker-blue-background-color { background-color: #183c55; }
 .has-dark-grey-blue-background-color { background-color: #495057; }
-.has-grey-background-color { background-color: #6c757d; }
+.has-grey-background-color { background-color:#4C4C4C; }
 .has-scilifelab-lime-25-background-color { background-color: #E9F2D1; }
 .has-scilifelab-lime-50-background-color { background-color: #D3E4A3; }
 .has-scilifelab-lime-75-background-color { background-color: #BDD775; }

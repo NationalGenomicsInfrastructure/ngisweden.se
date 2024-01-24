@@ -101,7 +101,7 @@ function ngi_gutenberg_color_palette() {
         array( 'color' => '#0056b3', 'name'  => 'Dark Blue', 'slug' => 'dark-blue' ),
         array( 'color' => '#183c55', 'name'  => 'Darker Blue', 'slug' => 'darker-blue' ),
         array( 'color' => '#495057', 'name'  => 'Dark Grey Blue', 'slug' => 'dark-grey-blue' ),
-        array( 'color' => '#6c757d', 'name'  => 'Grey', 'slug' => 'grey' ),
+        array( 'color' => '#4C4C4C', 'name'  => 'Grey', 'slug' => 'grey' ),
 
         array( 'color' => '#E9F2D1', 'name'  => 'SciLifeLab Lime 25%', 'slug' => 'scilifelab-lime-25' ),
         array( 'color' => '#D3E4A3', 'name'  => 'SciLifeLab Lime 50%', 'slug' => 'scilifelab-lime-50' ),
