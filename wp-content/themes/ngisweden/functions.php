@@ -96,7 +96,7 @@ add_action('pre_get_posts', 'ngi_cpt_archive_posts_per_page');
 // Use a custom colour palette for Gutenberg colour picker
 function ngi_gutenberg_color_palette() {
     add_theme_support('editor-color-palette', array(
-        array( 'color' => '#007bff', 'name'  => 'NGI Blue', 'slug' => 'ngi-blue' ),
+        array( 'color' => '#006fe6', 'name'  => 'NGI Blue', 'slug' => 'ngi-blue' ),
         array( 'color' => '#e7ecf7', 'name'  => 'Light Blue', 'slug' => 'light-blue' ),
         array( 'color' => '#0056b3', 'name'  => 'Dark Blue', 'slug' => 'dark-blue' ),
         array( 'color' => '#183c55', 'name'  => 'Darker Blue', 'slug' => 'darker-blue' ),

@@ -205,7 +205,10 @@ nav.navbar {
     margin-bottom: 0;
 }
 
-
+/*Make bootstrap custom colors darker for accessibility*/
+.btn-primary, .badge-primary {
+    background-color: #006fe6;
+}
 
 footer {
     background-color: #f8f9fa;
@@ -595,7 +598,7 @@ footer {
 }
 
 /* Custom Gutenberg colour palette */
-.has-ngi-blue-color { color: #007bff; }
+.has-ngi-blue-color { color: #006fe6; }
 .has-light-blue-color { color: #e7ecf7; }
 .has-dark-blue-color { color: #0056b3; }
 .has-darker-blue-color { color: #183c55; }
@@ -629,7 +632,7 @@ footer {
 .has-scilifelab-medium-grey-color { color: #A6A6A6; }
 .has-scilifelab-dark-grey-color { color: #3F3F3F; }
 
-.has-ngi-blue-background-color { background-color: #007bff; }
+.has-ngi-blue-background-color { background-color: #006fe6; }
 .has-light-blue-background-color { background-color: #e7ecf7; }
 .has-dark-blue-background-color { background-color: #0056b3; }
 .has-darker-blue-background-color { background-color: #183c55; }
