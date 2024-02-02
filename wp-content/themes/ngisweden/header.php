@@ -33,14 +33,13 @@ Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrast
   <body <?php body_class('ngisweden'); ?>>
     <nav class="navbar navbar-expand-lg fixed-top navbar-light shadow-sm main-nav-nav" id="main_navbar">
       <div class="container">
-        <a class="navbar-brand" href="<?php echo home_url( '/' ); ?>">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/NGI-logo.svg" height="95" width="300" class="navbar-logo" alt="NGI logo" />
-        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse justify-content-end ml-n8" id="navbarSupportedContent">
+        <a class="navbar-brand" href="<?php echo home_url( '/' ); ?>">
+          <img src="<?php echo get_stylesheet_directory_uri(); ?>/img/NGI-logo.svg" height="95" width="300" class="navbar-logo" alt="NGI logo" />
+        </a>
           <?php
           // https://github.com/wp-bootstrap/wp-bootstrap-navwalker
           wp_nav_menu([
@@ -54,7 +53,7 @@ Check out the theme source on GitHub: https://github.com/nationalGenomicsInfrast
             'walker'          => new WP_Bootstrap_Navwalker()
           ]);
           ?>
-          <a class="btn btn-primary new-order-btn mr-1" id="menu-main-order-btn" href="https://ngisweden.scilifelab.se/orders">New Order</a>
+          <a class="btn btn-primary new-order-btn mr-2" id="menu-main-order-btn" href="https://ngisweden.scilifelab.se/orders">New Order</a>
           <?php echo do_shortcode('[wpdreams_ajaxsearchlite]'); ?>
         </div>
       </div>
