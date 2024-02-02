@@ -116,11 +116,21 @@ nav.navbar {
         border-color: #4986e7;
     }
     .navbar .new-order-btn {
-        width: 100px;
         font-size: 13px;
         font-weight: 500;
         text-transform: uppercase;
+        white-space: nowrap;
         margin-bottom: 3px;
+    }
+}
+@media (max-width: 991px) {
+    .navbar .new-order-btn {
+        margin-bottom: 10px;
+    }
+}
+@media (max-width: 767px) {
+    .navbar .new-order-btn {
+        margin-bottom: 10px;
     }
 }
 @media all and (max-width: 992px) {
@@ -340,6 +350,9 @@ footer {
     }
     .home .carousel-caption h4 {
         font-size: 2rem;
+    }
+    .ml-n8 {
+        margin-left: -100px;
     }
 }
 
