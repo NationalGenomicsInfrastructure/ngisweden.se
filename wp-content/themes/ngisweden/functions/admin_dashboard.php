@@ -186,11 +186,11 @@ if($tab == 'user_guide'):
 ?>
 
 <h3>
-  <a class="button button-primary" style="float:right; margin-bottom: 10px;" href="https://docs.google.com/document/d/1wXarUg1JlxSmDLZwmhZs5ChV1Kq28pV-dBniaASlPWA/edit?usp=sharing" target="_blank">Open docs in new tab</a>
+  <a class="button button-primary" style="float:right; margin-bottom: 10px;" href="https://docs.google.com/document/d/1aG5HraJ0JUDce2zxsHgg2kPWLvwKu5KwhMpw53lsXbQ/edit?usp=sharing" target="_blank">Open docs in new tab</a>
   Website walkthrough for editors
 </h3>
 <div style="box-shadow: 0px 0px 6px 0px #0000002e;">
-  <iframe style="width:100%; height: 600px;" src="https://docs.google.com/document/d/e/2PACX-1vTty9lSxiX0O9dgNO8v6jEftdxilRH-oVGuTpxLqCR5Ta1IULbIgcDKOvoWa-Hft4RADVxaSJhZYrFa/pub"></iframe>
+  <iframe style="width:100%; height: 600px;" src="https://docs.google.com/document/d/e/2PACX-1vT15Gvv37mtis5mTq-7jc5EtcM7kOtSC8vnJUJk6GXcNO7xWgxM76GO2wt68i8AUurIVRiMf7Ut9hGd/pub"></iframe>
 </div>
 
 <?php
