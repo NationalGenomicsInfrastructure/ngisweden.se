@@ -21,13 +21,11 @@ wp-admin/
 wp-content/*.php
 wp-content/advanced-cache.php
 wp-content/aiowps_backups/
-wp-content/ai1wm-backups/
 wp-content/backup-db/
 wp-content/backups/
 wp-content/blogs.dir/
 wp-content/cache/
 wp-content/fv-flowplayer-custom/
-wp-content/jetpack-waf/
 wp-content/languages/
 wp-content/mu-plugins/
 wp-content/upgrade/
@@ -36,7 +34,6 @@ wp-content/wp-cache-config.php
 wp-includes/
 wp-snapshots/
 /.htaccess
-/.user.ini
 /license.txt
 /readme.html
 /sitemap.xml
