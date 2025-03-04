@@ -29,14 +29,7 @@ function ngisweden_pubs_shortcode($atts_raw){
 
     // Fetch the cached publications data
     $pubs_json = @file_get_contents(get_template_directory().'/cache/publications_cache.json');
-    if($pubs_json){
-        try {
-            $pubs_data = json_decode($pubs_json, true, 512, JSON_THROW_ON_ERROR);
-        } catch (\JsonException $exception) {
-            $warnings[] = 'JSON decode error while fetching cached NGI publications: ' . $exception->getMessage();
-            continue;
-        }
-    }
+    $pubs_data = @json_decode($pubs_json, true);
 
     // Refresh cache if it doesn't exist or is more than a week old
     if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or @count($pubs_data['publications']) == 0 or isset($_GET['refresh'])){
@@ -48,12 +41,7 @@ function ngisweden_pubs_shortcode($atts_raw){
             $pubs_url = 'https://publications.scilifelab.se/label/'.rawurlencode($fac).'.json?limit='.$download_limit;
             $pubs_json = file_get_contents($pubs_url);
             if($pubs_json){
-                try {
-                    $pubs_raw_data = json_decode($pubs_json, true, 512, JSON_THROW_ON_ERROR);
-                } catch (\JsonException $exception) {
-                    $warnings[] = 'JSON decode error while fetching NGI publications: ' . $exception->getMessage();
-                    continue;
-                }
+                $pubs_raw_data = json_decode($pubs_json, true);
                 $new_pubs_data['publications'] = array_merge($new_pubs_data['publications'], $pubs_raw_data['publications']);
             } else {
                 $warnings[] = 'Could not fetch URL: '.$pubs_url;
