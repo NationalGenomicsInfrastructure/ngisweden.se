@@ -21,86 +21,143 @@ function ngisweden_pubs_gh_shortcode($atts_raw){
     $pubs_json = @file_get_contents(get_template_directory().'/cache/publications_cache_gh.json');
     $pubs_data = @json_decode($pubs_json, true);
 
+    // Initialize publications as empty array if not set
+    if (!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+        $pubs_data = array(
+            'downloaded' => 0,
+            'publications' => array()
+        );
+    }
+
     // Refresh cache if it doesn't exist or is more than a week old
-    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or @count($pubs_data['publications']) == 0 or isset($_GET['refresh'])){
+    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or empty($pubs_data['publications']) or isset($_GET['refresh'])){
 
         $new_pubs_data = array(
             'downloaded' => time(),
-            'publications' => array()
+            'publications' => array()  // Initialize as empty array
         );
 
+        // Set up stream context with timeout
+        $opts = array(
+            'http' => array(
+                'timeout' => 10,  // 10 second timeout
+                'user_agent' => 'NGI Sweden Website Publications Fetcher'
+            )
+        );
+        $context = stream_context_create($opts);
+
         $pubs_url = 'https://raw.githubusercontent.com/NationalGenomicsInfrastructure/ngisweden.se-publications/refs/heads/main/cache/publications.json';
-        $pubs_json = file_get_contents($pubs_url);
+        
+        // Try to fetch from GitHub with proper error handling
+        $pubs_json = @file_get_contents($pubs_url, false, $context);
+        
+        if ($pubs_json === false) {
+            $error = error_get_last();
+            $warnings[] = 'Failed to fetch publications from GitHub: ' . ($error ? $error['message'] : 'Unknown error');
+            
+            // Try to use local cache as fallback if it exists and is not too old (30 days)
+            $local_cache_path = get_template_directory().'/cache/publications_cache_gh.json';
+            if (file_exists($local_cache_path)) {
+                $cache_age = time() - filemtime($local_cache_path);
+                if ($cache_age < (60*60*24*30)) { // 30 days
+                    $pubs_json = @file_get_contents($local_cache_path);
+                    if ($pubs_json) {
+                        $warnings[] = 'Using local cache as fallback (age: ' . round($cache_age/86400) . ' days)';
+                    } else {
+                        $warnings[] = 'Failed to read local cache file';
+                    }
+                } else {
+                    $warnings[] = 'Local cache too old (' . round($cache_age/86400) . ' days)';
+                }
+            } else {
+                $warnings[] = 'No local cache file found';
+            }
+        }
+
         if($pubs_json){
-            $new_pubs_data['publications'] = json_decode($pubs_json, true);
+            $decoded_json = json_decode($pubs_json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $new_pubs_data['publications'] = $decoded_json;
+            } else {
+                $warnings[] = 'Failed to parse JSON: ' . json_last_error_msg();
+            }
         } else {
-            $warnings[] = 'Could not fetch URL: '.$pubs_url;
-            $warnings[] = print_r(error_get_last(), true);
+            $warnings[] = 'No valid publications data available from GitHub or local cache';
         }
 
         // Only overwrite the cache if we successfully got some data
-        if(count($new_pubs_data['publications'])){
+        if(!empty($new_pubs_data['publications'])){
             $pubs_data = $new_pubs_data;
             // Get facility labels from the publications data
             $facility_labels = get_facility_labels($pubs_data['publications']);
         } else {
             $warnings[] = 'No publications found when fetching, using old cache';
+            // Ensure we keep the old publications array if it exists
+            if (!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+                $pubs_data['publications'] = array();
+            }
         }
 
         // Clean up
         $pub_ids = array();
         $dois = array();
-        foreach($pubs_data['publications'] as $idx => $pub){
-            // Remove duplicates - from parallel facilities and dup DOIs in publications.scilifelab.se
-            if(in_array($pub['iuid'], $pub_ids) || in_array($pub['doi'], $dois)){
-                unset($pubs_data['publications'][$idx]);
-                continue;
-            }
-            array_push($pub_ids, $pub['iuid']);
-            array_push($dois, $pub['doi']);
-
-            // Check if this is a collaboration
-            $pubs_data['publications'][$idx]['is_collab'] = false;
-            if (isset($pub['labels'])) {
-                foreach($pub['labels'] as $facility => $label) {
-                    if($label == 'Collaborative'){
-                        $pubs_data['publications'][$idx]['is_collab'] = true;
-                        break;
-                    }
+        if (!empty($pubs_data['publications'])) {  // Only process if we have publications
+            foreach($pubs_data['publications'] as $idx => $pub){
+                // Remove duplicates - from parallel facilities and dup DOIs in publications.scilifelab.se
+                if(in_array($pub['iuid'], $pub_ids) || in_array($pub['doi'], $dois)){
+                    unset($pubs_data['publications'][$idx]);
+                    continue;
                 }
-            }
+                array_push($pub_ids, $pub['iuid']);
+                array_push($dois, $pub['doi']);
 
-            // Check if this is Technology development
-            $pubs_data['publications'][$idx]['is_tech_dev'] = false;
-            if (isset($pub['labels'])) {
-                foreach($pub['labels'] as $facility => $label) {
-                    if($label == 'Technology development'){
-                        $pubs_data['publications'][$idx]['is_tech_dev'] = true;
-                        if($atts['tech_dev_is_collab']){
+                // Check if this is a collaboration
+                $pubs_data['publications'][$idx]['is_collab'] = false;
+                if (isset($pub['labels'])) {
+                    foreach($pub['labels'] as $facility => $label) {
+                        if($label == 'Collaborative'){
                             $pubs_data['publications'][$idx]['is_collab'] = true;
+                            break;
                         }
-                        break;
+                    }
+                }
+
+                // Check if this is Technology development
+                $pubs_data['publications'][$idx]['is_tech_dev'] = false;
+                if (isset($pub['labels'])) {
+                    foreach($pub['labels'] as $facility => $label) {
+                        if($label == 'Technology development'){
+                            $pubs_data['publications'][$idx]['is_tech_dev'] = true;
+                            if($atts['tech_dev_is_collab']){
+                                $pubs_data['publications'][$idx]['is_collab'] = true;
+                            }
+                            break;
+                        }
                     }
                 }
             }
-        }
 
-        // Sort by publication date
-        $sort_pubdate_func = function ($a, $b){
-            return strtotime($b['published']) - strtotime($a['published']);
-        };
-        usort($pubs_data['publications'], $sort_pubdate_func);
+            // Sort by publication date only if we have publications
+            $sort_pubdate_func = function ($a, $b){
+                return strtotime($b['published']) - strtotime($a['published']);
+            };
+            usort($pubs_data['publications'], $sort_pubdate_func);
+        }
 
         @file_put_contents(get_template_directory().'/cache/publications_cache.json', json_encode($pubs_data));
     }
 
+    // Ensure we have a valid publications array before proceeding
+    if(!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+        $pubs_data['publications'] = array();
+    }
 
-    if(@count($pubs_data['publications']) == 0){
+    if(empty($pubs_data['publications'])){
         return '<p class="text-muted"><em>Error: Publications could not be retrieved</em></p> <!-- '.implode("\n\n", $warnings).' -->';
     }
 
-    // Randomise the order
-    if($atts['randomise']) {
+    // Randomise the order only if we have publications
+    if($atts['randomise'] && !empty($pubs_data['publications'])) {
         shuffle($pubs_data['publications']);
     }
 
