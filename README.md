@@ -346,6 +346,24 @@ and delays the page load. To speed things up, the website caches the publication
 By default, publications are cached on the NGI website for a week. To force a fresh pull
 add `?refresh` to the end of the web URL, eg: `https://ngisweden.scilifelab.se/resources/scientific-highlights/?refresh`
 
+#### GitHub cached version of the publication list
+
+Since we have experienced occasional outages with the site going down, we started to investigate and traced the issue back to the publication-fetching routine. Our PHP script [retrieves the publications as JSON](https://github.com/ScilifelabDataCentre/Publications/issues/602) by generating URLs like
+
+```
+https://publications.scilifelab.se/label/NGI%20Stockholm%20%28Genomics%20Applications%29.json?limit=50
+```
+
+However, it seems that the `?limit=50` parameter is either no longer supported or may actually have never been implemented in the first place. Therefore, our website is easily overwhelmed by the thousands of publications that it needs to process. We decided [to outsource the publication request fetching to a GitHub action](https://github.com/NationalGenomicsInfrastructure/ngisweden.se-publications). Accordingly, the whole process will run isolated from our PHP code and not bring the website down under unfortunate conditions.
+
+The new version of the publication list can be used with the shortcode
+
+```
+[ngisweden_publications_gh] 
+```
+
+It is compatible with the original shortcode, but can not retrieve more than 50 publications, unless the GitHub action cache is enlarged first.
+
 ### Homepage application launcher
 
 Shows the search bar and large blue buttons for the top-level method application categories.

@@ -1,0 +1,347 @@
+<?php
+
+// NGI Publications Shortcode
+// Fetches publications from GitHub cache and displays them nicely
+function ngisweden_pubs_gh_shortcode($atts_raw){
+    // Warning strings to print to the page as HTML comments
+    $warnings = array();
+
+    // Shortcode attribute defaults
+    $atts = shortcode_atts( array(
+        'title' => 1,
+        'footer' => 1,
+        'randomise' => 1,
+        'num' => 5,
+        'collabs' => 0,
+        'max_collabs' => -1,
+        'tech_dev_is_collab' => 1
+    ), $atts_raw);
+
+    // Fetch the cached publications data
+    $pubs_json = @file_get_contents(get_template_directory().'/cache/publications_cache_gh.json');
+    $pubs_data = @json_decode($pubs_json, true);
+
+    // Initialize publications as empty array if not set
+    if (!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+        $pubs_data = array(
+            'downloaded' => 0,
+            'publications' => array()
+        );
+    }
+
+    // Refresh cache if it doesn't exist or is more than a week old
+    if(!$pubs_data or $pubs_data['downloaded'] < (time()-(60*60*24*7)) or empty($pubs_data['publications']) or isset($_GET['refresh'])){
+
+        $new_pubs_data = array(
+            'downloaded' => time(),
+            'publications' => array()  // Initialize as empty array
+        );
+
+        // Set up stream context with timeout
+        $opts = array(
+            'http' => array(
+                'timeout' => 10,  // 10 second timeout
+                'user_agent' => 'NGI Sweden Website Publications Fetcher'
+            )
+        );
+        $context = stream_context_create($opts);
+
+        $pubs_url = 'https://raw.githubusercontent.com/NationalGenomicsInfrastructure/ngisweden.se-publications/refs/heads/main/cache/publications.json';
+        
+        // Try to fetch from GitHub with proper error handling
+        $pubs_json = @file_get_contents($pubs_url, false, $context);
+        
+        if ($pubs_json === false) {
+            $error = error_get_last();
+            $warnings[] = 'Failed to fetch publications from GitHub: ' . ($error ? $error['message'] : 'Unknown error');
+            
+            // Try to use local cache as fallback if it exists and is not too old (30 days)
+            $local_cache_path = get_template_directory().'/cache/publications_cache_gh.json';
+            if (file_exists($local_cache_path)) {
+                $cache_age = time() - filemtime($local_cache_path);
+                if ($cache_age < (60*60*24*30)) { // 30 days
+                    $pubs_json = @file_get_contents($local_cache_path);
+                    if ($pubs_json) {
+                        $warnings[] = 'Using local cache as fallback (age: ' . round($cache_age/86400) . ' days)';
+                    } else {
+                        $warnings[] = 'Failed to read local cache file';
+                    }
+                } else {
+                    $warnings[] = 'Local cache too old (' . round($cache_age/86400) . ' days)';
+                }
+            } else {
+                $warnings[] = 'No local cache file found';
+            }
+        }
+
+        if($pubs_json){
+            $decoded_json = json_decode($pubs_json, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                $new_pubs_data['publications'] = $decoded_json;
+            } else {
+                $warnings[] = 'Failed to parse JSON: ' . json_last_error_msg();
+            }
+        } else {
+            $warnings[] = 'No valid publications data available from GitHub or local cache';
+        }
+
+        // Only overwrite the cache if we successfully got some data
+        if(!empty($new_pubs_data['publications'])){
+            $pubs_data = $new_pubs_data;
+            // Get facility labels from the publications data
+            $facility_labels = get_facility_labels($pubs_data['publications']);
+        } else {
+            $warnings[] = 'No publications found when fetching, using old cache';
+            // Ensure we keep the old publications array if it exists
+            if (!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+                $pubs_data['publications'] = array();
+            }
+        }
+
+        // Clean up
+        $pub_ids = array();
+        $dois = array();
+        if (!empty($pubs_data['publications'])) {  // Only process if we have publications
+            foreach($pubs_data['publications'] as $idx => $pub){
+                // Remove duplicates - from parallel facilities and dup DOIs in publications.scilifelab.se
+                if(in_array($pub['iuid'], $pub_ids) || in_array($pub['doi'], $dois)){
+                    unset($pubs_data['publications'][$idx]);
+                    continue;
+                }
+                array_push($pub_ids, $pub['iuid']);
+                array_push($dois, $pub['doi']);
+
+                // Check if this is a collaboration
+                $pubs_data['publications'][$idx]['is_collab'] = false;
+                if (isset($pub['labels'])) {
+                    foreach($pub['labels'] as $facility => $label) {
+                        if($label == 'Collaborative'){
+                            $pubs_data['publications'][$idx]['is_collab'] = true;
+                            break;
+                        }
+                    }
+                }
+
+                // Check if this is Technology development
+                $pubs_data['publications'][$idx]['is_tech_dev'] = false;
+                if (isset($pub['labels'])) {
+                    foreach($pub['labels'] as $facility => $label) {
+                        if($label == 'Technology development'){
+                            $pubs_data['publications'][$idx]['is_tech_dev'] = true;
+                            if($atts['tech_dev_is_collab']){
+                                $pubs_data['publications'][$idx]['is_collab'] = true;
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Sort by publication date only if we have publications
+            $sort_pubdate_func = function ($a, $b){
+                return strtotime($b['published']) - strtotime($a['published']);
+            };
+            usort($pubs_data['publications'], $sort_pubdate_func);
+        }
+
+        @file_put_contents(get_template_directory().'/cache/publications_cache.json', json_encode($pubs_data));
+    }
+
+    // Ensure we have a valid publications array before proceeding
+    if(!isset($pubs_data['publications']) || !is_array($pubs_data['publications'])) {
+        $pubs_data['publications'] = array();
+    }
+
+    if(empty($pubs_data['publications'])){
+        return '<p class="text-muted"><em>Error: Publications could not be retrieved</em></p> <!-- '.implode("\n\n", $warnings).' -->';
+    }
+
+    // Randomise the order only if we have publications
+    if($atts['randomise'] && !empty($pubs_data['publications'])) {
+        shuffle($pubs_data['publications']);
+    }
+
+    // Build output
+    $modals = '';
+    $pubs_items = array();
+    $i = 0;
+    $num_collabs = 0;
+    foreach($pubs_data['publications'] as $pub){
+
+        // Skip collaborative papers if we already have the maximum number
+        if($atts['max_collabs'] >= 0 && $num_collabs >= $atts['max_collabs'] && $pub['is_collab']){
+            continue;
+        }
+
+        // Skip non-collaborative papers if we need only collabs from here ony
+        if($atts['collabs'] > 0){
+            $remaining_non_collab = $atts['num'] - $atts['collabs'] - $i;
+            if(!$pub['is_collab'] && $remaining_non_collab <= 0){
+                continue;
+            }
+        }
+
+        // Limit the number shown
+        if($i >= $atts['num']){
+            break;
+        }
+
+        // Bump the counters
+        $i++;
+        if($pub['is_collab']){
+            $num_collabs += 1;
+        }
+
+        // Add to the visible list
+        $pubs_items[] = '
+        <a data-toggle="modal" data-target="#pub_'.(isset($pub['iuid']) ? $pub['iuid'] : '').'" href="'.(isset($pub['links']['display']['href']) ? $pub['links']['display']['href'] : '#').'" target="_blank" class="list-group-item list-group-item-action'.(isset($pub['is_collab']) && $pub['is_collab'] ? ' list-pub-collab' : '').(isset($pub['is_tech_dev']) && $pub['is_tech_dev'] ? ' list-pub-techdev' : '').'">
+            '.(isset($pub['title']) ? $pub['title'] : '').'<br>
+            <small class="text-muted"><em>'.(isset($pub['journal']['title']) ? $pub['journal']['title'] : '').'</em> ('.(isset($pub['published']) ? explode('-', $pub['published'])[0] : '').')</small>'
+            .(isset($pub['is_collab']) && $pub['is_collab'] ? '<span class="float-right" style="display:inline-block"><span class="badge badge-primary mt-3">NGI Collaboration</span>' : '').(isset($pub['is_tech_dev']) && $pub['is_tech_dev'] ? '<span class="badge badge-success mt-3 mx-1">NGI Technology development</span></span>' : '</span>').'
+        </a>';
+
+        // $pubs_items[] = '<pre>'.print_r($pub, true).'</pre>';
+
+        //
+        // Make publication modal
+        //
+
+        // Make authors array
+        $authors = array();
+        foreach($pub['authors'] as $author){
+            // If ALL CAPS then capitilise nicely
+            if(isset($author['given']) && strtoupper($author['given']) == $author['given']){
+                $author['given'] = ucwords(strtolower($author['given']));
+            }
+            if(isset($author['family']) && strtoupper($author['family']) == $author['family']){
+                $author['family'] = ucwords(strtolower($author['family']));
+            }
+            $authors[] = '<span class="pub-author" title="'.(isset($author['given']) ? $author['given'] : '').' '.(isset($author['family']) ? $author['family'] : '').'">'.(isset($author['initials']) ? $author['initials'] : '').' '.(isset($author['family']) ? $author['family'] : '').'</span>';
+        }
+
+        // Make publication ref string
+        $pub_ref = '';
+        if(isset($pub['journal']['title']) && $pub['journal']['title']){
+            $pub_ref .= '<em>'.$pub['journal']['title'].'</em>, ';
+        }
+        $pub_ref .= '<small>';
+        if(isset($pub['journal']['volume']) && $pub['journal']['volume']){
+            $pub_ref .= '<strong>'.$pub['journal']['volume'].'</strong> ';
+        }
+        if(isset($pub['journal']['issue']) && $pub['journal']['issue']){
+            $pub_ref .= '('.$pub['journal']['issue'].') ';
+        }
+        if(isset($pub['journal']['issn']) && $pub['journal']['issn']){
+            $pub_ref .= $pub['journal']['issn'].' ';
+        }
+        if(isset($pub['published']) && $pub['published']){
+            $pub_ref .= '('.explode('-', $pub['published'])[0].')';
+        }
+        $pub_ref .= '</small>';
+
+        // NGI collaboration flag
+        $collab_badge = '';
+        if(isset($pub['is_collab']) && $pub['is_collab']){
+            $collab_badge = '<span class="float-right badge badge-primary" title="A publication where a facility member is in the authors list" data-toggle="tooltip">NGI Collaboration</span>';
+        }
+
+        // NGI Technology Development flag
+        if(isset($pub['is_tech_dev']) && $pub['is_tech_dev']){
+            $collab_badge = '<span class="float-right badge badge-success" title="A publication with facility internal technology development" data-toggle="tooltip">NGI Technology development</span>';
+        }
+
+        // Only show modal body if we have an abstract
+        $footer_border = '';
+        if(isset($pub['abstract']) && $pub['abstract']){
+            $abstract = '<div class="modal-body small">'.$pub['abstract'].'</div>';
+        } else {
+            // Due to a bootstrap bug, we need a modal-body element https://github.com/twbs/bootstrap/issues/28906
+            // So just hide it if empty
+            $abstract = '<div class="modal-body d-none"></div>';
+            // If it's hidden we get a double border from the footer-header, so need to hide one
+            $footer_border = 'border-0';
+        }
+        $modals .= '
+        <div class="modal ngisweden-publications-modal fade" id="pub_'.(isset($pub['iuid']) ? $pub['iuid'] : '').'" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">'.(isset($pub['title']) ? $pub['title'] : '').'</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              </div>
+              <div class="modal-sub-header">
+                <div class="font-weight-light pub-authors">'.implode(', ', $authors).'</div>
+                <p class="mt-2 mb-0">'.$collab_badge.$pub_ref.'</p>
+              </div>
+              '.$abstract.'
+              <div class="modal-footer '.$footer_border.'">
+                <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+                <a href="https://www.ncbi.nlm.nih.gov/pubmed/'.(isset($pub['pmid']) ? $pub['pmid'] : '').'" target="_blank" class="btn btn-sm btn-info">Pubmed <i class="fas fa-external-link-alt fa-sm ml-2"></i></a>
+                <a href="https://dx.doi.org/'.(isset($pub['doi']) ? $pub['doi'] : '').'" target="_blank" class="btn btn-sm btn-primary">DOI <i class="fas fa-external-link-alt fa-sm ml-2"></i></a>
+                <a href="'.(isset($pub['links']['display']['href']) ? $pub['links']['display']['href'] : '#').'" target="_blank" class="btn btn-sm btn-success">SciLifeLab Pubs <i class="fas fa-external-link-alt fa-sm ml-2"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>';
+    }
+
+    // Randomise the order again, so that collabs aren't always at the bottom
+    if($atts['randomise']) {
+        shuffle($pubs_items);
+    }
+
+    // Build the pubs list
+    $pubs_div = '<div class="ngisweden-publications mb-5">';
+    if($atts['title']) {
+        $pubs_div .= '<h5>User Publications</h5>';
+    }
+    $pubs_div .= '<div class="list-group">';
+    $pubs_div .= implode("\n", $pubs_items);
+    $pubs_div .= '</div>';
+    if($atts['footer']) {
+        $pubs_div .= '<p class="small text-muted mt-2">
+            See all publications at
+            <a href="https://publications.scilifelab.se/label/National%20Genomics%20Infrastructure" target="_blank" class="text-muted">
+                publications.scilifelab.se
+            </a>
+        </p>';
+    }
+    $pubs_div .= '</div>';
+
+    // Warnings-string
+    $warnings_str = '';
+    if(count($warnings)){
+        $warnings_str = "<!-- NGI Sweden Publications Warnings:\n\n".implode("\n\n", $warnings).' -->';
+    } else {
+        $warnings_str = "<!-- NGI Sweden Publications Warnings: No warnings -->";
+    }
+
+    // Return the list and modals output
+    return $pubs_div.$modals.$warnings_str;
+}
+add_shortcode('ngisweden_publications_gh', 'ngisweden_pubs_gh_shortcode');
+
+//
+//
+// Function to extract unique facility labels from publications data
+//
+//
+function get_facility_labels($publications) {
+    $facility_labels = array();
+    foreach ($publications as $pub) {
+        if (isset($pub['labels']) && is_array($pub['labels'])) {
+            foreach ($pub['labels'] as $facility => $label) {
+                // Only include facilities that start with NGI or are exactly National Genomics Infrastructure
+                if (strpos($facility, 'NGI') === 0 || $facility === 'National Genomics Infrastructure') {
+                    if (!isset($facility_labels[$facility])) {
+                        $facility_labels[$facility] = array();
+                    }
+                    if (!in_array($label, $facility_labels[$facility])) {
+                        $facility_labels[$facility][] = $label;
+                    }
+                }
+            }
+        }
+    }
+    return $facility_labels;
+}
