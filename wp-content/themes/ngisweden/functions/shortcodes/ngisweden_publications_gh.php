@@ -18,7 +18,13 @@ function ngisweden_pubs_gh_shortcode($atts_raw){
     ), $atts_raw);
 
     // Fetch the cached publications data
-    $pubs_json = @file_get_contents(get_template_directory().'/cache/publications_cache_gh.json');
+    if($atts['randomise'] == 1){
+        $cache_file = 'publications_cache_gh.json';
+    } else {
+        $cache_file = 'latest-publications_cache_gh.json';
+    }
+    
+    $pubs_json = @file_get_contents(get_template_directory().'/cache/'.$cache_file);
     $pubs_data = @json_decode($pubs_json, true);
 
     // Initialize publications as empty array if not set
@@ -46,7 +52,11 @@ function ngisweden_pubs_gh_shortcode($atts_raw){
         );
         $context = stream_context_create($opts);
 
-        $pubs_url = 'https://raw.githubusercontent.com/NationalGenomicsInfrastructure/ngisweden.se-publications/refs/heads/main/cache/publications.json';
+        if($atts['randomise'] == 1){
+            $pubs_url = 'https://raw.githubusercontent.com/NationalGenomicsInfrastructure/ngisweden.se-publications/refs/heads/main/cache/publications.json';
+        } else {
+            $pubs_url = 'https://raw.githubusercontent.com/NationalGenomicsInfrastructure/ngisweden.se-publications/refs/heads/main/cache/latest-publications.json';
+        }
         
         // Try to fetch from GitHub with proper error handling
         $pubs_json = @file_get_contents($pubs_url, false, $context);
