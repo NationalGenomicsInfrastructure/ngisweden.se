@@ -197,8 +197,15 @@ get_header(); ?>
   // Blue box with one-line introduction
   echo $page_intro;
 
-  // Echo the rest of the page contents
-  echo $page_contents;
+  // Echo the rest of the page contents (run through the_content so blocks/scripts are processed)
+  if ( ! empty( $page_contents ) && isset( $app_page ) ) {
+    $previous_post = $GLOBALS['post'];
+    $GLOBALS['post'] = $app_page;
+    echo apply_filters( 'the_content', $page_contents );
+    $GLOBALS['post'] = $previous_post;
+  } else {
+    echo apply_filters( 'the_content', $page_contents );
+  }
 
   // Print the tab headers
   echo '<div class="row mt-5 mb-3"><div class="col-sm-2 mb-3"><div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">';
